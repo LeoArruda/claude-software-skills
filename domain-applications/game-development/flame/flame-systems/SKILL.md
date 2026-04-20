@@ -8,65 +8,65 @@ tags: [flame, flutter, dart, game-systems, rpg]
 
 # Flame Game Systems
 
-14 個常見遊戲系統的實作模式與參考代碼。
+Implementation patterns and reference snippets for 14 common game systems.
 
-## Reference Index
+## Reference index
 
 | System | File | Description |
 |--------|------|-------------|
-| **Quest** | `references/quest.md` | 任務系統、目標追蹤、獎勵 |
-| **Dialogue** | `references/dialogue.md` | 對話系統、分支選項、NPC |
-| **Localization** | `references/localization.md` | 多語言、文本管理 |
-| **Inventory** | `references/inventory.md` | 背包、物品堆疊、分類 |
-| **Paper Doll** | `references/paperdoll.md` | 角色外觀、裝備視覺 |
-| **Combat** | `references/combat.md` | 戰鬥系統、傷害計算 |
-| **Skills** | `references/skills.md` | 技能樹、冷卻、效果 |
-| **Save/Load** | `references/saveload.md` | 存檔、序列化、雲端 |
-| **Achievement** | `references/achievement.md` | 成就、解鎖、進度 |
-| **Shop** | `references/shop.md` | 商店、交易、貨幣 |
-| **Crafting** | `references/crafting.md` | 製作、配方、材料 |
-| **Procedural** | `references/procedural.md` | 隨機生成、Roguelike |
-| **Multiplayer** | `references/multiplayer.md` | 多人連線、同步 |
-| **Level Editor** | `references/leveleditor.md` | 關卡編輯器、地圖工具 |
+| **Quest** | `references/quest.md` | Objectives, tracking, rewards |
+| **Dialogue** | `references/dialogue.md` | Branching dialogue, NPCs |
+| **Localization** | `references/localization.md` | Strings and locales |
+| **Inventory** | `references/inventory.md` | Items, stacking, categories |
+| **Paper Doll** | `references/paperdoll.md` | Equipment visuals |
+| **Combat** | `references/combat.md` | Combat flow, damage |
+| **Skills** | `references/skills.md` | Skill trees, cooldowns, effects |
+| **Save/Load** | `references/saveload.md` | Serialization, cloud saves |
+| **Achievement** | `references/achievement.md` | Achievements and progress |
+| **Shop** | `references/shop.md` | Buying, selling, currency |
+| **Crafting** | `references/crafting.md` | Recipes and materials |
+| **Procedural** | `references/procedural.md` | PCG, roguelike maps |
+| **Multiplayer** | `references/multiplayer.md` | Networking, sync |
+| **Level Editor** | `references/leveleditor.md` | Authoring tools |
 
-## AI Usage Guide
-
-```
-需要任務系統？     → Read references/quest.md
-需要對話系統？     → Read references/dialogue.md
-需要多語言？       → Read references/localization.md
-需要背包系統？     → Read references/inventory.md
-需要裝備外觀？     → Read references/paperdoll.md
-需要戰鬥系統？     → Read references/combat.md
-需要技能系統？     → Read references/skills.md
-需要存檔功能？     → Read references/saveload.md
-需要成就系統？     → Read references/achievement.md
-需要商店系統？     → Read references/shop.md
-需要製作系統？     → Read references/crafting.md
-需要隨機生成？     → Read references/procedural.md
-需要多人連線？     → Read references/multiplayer.md
-需要關卡編輯？     → Read references/leveleditor.md
-```
-
-## System Dependencies
+## AI usage guide
 
 ```
-Combat ──→ Skills (技能影響戰鬥)
-       ──→ Inventory (裝備影響屬性)
-       ──→ Paper Doll (裝備外觀)
-
-Quest ──→ Dialogue (NPC 給予任務)
-      ──→ Achievement (完成任務獲得成就)
-      ──→ Inventory (任務獎勵物品)
-
-Shop ──→ Inventory (購買物品存入背包)
-     ──→ Crafting (購買材料用於製作)
-
-Procedural ──→ Combat (生成敵人)
-           ──→ Inventory (隨機掉落)
+Quests?        → Read references/quest.md
+Dialogue?      → Read references/dialogue.md
+Localization? → Read references/localization.md
+Inventory?     → Read references/inventory.md
+Paper doll?    → Read references/paperdoll.md
+Combat?        → Read references/combat.md
+Skills?        → Read references/skills.md
+Save/load?     → Read references/saveload.md
+Achievements?  → Read references/achievement.md
+Shop?          → Read references/shop.md
+Crafting?      → Read references/crafting.md
+Procedural?    → Read references/procedural.md
+Multiplayer?   → Read references/multiplayer.md
+Level editor?  → Read references/leveleditor.md
 ```
 
-## Related Skills
+## System dependencies
 
-- `flame-core` - 引擎核心基礎
-- `flame-templates` - 遊戲類型模板
+```
+Combat ──→ Skills (skills affect combat)
+       ──→ Inventory (gear affects stats)
+       ──→ Paper Doll (gear visuals)
+
+Quest ──→ Dialogue (NPCs grant quests)
+      ──→ Achievement (quest completion)
+      ──→ Inventory (quest rewards)
+
+Shop ──→ Inventory (purchases go to inventory)
+     ──→ Crafting (buy materials)
+
+Procedural ──→ Combat (spawn enemies)
+           ──→ Inventory (random drops)
+```
+
+## Related skills
+
+- `flame-core` — Engine fundamentals
+- `flame-templates` — Genre templates

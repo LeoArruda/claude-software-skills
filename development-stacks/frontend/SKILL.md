@@ -560,106 +560,106 @@ describe('LoginForm', () => {
 
 ---
 
-## Sharp Edges（常見陷阱）
+## Sharp edges (common pitfalls)
 
-> 這些是前端開發中最常見且代價最高的錯誤
+> High-impact mistakes in frontend development
 
-### SE-1: useEffect 無限迴圈
-- **嚴重度**: critical
-- **情境**: useEffect 中更新 state，而該 state 又是 dependency，導致無限重新渲染
-- **原因**: 不了解 React 的 dependency 機制、object/array 作為 dependency
-- **症狀**:
-  - 頁面卡死或極度緩慢
-  - 瀏覽器記憶體持續增長
-  - Network tab 顯示大量重複請求
-- **檢測**: `useEffect.*setState.*\].*\{|useEffect\(\(\).*fetch.*\[\]`
-- **解法**: 正確設定 dependencies、使用 useCallback/useMemo、考慮用 useRef 追蹤值
+### SE-1: useEffect infinite loop
+- **Severity**: critical
+- **Situation**: Effect updates state that is also a dependency, causing a render loop
+- **Why**: Misunderstanding dependency rules; objects/arrays as deps
+- **Symptoms**:
+  - UI freezes or becomes very slow
+  - Browser memory grows
+  - Network tab shows repeated requests
+- **Detect**: `useEffect.*setState.*\].*\{|useEffect\(\(\).*fetch.*\[\]`
+- **Fix**: Correct dependency lists; useCallback/useMemo; useRef for stable values
 
-### SE-2: 記憶體洩漏 (Memory Leak)
-- **嚴重度**: high
-- **情境**: Component unmount 後仍有 subscription、timer 或 async 操作更新 state
-- **原因**: 沒有清理 effect、沒有取消進行中的 fetch
-- **症狀**:
-  - Console 警告「Can't perform state update on unmounted component」
-  - 應用程式越用越慢
-  - 切換頁面後舊資料閃現
-- **檢測**: `useEffect.*setInterval(?!.*return)|useEffect.*addEventListener(?!.*return.*remove)|useEffect.*subscribe(?!.*return)`
-- **解法**: 在 useEffect 中 return cleanup function、使用 AbortController 取消 fetch
+### SE-2: Memory leaks
+- **Severity**: high
+- **Situation**: After unmount, subscriptions, timers, or async work still update state
+- **Why**: Missing cleanup; fetches not aborted
+- **Symptoms**:
+  - “Can't perform state update on unmounted component”
+  - App slows over time
+  - Stale UI flashes after navigation
+- **Detect**: `useEffect.*setInterval(?!.*return)|useEffect.*addEventListener(?!.*return.*remove)|useEffect.*subscribe(?!.*return)`
+- **Fix**: Return cleanup from useEffect; AbortController for fetch
 
-### SE-3: Props Drilling 地獄
-- **嚴重度**: medium
-- **情境**: 為了傳遞資料給深層 component，中間層需要傳遞不需要的 props
-- **原因**: 沒有使用 Context 或狀態管理、component 結構設計不當
-- **症狀**:
-  - 修改一個 prop 需要改動 5+ 個 component
-  - 中間層 component 有很多只是「傳遞」的 props
-  - 難以追蹤資料流向
-- **檢測**: `props\.\w+.*props\.\w+.*props\.\w+|{.*,.*,.*,.*,.*,.*}.*=>`
-- **解法**: 使用 Context、Zustand/Redux、或 Component Composition
+### SE-3: Props drilling
+- **Severity**: medium
+- **Situation**: Deep trees pass props through layers that do not use them
+- **Why**: No context or state store; poor component boundaries
+- **Symptoms**:
+  - Changing one prop touches many files
+  - Middle components only forward props
+  - Hard to trace data flow
+- **Detect**: `props\.\w+.*props\.\w+.*props\.\w+|{.*,.*,.*,.*,.*,.*}.*=>`
+- **Fix**: Context, Zustand/Redux, or composition
 
-### SE-4: 過早優化 (Premature Optimization)
-- **嚴重度**: medium
-- **情境**: 在沒有效能問題時過度使用 useMemo/useCallback/React.memo
-- **原因**: 誤解這些 hooks 的用途、盲目「優化」
-- **症狀**:
-  - 程式碼充滿 useMemo 但沒有效能改善
-  - 反而因為額外的記憶體和比較操作變慢
-  - 程式碼難以閱讀
-- **檢測**: `useMemo\(\(\).*return.*\d+|useCallback\(\(\).*console|React\.memo\(.*\)(?!.*areEqual)`
-- **解法**: 先測量效能、只在確定有問題時優化、理解何時使用這些工具
+### SE-4: Premature optimization
+- **Severity**: medium
+- **Situation**: Heavy useMemo/useCallback/React.memo without measured need
+- **Why**: Misunderstanding what these APIs buy you
+- **Symptoms**:
+  - Lots of memoization with no real win
+  - Extra allocations/comparisons slow things down
+  - Harder to read code
+- **Detect**: `useMemo\(\(\).*return.*\d+|useCallback\(\(\).*console|React\.memo\(.*\)(?!.*areEqual)`
+- **Fix**: Measure first; optimize hot paths only
 
-### SE-5: 不安全的 HTML 渲染
-- **嚴重度**: critical
-- **情境**: 使用 dangerouslySetInnerHTML 或直接渲染用戶輸入的 HTML
-- **原因**: 為了渲染 rich text、不了解 XSS 風險
-- **症狀**:
-  - XSS 攻擊漏洞
-  - 用戶可以注入惡意腳本
-  - 網站被用於釣魚或竊取資料
-- **檢測**: `dangerouslySetInnerHTML|innerHTML.*=.*user|v-html.*user`
-- **解法**: 使用 DOMPurify 消毒、使用安全的 Markdown 渲染器、避免直接渲染用戶輸入
+### SE-5: Unsafe HTML rendering
+- **Severity**: critical
+- **Situation**: Raw HTML from users or unsanitized rich text
+- **Why**: Rich text needs; ignoring XSS
+- **Symptoms**:
+  - XSS
+  - Injected scripts
+  - Phishing or data theft
+- **Detect**: `dangerouslySetInnerHTML|innerHTML.*=.*user|v-html.*user`
+- **Fix**: Sanitize with a trusted library; safe Markdown renderers; never trust raw user HTML
 
 ---
 
 ## Validations
 
-### V-1: useEffect 缺少 cleanup
-- **類型**: regex
-- **嚴重度**: high
-- **模式**: `useEffect\s*\([^)]*=>\s*\{[^}]*(setInterval|addEventListener|subscribe)[^}]*\}(?![^}]*return)`
-- **訊息**: useEffect with subscription/timer missing cleanup function
-- **修復建議**: Add cleanup: `return () => clearInterval(id)` or `return () => unsubscribe()`
-- **適用**: `*.tsx`, `*.jsx`
+### V-1: useEffect missing cleanup
+- **Type**: regex
+- **Severity**: high
+- **Pattern**: `useEffect\s*\([^)]*=>\s*\{[^}]*(setInterval|addEventListener|subscribe)[^}]*\}(?![^}]*return)`
+- **Message**: useEffect with subscription/timer missing cleanup function
+- **Fix**: Add cleanup: `return () => clearInterval(id)` or `return () => unsubscribe()`
+- **Applies to**: `*.tsx`, `*.jsx`
 
-### V-2: 禁止 dangerouslySetInnerHTML
-- **類型**: regex
-- **嚴重度**: critical
-- **模式**: `dangerouslySetInnerHTML`
-- **訊息**: dangerouslySetInnerHTML is a security risk (XSS)
-- **修復建議**: Use DOMPurify: `dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(html) }}`
-- **適用**: `*.tsx`, `*.jsx`
+### V-2: Raw inner HTML props
+- **Type**: regex
+- **Severity**: critical
+- **Pattern**: `dangerouslySetInnerHTML`
+- **Message**: Setting raw HTML from strings is an XSS risk
+- **Fix**: Pipe through an HTML sanitizer before assigning to inner HTML props
+- **Applies to**: `*.tsx`, `*.jsx`
 
-### V-3: useEffect 空 dependency array + state 更新
-- **類型**: regex
-- **嚴重度**: high
-- **模式**: `useEffect\s*\([^)]*=>\s*\{[^}]*set\w+\([^}]*\},\s*\[\s*\]\s*\)`
-- **訊息**: useEffect with empty deps but updates state - possible stale closure
-- **修復建議**: Add necessary dependencies or use useRef for values that shouldn't trigger re-run
-- **適用**: `*.tsx`, `*.jsx`
+### V-3: Empty dependency array with state updates
+- **Type**: regex
+- **Severity**: high
+- **Pattern**: `useEffect\s*\([^)]*=>\s*\{[^}]*set\w+\([^}]*\},\s*\[\s*\]\s*\)`
+- **Message**: useEffect with empty deps but updates state - possible stale closure
+- **Fix**: Add necessary dependencies or use useRef for values that should not retrigger the effect
+- **Applies to**: `*.tsx`, `*.jsx`
 
-### V-4: 禁止 inline styles 物件字面量
-- **類型**: regex
-- **嚴重度**: medium
-- **模式**: `style=\{\s*\{[^}]+\}\s*\}`
-- **訊息**: Inline style object creates new reference on every render
-- **修復建議**: Extract to variable or use useMemo: `const styles = useMemo(() => ({...}), [])`
-- **適用**: `*.tsx`, `*.jsx`
+### V-4: Inline style object literals
+- **Type**: regex
+- **Severity**: medium
+- **Pattern**: `style=\{\s*\{[^}]+\}\s*\}`
+- **Message**: Inline style object creates new reference on every render
+- **Fix**: Hoist or memoize: `const styles = useMemo(() => ({...}), [])`
+- **Applies to**: `*.tsx`, `*.jsx`
 
-### V-5: 禁止在 JSX 中使用 index 作為 key
-- **類型**: regex
-- **嚴重度**: medium
-- **模式**: `key=\{(index|i|idx)\}`
-- **訊息**: Using array index as key can cause issues with reordering
-- **修復建議**: Use a unique identifier: `key={item.id}` or `key={item.uniqueField}`
-- **適用**: `*.tsx`, `*.jsx`
+### V-5: Array index as key
+- **Type**: regex
+- **Severity**: medium
+- **Pattern**: `key=\{(index|i|idx)\}`
+- **Message**: Using array index as key can break on reorder
+- **Fix**: Use stable ids: `key={item.id}` or `key={item.uniqueField}`
+- **Applies to**: `*.tsx`, `*.jsx`
 

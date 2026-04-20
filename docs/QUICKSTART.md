@@ -1,13 +1,13 @@
 # Claude Software Skills Quick Start
 
-> 3 分鐘開始使用 50+ 軟體開發技能
+> Get started with 50+ software development skills in about three minutes
 
-## 什麼是 Claude Software Skills？
+## What is Claude Software Skills?
 
-這是為 Claude Code 設計的軟體開發技能庫，涵蓋：
+A software development skill library for Claude Code, covering:
 
-| 類別 | 技能數 | 範例 |
-|------|--------|------|
+| Category | Skill count | Examples |
+|----------|-------------|----------|
 | Programming Languages | 12 | python, typescript, rust, go |
 | Software Engineering | 8 | backend, frontend, database, api-design |
 | Software Design | 6 | architecture-patterns, design-patterns |
@@ -17,120 +17,120 @@
 
 ---
 
-## Step 1: 安裝完整技能庫 (1 分鐘)
+## Step 1: Install the full library (~1 minute)
 
-### 方式 A: 在 Claude Code 中
+### Option A: In Claude Code
 
 ```
-安裝 claude-software-skills 技能庫
+Install the claude-software-skills library
 ```
 
-### 方式 B: 使用 CLI
+### Option B: Using the CLI
 
 ```bash
-npx skillpkg-cli install miles990/claude-software-skills
+npx skillpkg-cli install LeoArruda/claude-software-skills
 ```
 
 ---
 
-## Step 2: 安裝單一技能 (30 秒)
+## Step 2: Install a single skill (~30 seconds)
 
-只需要特定技能？
+Only need specific skills?
 
 ```bash
-# 安裝 backend 技能
-npx skillpkg-cli install github:miles990/claude-software-skills#skills/backend
+# Install backend skill
+npx skillpkg-cli install github:LeoArruda/claude-software-skills#skills/backend
 
-# 安裝 python 技能
-npx skillpkg-cli install github:miles990/claude-software-skills#skills/python
+# Install python skill
+npx skillpkg-cli install github:LeoArruda/claude-software-skills#skills/python
 
-# 安裝 testing-strategies 技能
-npx skillpkg-cli install github:miles990/claude-software-skills#skills/testing-strategies
+# Install testing-strategies skill
+npx skillpkg-cli install github:LeoArruda/claude-software-skills#skills/testing-strategies
 ```
 
 ---
 
-## Step 3: 使用技能 (1 分鐘)
+## Step 3: Use skills (~1 minute)
 
-安裝後，Claude 會自動套用相關知識。
+After installation, Claude applies relevant knowledge automatically.
 
-### 範例對話
+### Example prompts
 
 ```
-# 使用 backend 技能
-/evolve 建立一個 Express + TypeScript 的 RESTful API
+# Using backend skill
+/evolve Build a RESTful API with Express + TypeScript
 
-# 使用 testing-strategies 技能
-幫這個模組寫單元測試，覆蓋率要達到 80%
+# Using testing-strategies skill
+Write unit tests for this module with 80% coverage
 
-# 使用 python 技能
-用 Python 寫一個爬蟲，抓取網站資料並存到 SQLite
+# Using python skill
+Write a Python scraper that fetches a site and stores data in SQLite
 ```
 
 ---
 
-## 技能目錄
+## Skill catalog
 
-### 程式語言
+### Programming languages
 `python` `typescript` `javascript` `rust` `go` `java` `csharp` `cpp` `ruby` `php` `swift` `kotlin`
 
-### 軟體工程
+### Software engineering
 `backend` `frontend` `database` `api-design` `testing-strategies` `security` `performance-optimization` `documentation`
 
-### 軟體設計
+### Software design
 `architecture-patterns` `design-patterns` `clean-code` `refactoring` `system-design` `ddd`
 
-### 工具整合
+### Tools & integrations
 `git-workflows` `devops-ci-cd` `docker-containers` `aws-cloud` `monitoring-observability` `debugging-profiling` `ide-productivity` `cli-tools`
 
-### 開發框架
+### Frameworks & stacks
 `react-ecosystem` `vue-ecosystem` `node-backend` `python-web` `mobile-development` `serverless` `microservices` `monorepo`
 
-### 領域應用
+### Domain applications
 `ai-ml-integration` `data-analysis` `blockchain-web3` `game-development` `iot-embedded` `real-time-systems` `fintech` `healthcare-systems`
 
 ---
 
-## 常見問題
+## FAQ
 
-### Q: 安裝所有技能會很慢嗎？
+### Q: Is installing everything slow?
 
-技能是 Markdown 文件，不需編譯。完整安裝約 30 秒。
+Skills are Markdown; nothing to compile. A full install is roughly 30 seconds.
 
-### Q: 技能之間會衝突嗎？
+### Q: Do skills conflict?
 
-不會。技能設計為可疊加使用。
+No. They are designed to stack.
 
-### Q: 如何知道載入了哪些技能？
+### Q: How do I see what is loaded?
 
 ```bash
 npx skillpkg-cli list
 ```
 
-或在 Claude Code 中說：
+Or in Claude Code:
 ```
-列出已載入的技能
+List loaded skills
 ```
 
 ---
 
-## 下一步
+## Next steps
 
-| 目標 | 指令 |
+| Goal | Link |
 |------|------|
-| 查看完整技能清單 | [README.md](../README.md) |
-| 了解使用方式 | [USAGE-GUIDE.md](USAGE-GUIDE.md) |
-| 查看技能模板 | [SKILL-TEMPLATE.md](SKILL-TEMPLATE.md) |
-| 貢獻新技能 | [CONTRIBUTING.md](../CONTRIBUTING.md) |
+| Full skill list | [README.md](../README.md) |
+| Usage details | [USAGE-GUIDE.md](USAGE-GUIDE.md) |
+| Skill template | [SKILL-TEMPLATE.md](SKILL-TEMPLATE.md) |
+| Contributing | [CONTRIBUTING.md](../CONTRIBUTING.md) |
 
 ---
 
-## 成功！
+## Success
 
 ```
-✅ 技能庫已安裝
-✅ Claude 可以使用軟體開發知識
-✅ 開始你的專案吧！
+✅ Skill library installed
+✅ Claude can use software development guidance
+✅ Start your project!
 
-/evolve [你的目標]
+/evolve [your goal]
 ```

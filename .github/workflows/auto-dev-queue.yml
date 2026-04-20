@@ -1,31 +1,31 @@
 # ============================================================================
 # Auto-Dev Task Queue
 # ============================================================================
-# 管理多個待執行的目標：
-#   - 每小時檢查待處理的 auto-dev issues
-#   - 按優先級排序執行
-#   - 避免同時執行太多任務
+# Manage multiple pending goals:
+#   - Hourly check for pending auto-dev issues
+#   - Run by priority order
+#   - Avoid running too many tasks at once
 # ============================================================================
 
 name: 📋 Auto-Dev Queue
 
 on:
-  # 定時執行
+  # Scheduled
   schedule:
-    - cron: '0 * * * *'  # 每小時執行一次
+    - cron: '0 * * * *'  # Hourly
 
-  # 手動觸發
+  # Manual
   workflow_dispatch:
     inputs:
       process_count:
-        description: '處理幾個任務'
+        description: 'How many tasks to process'
         required: false
         type: number
         default: 1
 
 jobs:
   # =========================================================================
-  # 檢查並處理任務佇列
+  # Check and process the task queue
   # =========================================================================
   process-queue:
     name: 📋 Process Queue
@@ -38,7 +38,7 @@ jobs:
           script: |
             const processCount = ${{ github.event.inputs.process_count || 1 }};
 
-            // 搜尋所有帶有 auto-dev label 但還沒有對應 PR 的 issues
+            // Find open issues with auto-dev label and no linked PR yet
             const { data: issues } = await github.rest.issues.listForRepo({
               owner: context.repo.owner,
               repo: context.repo.repo,
@@ -51,10 +51,10 @@ jobs:
 
             console.log(`Found ${issues.length} open auto-dev issues`);
 
-            // 過濾已經有 PR 的 issues
+            // Filter out issues that already have a PR
             const pendingIssues = [];
             for (const issue of issues) {
-              // 檢查是否有連結的 PR
+              // Check for linked PR
               const { data: events } = await github.rest.issues.listEvents({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
@@ -66,7 +66,7 @@ jobs:
                 e.source?.issue?.pull_request
               );
 
-              // 檢查是否有 "processing" label
+              // Check for processing label
               const isProcessing = issue.labels.some(l =>
                 l.name === 'processing' || l.name === '⏳ processing'
               );
@@ -78,7 +78,7 @@ jobs:
 
             console.log(`${pendingIssues.length} issues pending processing`);
 
-            // 按優先級排序
+            // Sort by priority
             const priorityOrder = { 'priority:high': 0, 'priority:normal': 1, 'priority:low': 2 };
             pendingIssues.sort((a, b) => {
               const aPriority = a.labels.find(l => l.name.startsWith('priority:'))?.name || 'priority:normal';
@@ -86,13 +86,13 @@ jobs:
               return (priorityOrder[aPriority] || 1) - (priorityOrder[bPriority] || 1);
             });
 
-            // 處理前 N 個
+            // Process first N
             const toProcess = pendingIssues.slice(0, processCount);
 
             for (const issue of toProcess) {
               console.log(`Triggering auto-dev for issue #${issue.number}: ${issue.title}`);
 
-              // 加上 processing label
+              // Add processing label
               await github.rest.issues.addLabels({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
@@ -100,7 +100,7 @@ jobs:
                 labels: ['⏳ processing']
               });
 
-              // 觸發 auto-dev workflow
+              // Trigger auto-dev workflow
               await github.rest.actions.createWorkflowDispatch({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
@@ -113,19 +113,19 @@ jobs:
               });
             }
 
-            // 輸出摘要
+            // Log summary
             const summary = `
-            ## 📋 Auto-Dev Queue 處理完成
+            ## 📋 Auto-Dev queue processed
 
-            - 總待處理: ${pendingIssues.length}
-            - 本次處理: ${toProcess.length}
-            - 剩餘待處理: ${pendingIssues.length - toProcess.length}
+            - Pending total: ${pendingIssues.length}
+            - Processed this run: ${toProcess.length}
+            - Still pending: ${pendingIssues.length - toProcess.length}
 
-            ### 本次處理的 Issues
-            ${toProcess.map(i => `- #${i.number}: ${i.title}`).join('\n') || '無'}
+            ### Processed this run
+            ${toProcess.map(i => `- #${i.number}: ${i.title}`).join('\n') || 'None'}
 
-            ### 待處理佇列
-            ${pendingIssues.slice(processCount).map(i => `- #${i.number}: ${i.title}`).join('\n') || '無'}
+            ### Remaining queue
+            ${pendingIssues.slice(processCount).map(i => `- #${i.number}: ${i.title}`).join('\n') || 'None'}
             `;
 
             console.log(summary);

@@ -1,6 +1,6 @@
 # Localization System Reference
 
-## Data Structure
+## Data structure
 
 ```dart
 class LocalizationManager {
@@ -40,7 +40,7 @@ class LocalizationManager {
 late LocalizationManager l10n;
 ```
 
-## JSON Translation Files
+## JSON translation files
 
 ```json
 // assets/i18n/en.json
@@ -55,20 +55,20 @@ late LocalizationManager l10n;
   "achievement_unlocked": "Achievement Unlocked: {title}"
 }
 
-// assets/i18n/zh_TW.json
+// assets/i18n/es.json
 {
-  "game_title": "史詩冒險",
-  "menu_start": "開始遊戲",
-  "menu_settings": "設定",
-  "menu_quit": "離開",
-  "dialog_hello": "你好，{name}！",
-  "quest_kill": "擊敗 {count} 隻 {enemy}",
-  "item_gold": "{amount} 金幣",
-  "achievement_unlocked": "成就解鎖：{title}"
+  "game_title": "Aventura épica",
+  "menu_start": "Comenzar",
+  "menu_settings": "Ajustes",
+  "menu_quit": "Salir",
+  "dialog_hello": "Hola, {name}!",
+  "quest_kill": "Elimina {count} {enemy}",
+  "item_gold": "{amount} oro",
+  "achievement_unlocked": "Logro desbloqueado: {title}"
 }
 ```
 
-## Loading Translations
+## Loading translations
 
 ```dart
 class MyGame extends FlameGame {
@@ -78,10 +78,10 @@ class MyGame extends FlameGame {
 
     // Load from JSON
     final enJson = await rootBundle.loadString('assets/i18n/en.json');
-    final zhJson = await rootBundle.loadString('assets/i18n/zh_TW.json');
+    final esJson = await rootBundle.loadString('assets/i18n/es.json');
 
     l10n.loadTranslations('en', Map<String, String>.from(jsonDecode(enJson)));
-    l10n.loadTranslations('zh_TW', Map<String, String>.from(jsonDecode(zhJson)));
+    l10n.loadTranslations('es', Map<String, String>.from(jsonDecode(esJson)));
 
     // Set default or saved preference
     final savedLocale = prefs.getString('locale') ?? 'en';
@@ -90,18 +90,18 @@ class MyGame extends FlameGame {
 }
 ```
 
-## Usage in Game
+## Usage in game
 
 ```dart
 // Simple text
-final title = l10n.tr('game_title');  // "Epic Adventure" or "史詩冒險"
+final title = l10n.tr('game_title');  // English or Spanish string per locale
 
 // With parameters
 final greeting = l10n.tr('dialog_hello', {'name': 'Hero'});
-// "Hello, Hero!" or "你好，Hero！"
+// Locale-specific greeting with the hero name
 
 final questText = l10n.tr('quest_kill', {'count': 5, 'enemy': 'Rats'});
-// "Kill 5 Rats" or "擊敗 5 隻 Rats"
+// "Kill 5 Rats" / Spanish equivalent depending on locale
 
 // In components
 class MenuButton extends TextComponent {
@@ -140,14 +140,14 @@ l10n.plural('enemy_killed', 1);  // "Killed 1 enemy"
 l10n.plural('enemy_killed', 5);  // "Killed 5 enemies"
 ```
 
-## Language Selector UI
+## Language selector UI
 
 ```dart
 class LanguageSelector extends PositionComponent with TapCallbacks {
   final List<Map<String, String>> languages = [
     {'code': 'en', 'name': 'English'},
-    {'code': 'zh_TW', 'name': '繁體中文'},
-    {'code': 'ja', 'name': '日本語'},
+    {'code': 'es', 'name': 'Español'},
+    {'code': 'fr', 'name': 'Français'},
   ];
 
   @override
@@ -174,13 +174,13 @@ class LanguageSelector extends PositionComponent with TapCallbacks {
 }
 ```
 
-## Font Support
+## Font support
 
 ```dart
-// For CJK characters, use appropriate fonts
-final chineseRenderer = TextPaint(
+// For CJK, use a font that includes those glyphs
+final cjkRenderer = TextPaint(
   style: const TextStyle(
-    fontFamily: 'NotoSansTC',  // Supports Chinese
+    fontFamily: 'NotoSansTC',
     fontSize: 16,
   ),
 );

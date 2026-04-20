@@ -1,23 +1,23 @@
 # ============================================================================
 # Auto-Dev Feedback Handler
 # ============================================================================
-# 處理人類審查 feedback，支援：
-#   - PR 上的 /evolve 命令（繼續迭代）
-#   - PR merge 後更新記憶
-#   - PR close 後記錄失敗經驗
+# Handle human review feedback:
+#   - /evolve on PRs (continue iteration)
+#   - Update memory after PR merge
+#   - Record failures after PR close without merge
 # ============================================================================
 
 name: 🔄 Auto-Dev Feedback
 
 on:
-  # PR 上的 comment
+  # PR comments
   pull_request_review_comment:
     types: [created]
 
   issue_comment:
     types: [created]
 
-  # PR 狀態變更
+  # PR lifecycle
   pull_request:
     types: [closed]
 
@@ -26,7 +26,7 @@ env:
 
 jobs:
   # =========================================================================
-  # 處理 PR Comment 命令
+  # Handle PR comment commands
   # =========================================================================
   handle-pr-command:
     name: 📝 Handle PR Command
@@ -50,7 +50,7 @@ jobs:
               core.setOutput('feedback', feedback);
               core.setOutput('should_continue', 'true');
 
-              // 取得 PR 資訊
+              // Load PR details
               const { data: pr } = await github.rest.pulls.get({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
@@ -86,12 +86,12 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: ${{ steps.parse.outputs.pr_number }},
-              body: `## 🔄 收到 Feedback，繼續迭代中...
+              body: `## 🔄 Feedback received; continuing iteration...
 
-            **調整目標**:
+            **Updated goal**:
             > ${{ steps.parse.outputs.feedback }}
 
-            ⏳ 執行中...`
+            ⏳ Running...`
             });
 
       - name: Install Claude Code
@@ -103,10 +103,10 @@ jobs:
         env:
           FEEDBACK: ${{ steps.parse.outputs.feedback }}
         run: |
-          # 執行帶有 feedback 的 evolve
+          # Evolve with feedback
           claude --dangerously-skip-permissions \
                  --max-turns 30 \
-                 "/evolve 繼續改進，根據以下 feedback: $FEEDBACK" 2>&1 | tee execution.log
+                 "/evolve Continue and apply this feedback: $FEEDBACK" 2>&1 | tee execution.log
 
       - name: Commit and push changes
         if: steps.parse.outputs.should_continue == 'true'
@@ -134,13 +134,13 @@ jobs:
             const changesMade = '${{ env.CHANGES_MADE }}' === 'true';
 
             let message = changesMade
-              ? `## ✅ 迭代完成！
+              ? `## ✅ Iteration complete!
 
-            已根據 feedback 更新程式碼，請重新審查。`
-              : `## ⚠️ 無新變更
+            Code updated from feedback; please review again.`
+              : `## ⚠️ No new changes
 
-            已處理 feedback，但沒有產生新的程式碼變更。
-            可能需要更具體的指示。`;
+            Feedback was processed but no new code changes were produced.
+            Try a more specific instruction.`;
 
             await github.rest.issues.createComment({
               owner: context.repo.owner,
@@ -150,7 +150,7 @@ jobs:
             });
 
   # =========================================================================
-  # PR 合併後：記錄成功經驗
+  # After PR merge: record success
   # =========================================================================
   handle-pr-merged:
     name: 📚 Record Success
@@ -178,7 +178,7 @@ jobs:
               .replace(/[^a-z0-9]+/g, '-')
               .substring(0, 50);
 
-            // 建立學習記錄
+            // Create learning record
             const learningContent = `---
             date: "${date}"
             tags: [auto-dev, success, pr-${pr.number}]
@@ -189,25 +189,25 @@ jobs:
 
             # ${pr.title}
 
-            ## 情境
-            透過 Auto-Dev 自動完成的任務
+            ## Context
+            Task completed via Auto-Dev
 
-            ## PR 描述
+            ## PR description
             ${pr.body || 'No description'}
 
-            ## 結果
-            ✅ 成功合併
+            ## Outcome
+            ✅ Merged successfully
 
-            ## 變更檔案
-            ${pr.changed_files} 個檔案
+            ## Files changed
+            ${pr.changed_files} file(s)
 
-            ## 經驗記錄
-            此任務成功完成，可作為未來類似任務的參考。
+            ## Notes
+            This task completed successfully; use as a reference for similar work.
             `;
 
             const filePath = `.claude/memory/learnings/${date}-${slug}.md`;
 
-            // 確保目錄存在
+            // Ensure directory exists
             const dir = '.claude/memory/learnings';
             if (!fs.existsSync(dir)) {
               fs.mkdirSync(dir, { recursive: true });
@@ -232,7 +232,7 @@ jobs:
           fi
 
   # =========================================================================
-  # PR 關閉（未合併）：記錄失敗經驗
+  # PR closed without merge: record failure
   # =========================================================================
   handle-pr-closed:
     name: 📝 Record Failure
@@ -260,7 +260,7 @@ jobs:
               .replace(/[^a-z0-9]+/g, '-')
               .substring(0, 50);
 
-            // 取得 PR comments 來了解拒絕原因
+            // Load PR comments for rejection context
             const { data: comments } = await github.rest.issues.listComments({
               owner: context.repo.owner,
               repo: context.repo.repo,
@@ -272,7 +272,7 @@ jobs:
               .map(c => `- ${c.user.login}: ${c.body.substring(0, 200)}`)
               .join('\n');
 
-            // 建立失敗記錄
+            // Create failure record
             const failureContent = `---
             date: "${date}"
             tags: [auto-dev, failure, pr-${pr.number}]
@@ -283,30 +283,30 @@ jobs:
 
             # ${pr.title}
 
-            ## 情境
-            透過 Auto-Dev 自動完成的任務，但 PR 被拒絕
+            ## Context
+            Auto-Dev task where the PR was not merged
 
-            ## PR 描述
+            ## PR description
             ${pr.body || 'No description'}
 
-            ## 結果
-            ❌ PR 被關閉（未合併）
+            ## Outcome
+            ❌ PR closed without merge
 
-            ## 審查者 Feedback
-            ${rejectionComments || '無明確 feedback'}
+            ## Reviewer feedback
+            ${rejectionComments || 'No clear feedback'}
 
-            ## 教訓
-            - 需要分析為什麼這個任務失敗
-            - 未來遇到類似任務時需要注意
+            ## Lessons
+            - Analyze why this task did not land
+            - Watch for similar pitfalls on future tasks
 
-            ## 待改進
-            - [ ] 分析失敗原因
-            - [ ] 更新策略避免重蹈覆轍
+            ## Follow-ups
+            - [ ] Root-cause analysis
+            - [ ] Update strategy to avoid repeat issues
             `;
 
             const filePath = `.claude/memory/failures/${date}-${slug}.md`;
 
-            // 確保目錄存在
+            // Ensure directory exists
             const dir = '.claude/memory/failures';
             if (!fs.existsSync(dir)) {
               fs.mkdirSync(dir, { recursive: true });

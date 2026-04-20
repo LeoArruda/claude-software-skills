@@ -2,7 +2,7 @@
 schema: "1.0"
 name: flame-game-dev
 version: "2.2.0"
-description: Flame Engine 2D 遊戲開發完整指南 - 核心、系統、模板、部署
+description: Complete Flame Engine 2D game development guide - core, systems, templates, shipping
 domain: game-development
 triggers:
   keywords:
@@ -19,115 +19,119 @@ author: miles990
 
 # Flame Engine 2D Game Development
 
-Flame Engine 遊戲開發完整指南，包含核心基礎、14 個遊戲系統、3 種遊戲類型模板。
+Guide to Flame: core concepts, 14 gameplay systems, and three genre templates.
 
-## Sub-Skills Index
+## Sub-skills index
 
-| Skill | Description | Reference Count |
-|-------|-------------|-----------------|
-| **flame-core** | 引擎核心基礎 | 10 references |
-| **flame-systems** | 14 個遊戲系統 | 14 references |
-| **flame-templates** | 遊戲類型模板 | 3 references |
+| Skill | Description | References |
+|-------|-------------|------------|
+| **flame-core** | Engine fundamentals | 10 files |
+| **flame-systems** | Gameplay systems | 14 files |
+| **flame-templates** | Genre starters | 3 files |
 
-## Quick Navigation
+## Quick navigation
 
-### flame-core (核心基礎)
+### flame-core
 ```
-components.md   - 組件生命週期、類型
-input.md        - 觸控、鍵盤、搖桿
-collision.md    - 碰撞檢測、Hitbox
-camera.md       - 相機、HUD、視口
-animation.md    - 精靈動畫、Effects
-scenes.md       - RouterComponent、Overlays、UI
-audio.md        - 音效、背景音樂
-particles.md    - 粒子系統、特效
-performance.md  - 效能優化、最佳實踐
-debug.md        - 除錯模式、日誌
-```
-
-### flame-systems (遊戲系統)
-```
-quest.md        - 任務系統         achievement.md - 成就系統
-dialogue.md     - 對話系統         shop.md        - 商店系統
-localization.md - 多語言系統       crafting.md    - 製作系統
-inventory.md    - 背包系統         procedural.md  - 程序生成
-paperdoll.md    - 紙娃娃系統       multiplayer.md - 多人連線
-combat.md       - 戰鬥系統         leveleditor.md - 關卡編輯器
-skills.md       - 技能系統
-saveload.md     - 存檔系統
+components.md   - Component lifecycle and types
+input.md        - Touch, keyboard, gamepad
+collision.md    - Hitboxes and collision
+camera.md       - Camera, HUD, viewport
+animation.md    - Sprite animation, effects
+scenes.md       - RouterComponent, overlays, UI
+audio.md        - SFX and music
+particles.md    - Particles and VFX
+performance.md  - Optimization
+debug.md        - Debugging and logging
 ```
 
-### flame-templates (遊戲模板)
+### flame-systems
 ```
-rpg.md          - 回合制/動作 RPG
-platformer.md   - 橫向卷軸平台遊戲
-roguelike.md    - 程序生成地下城
-```
-
-## AI Usage Guide
-
-```
-# 基礎問題
-需要了解 Flame？      → 先讀 flame-core/SKILL.md
-需要特定功能？        → 根據 flame-core 索引讀取對應 reference
-
-# 系統實作
-需要任務/對話系統？   → 讀 flame-systems/references/quest.md 或 dialogue.md
-需要戰鬥系統？        → 讀 flame-systems/references/combat.md + skills.md
-需要存檔功能？        → 讀 flame-systems/references/saveload.md
-需要多人連線？        → 讀 flame-systems/references/multiplayer.md
-
-# 完整遊戲
-要做 RPG？           → 讀 flame-templates/references/rpg.md
-要做平台遊戲？       → 讀 flame-templates/references/platformer.md
-要做 Roguelike？     → 讀 flame-templates/references/roguelike.md
-
-# 部署發布
-要發布遊戲？         → 參考下方「部署平台」章節
+quest.md        - Quests          achievement.md - Achievements
+dialogue.md     - Dialogue       shop.md        - Shops
+localization.md - Localization   crafting.md    - Crafting
+inventory.md    - Inventory      procedural.md  - Procedural
+paperdoll.md    - Paper doll     multiplayer.md - Multiplayer
+combat.md       - Combat         leveleditor.md - Level editor
+skills.md       - Skills
+saveload.md     - Save/load
 ```
 
-## 適用場景
+### flame-templates
+```
+rpg.md          - Turn-based / action RPG
+platformer.md   - Side-scrolling platformer
+roguelike.md    - Procedural dungeons
+```
 
-根據 [Filip Hráček 的 Benchmark 測試](https://filiph.net/text/benchmarking-flutter-flame-unity-godot.html)，Flame 與其他引擎比較：
+## AI usage guide
 
-### Flame 優勢
-| 項目 | Flame | Unity/Godot |
-|------|-------|-------------|
-| **啟動時間** | 最快 | 較慢 |
-| **包體大小** | 較小 | 較大 |
-| **學習曲線** | Flutter 開發者友善 | 需學習新工具 |
-| **跨平台** | 一套代碼 6 平台 | 需平台適配 |
-| **熱重載** | 支援 | 部分支援 |
+```
+# Basics
+New to Flame?        → Read flame-core/SKILL.md first
+Need a feature?      → Use the flame-core index
 
-### Flame 限制
-| 項目 | Flame | Unity/Godot |
-|------|-------|-------------|
-| **最大實體數** | ~數百個 | 數千個 |
-| **3D 支援** | 無 | 完整 |
-| **物理引擎** | 基礎 (Forge2D) | 完整 |
-| **編輯器** | 無視覺化編輯器 | 完整 IDE |
+# Systems
+Quests / dialogue?   → flame-systems/references/quest.md or dialogue.md
+Combat?              → flame-systems/references/combat.md + skills.md
+Save/load?           → flame-systems/references/saveload.md
+Multiplayer?         → flame-systems/references/multiplayer.md
 
-### 推薦使用 Flame
-- ✅ **休閒遊戲**：卡牌、解謎、益智、問答
-- ✅ **Hyper-casual**：簡單機制、快速遊玩
-- ✅ **故事驅動**：視覺小說、互動故事
-- ✅ **2D 平台遊戲**：橫向卷軸、Metroidvania
-- ✅ **回合制遊戲**：戰棋、RPG、桌遊
-- ✅ **Flutter App 內嵌遊戲**：小遊戲、互動元素
+# Full games
+RPG?                 → flame-templates/references/rpg.md
+Platformer?          → flame-templates/references/platformer.md
+Roguelike?           → flame-templates/references/roguelike.md
 
-### 不推薦使用 Flame
-- ❌ **大量實體**：彈幕、RTS、大規模戰鬥
-- ❌ **3D 遊戲**：任何需要 3D 渲染的遊戲
-- ❌ **物理密集**：複雜物理模擬、賽車
-- ❌ **AAA 級遊戲**：高畫質、複雜特效
+# Shipping
+Publishing?          → See “Deployment” below
+```
 
-## Quick Start
+## When to use Flame
+
+From [Filip Hráček’s benchmark](https://filiph.net/text/benchmarking-flutter-flame-unity-godot.html):
+
+### Strengths
+
+| Topic | Flame | Unity/Godot |
+|-------|-------|---------------|
+| **Cold start** | Fastest | Slower |
+| **Binary size** | Smaller | Larger |
+| **Learning curve** | Familiar if you know Flutter | New tooling |
+| **Cross-platform** | One codebase, many targets | Per-target tweaks |
+| **Hot reload** | Yes | Partial |
+
+### Limits
+
+| Topic | Flame | Unity/Godot |
+|-------|-------|-------------|
+| **Max entities** | ~hundreds | Thousands |
+| **3D** | No | Full |
+| **Physics** | Basic (Forge2D) | Full engines |
+| **Editor** | No visual editor | Full IDE |
+
+### Recommended for Flame
+
+- **Casual**: card, puzzle, trivia
+- **Hyper-casual**: simple loops, short sessions
+- **Story-driven**: visual novels, interactive fiction
+- **2D platformers**: side-scrollers, Metroidvania
+- **Turn-based**: tactics, RPG, board-style
+- **Embedded mini-games** inside Flutter apps
+
+### Not ideal for Flame
+
+- **Huge entity counts**: bullet hell, RTS, massive battles
+- **3D** of any kind
+- **Physics-heavy**: racing, complex simulations
+- **AAA** fidelity or effects
+
+## Quick start
 
 ```bash
 flutter create my_game && cd my_game
 flutter pub add flame
-flutter pub add flame_audio       # 選用
-flutter pub add flame_tiled       # 選用
+flutter pub add flame_audio       # Optional
+flutter pub add flame_tiled       # Optional
 ```
 
 ```dart
@@ -140,94 +144,94 @@ class MyGame extends FlameGame with HasCollisionDetection {
   @override
   Future<void> onLoad() async {
     camera.viewfinder.anchor = Anchor.topLeft;
-    // 開始建構你的遊戲！
+    // Build your game here
   }
 }
 ```
 
-## 部署平台
+## Deployment
 
-Flame 基於 Flutter，支援多平台部署：
+Flame runs on every Flutter target:
 
-| 平台 | 發布管道 | 指令 |
-|------|----------|------|
+| Platform | Channel | Command |
+|----------|---------|---------|
 | **iOS** | App Store | `flutter build ios --release` |
 | **Android** | Google Play | `flutter build apk --release` |
 | **Web** | itch.io / GitHub Pages | `flutter build web --release` |
-| **macOS** | App Store / 獨立 | `flutter build macos --release` |
-| **Windows** | Steam / 獨立 | `flutter build windows --release` |
-| **Linux** | Steam / 獨立 | `flutter build linux --release` |
+| **macOS** | App Store / direct | `flutter build macos --release` |
+| **Windows** | Steam / direct | `flutter build windows --release` |
+| **Linux** | Steam / direct | `flutter build linux --release` |
 
-### 發布到 itch.io (Web)
+### itch.io (Web)
 
 ```bash
-# 1. 建置 Web 版本
+# 1. Build web
 flutter build web --release --web-renderer canvaskit
 
-# 2. 上傳 build/web 資料夾到 itch.io
+# 2. Upload the build/web folder to itch.io
 
-# 3. itch.io 設置
+# 3. itch.io settings
 #    - Kind of project: HTML
 #    - Embed options: Click to launch in fullscreen
 ```
 
-### 發布到 Google Play (Android)
+### Google Play (Android)
 
 ```bash
-# 1. 建立 keystore
+# 1. Create a keystore
 keytool -genkey -v -keystore ~/my-game.jks -keyalg RSA -keysize 2048 -validity 10000 -alias my-game
 
-# 2. 設定 android/key.properties
+# 2. Configure android/key.properties
 storePassword=<password>
 keyPassword=<password>
 keyAlias=my-game
 storeFile=/Users/you/my-game.jks
 
-# 3. 建置 App Bundle
+# 3. Build App Bundle
 flutter build appbundle --release
 
-# 4. 上傳 build/app/outputs/bundle/release/app-release.aab
+# 4. Upload build/app/outputs/bundle/release/app-release.aab
 ```
 
-### 發布到 Steam (Desktop)
+### Steam (desktop)
 
 ```bash
-# 1. 建置 Desktop 版本
-flutter build windows --release  # 或 macos / linux
+# 1. Build desktop
+flutter build windows --release  # or macos / linux
 
-# 2. 使用 Steamworks SDK 打包
-#    - 設定 app_build.vdf
-#    - 上傳到 Steam Partner
+# 2. Package with Steamworks SDK
+#    - Configure app_build.vdf
+#    - Upload via Steam Partner
 
-# 3. 建議加入 Steam 成就整合
+# 3. Optional: Steam achievements
 #    flutter pub add steamworks
 ```
 
-## Dependency Graph
+## Dependency graph
 
 ```
-flame/ (本索引)
+flame/ (this index)
     │
-    ├── flame-core (核心基礎)
+    ├── flame-core (fundamentals)
     │   └── 10 reference files
     │
-    ├── flame-systems (遊戲系統)
+    ├── flame-systems (gameplay)
     │   └── 14 reference files
     │
-    └── flame-templates (遊戲模板)
+    └── flame-templates (starters)
         └── 3 reference files
 ```
 
-## Best Practices
+## Best practices
 
-1. **按需載入** - 只讀取需要的 reference，節省 token
-2. **核心優先** - 先熟悉 flame-core，再擴展系統
-3. **模板參考** - 用模板作為起點，按需添加系統
-4. **模組化** - 每個系統獨立，可組合使用
+1. **Load on demand** — open only the references you need.
+2. **Learn core first** — flame-core before heavy systems.
+3. **Start from templates** — add systems as required.
+4. **Stay modular** — compose independent systems.
 
-## Version History
+## Version history
 
-- v2.2.0 - 新增適用場景、Benchmark 數據
-- v2.1.0 - 新增 Audio、Particles、Performance、部署指南
-- v2.0.0 - 重構為模組化架構
-- v1.0.0 - 初始版本
+- v2.2.0 — Added fit analysis and benchmark notes
+- v2.1.0 — Audio, particles, performance, deployment
+- v2.0.0 — Modular layout
+- v1.0.0 — Initial release

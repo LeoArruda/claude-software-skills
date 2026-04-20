@@ -1,6 +1,6 @@
 #!/bin/bash
 # Pre-commit hook for claude-software-skills
-# 驗證所有 SKILL.md 檔案格式
+# Validates format of all SKILL.md files
 
 set -e
 
@@ -16,7 +16,7 @@ ERRORS=0
 WARNINGS=0
 
 # ============================================
-# Check 1: 驗證所有 SKILL.md 的 frontmatter
+# Check 1: Validate frontmatter for all SKILL.md files
 # ============================================
 echo "  ✓ Validating SKILL.md files..."
 
@@ -49,7 +49,7 @@ if [ $ERRORS -eq 0 ]; then
 fi
 
 # ============================================
-# Check 2: 檢查重複的 skill name
+# Check 2: Check for duplicate skill names
 # ============================================
 echo -n "  ✓ Checking for duplicate skill names... "
 
@@ -65,7 +65,7 @@ else
 fi
 
 # ============================================
-# Check 3: 檢查 README.md
+# Check 3: Check README.md
 # ============================================
 echo -n "  ✓ Checking README.md exists... "
 if [ ! -f "README.md" ]; then
@@ -76,7 +76,7 @@ else
 fi
 
 # ============================================
-# Check 4: 檢查大檔案 (> 1MB)
+# Check 4: Check for large files (> 1MB)
 # ============================================
 echo -n "  ✓ Checking for large files... "
 LARGE_FILES=$(find . -type f -size +1M -not -path "./.git/*" 2>/dev/null || true)

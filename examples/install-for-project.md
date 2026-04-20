@@ -1,34 +1,34 @@
-# 範例：為專案安裝 Skills
+# Example: Installing skills for a project
 
-> 實際案例：為 omniflow-studio (React + FastAPI + AI) 安裝完整開發 skills
+> Walkthrough: installing a full development skill set for omniflow-studio (React + FastAPI + AI)
 
-## 專案背景
+## Project context
 
-- **前端**: React + TypeScript
-- **後端**: FastAPI (Python)
-- **特殊功能**: SSE 即時通訊、AI API 整合
-- **目標**: 安裝所有相關 skills 以提升開發效率
+- **Frontend**: React + TypeScript
+- **Backend**: FastAPI (Python)
+- **Extras**: SSE real-time, AI API integration
+- **Goal**: Install related skills to speed up development
 
-## 安裝過程
+## Installation steps
 
-### 1. 確認 skillpkg 可用
+### 1. Confirm skillpkg is available
 
 ```
-User: 檢查 skillpkg 狀態
+User: Check skillpkg status
 
-Claude: [呼叫 mcp__skillpkg__skill_status()]
-輸出:
+Claude: [calls mcp__skillpkg__skill_status()]
+Output:
 📦 Project
    Name: omniflow-studio
    Config: skillpkg.json ✓
 ```
 
-### 2. 安裝開發架構 Skills (4 個)
+### 2. Install stack skills (4)
 
 ```
-User: 安裝 frontend, backend, realtime-systems, ai-ml-integration
+User: Install frontend, backend, realtime-systems, ai-ml-integration
 
-Claude: [平行呼叫 4 個 install_skill]
+Claude: [parallel install_skill calls]
 
 mcp__skillpkg__install_skill(source="github:miles990/claude-software-skills#development-stacks/frontend")
 → ✅ Installed: frontend v1.0.0
@@ -43,10 +43,10 @@ mcp__skillpkg__install_skill(source="github:miles990/claude-software-skills#deve
 → ✅ Installed: ai-ml-integration v1.0.0
 ```
 
-### 3. 安裝程式語言 Skills (2 個)
+### 3. Install language skills (2)
 
 ```
-Claude: [平行呼叫 2 個 install_skill]
+Claude: [parallel install_skill calls]
 
 mcp__skillpkg__install_skill(source="github:miles990/claude-software-skills#programming-languages/javascript-typescript")
 → ✅ Installed: javascript-typescript v1.0.0
@@ -55,10 +55,10 @@ mcp__skillpkg__install_skill(source="github:miles990/claude-software-skills#prog
 → ✅ Installed: python v1.0.0
 ```
 
-### 4. 安裝軟體工程 Skills (2 個)
+### 4. Install software engineering skills (2)
 
 ```
-Claude: [平行呼叫 2 個 install_skill]
+Claude: [parallel install_skill calls]
 
 mcp__skillpkg__install_skill(source="github:miles990/claude-software-skills#software-engineering/code-quality")
 → ✅ Installed: code-quality v1.0.0
@@ -67,10 +67,10 @@ mcp__skillpkg__install_skill(source="github:miles990/claude-software-skills#soft
 → ✅ Installed: testing-strategies v1.0.0
 ```
 
-### 5. 安裝軟體設計 Skills (2 個)
+### 5. Install software design skills (2)
 
 ```
-Claude: [平行呼叫 2 個 install_skill]
+Claude: [parallel install_skill calls]
 
 mcp__skillpkg__install_skill(source="github:miles990/claude-software-skills#software-design/api-design")
 → ✅ Installed: api-design v1.0.0
@@ -79,10 +79,10 @@ mcp__skillpkg__install_skill(source="github:miles990/claude-software-skills#soft
 → ✅ Installed: ux-principles v1.0.0
 ```
 
-### 6. 驗證安裝結果
+### 6. Verify installation
 
 ```
-Claude: [呼叫 mcp__skillpkg__list_skills(scope="local")]
+Claude: [calls mcp__skillpkg__list_skills(scope="local")]
 
 Found 10 installed skill(s):
 • ai-ml-integration v1.0.0 [local]
@@ -97,7 +97,7 @@ Found 10 installed skill(s):
 • ux-principles v1.0.0 [local]
 ```
 
-## 安裝後的 skillpkg.json
+## Resulting skillpkg.json
 
 ```json
 {
@@ -121,36 +121,36 @@ Found 10 installed skill(s):
 }
 ```
 
-## 使用效果
+## What you get
 
-安裝後，Claude Code 會自動載入這些 skills，在開發時提供：
+After installation, Claude Code loads these skills automatically and can provide:
 
-### Frontend Skill 提供
-- React 最佳實踐 (Hooks, Context, Performance)
-- 狀態管理模式 (Zustand, Redux Toolkit)
-- 測試策略 (React Testing Library)
+### Frontend skill
+- React best practices (hooks, context, performance)
+- State management (Zustand, Redux Toolkit)
+- Testing (React Testing Library)
 
-### Backend Skill 提供
-- FastAPI 路由設計
-- 依賴注入模式
-- 錯誤處理策略
+### Backend skill
+- FastAPI routing patterns
+- Dependency injection
+- Error handling
 
-### Realtime-Systems Skill 提供
-- SSE 實作模式
-- WebSocket 連線管理
-- 事件驅動架構
+### Realtime-systems skill
+- SSE patterns
+- WebSocket connection management
+- Event-driven design
 
-### AI-ML-Integration Skill 提供
-- LLM API 整合模式
-- Prompt Engineering
-- 串流回應處理
+### AI-ML-integration skill
+- LLM API integration
+- Prompt engineering
+- Streaming responses
 
-## 快速複製指令
+## Copy-paste snippet
 
-如果你的專案也是 React + FastAPI + AI，可以直接複製以下指令：
+For a similar React + FastAPI + AI stack, you can use:
 
 ```python
-# 在 Claude Code 中執行
+# Run in Claude Code
 skills = [
     "development-stacks/frontend",
     "development-stacks/backend",
@@ -171,7 +171,7 @@ for skill in skills:
     )
 ```
 
-## 相關文件
+## Related docs
 
-- [完整使用指南](../docs/USAGE-GUIDE.md)
-- [Skill 目錄](../README.md#available-skills)
+- [Full usage guide](../docs/USAGE-GUIDE.md)
+- [Skill catalog](../README.md#available-skills)

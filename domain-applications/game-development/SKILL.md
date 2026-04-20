@@ -408,11 +408,11 @@ function onBulletHit(bullet: Bullet) {
 
 ### Flame Engine (Flutter)
 
-專為 Flutter 開發者設計的 2D 遊戲引擎，詳細文件請參考 [flame/SKILL.md](./flame/SKILL.md)：
+A 2D game engine for Flutter developers. See [flame/SKILL.md](./flame/SKILL.md):
 
-- **flame-core/** - 組件、輸入、碰撞、相機、動畫、音效、粒子
-- **flame-systems/** - 14 個遊戲系統（任務、對話、背包、戰鬥等）
-- **flame-templates/** - RPG、Platformer、Roguelike 模板
+- **flame-core/** — Components, input, collision, camera, animation, audio, particles
+- **flame-systems/** — 14 game systems (quests, dialogue, inventory, combat, etc.)
+- **flame-templates/** — RPG, platformer, and roguelike starter templates
 
 ---
 

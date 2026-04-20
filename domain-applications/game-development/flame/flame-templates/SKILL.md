@@ -8,25 +8,25 @@ tags: [flame, flutter, dart, game-templates, starter]
 
 # Flame Game Templates
 
-三種主要遊戲類型的完整起始模板和架構。
+Full starter templates and architecture for three common game genres.
 
-## Reference Index
+## Reference index
 
 | Template | File | Description |
 |----------|------|-------------|
-| **RPG** | `references/rpg.md` | 回合制/動作 RPG 完整架構 |
-| **Platformer** | `references/platformer.md` | 橫向卷軸平台遊戲 |
-| **Roguelike** | `references/roguelike.md` | 程序生成地下城 |
+| **RPG** | `references/rpg.md` | Turn-based / action RPG architecture |
+| **Platformer** | `references/platformer.md` | Side-scrolling platformer |
+| **Roguelike** | `references/roguelike.md` | Procedural dungeon generation |
 
-## AI Usage Guide
+## AI usage guide
 
 ```
-需要 RPG 遊戲？      → Read references/rpg.md
-需要平台遊戲？       → Read references/platformer.md
-需要 Roguelike？    → Read references/roguelike.md
+Need an RPG?        → Read references/rpg.md
+Need a platformer?  → Read references/platformer.md
+Need a roguelike?   → Read references/roguelike.md
 ```
 
-## Template Comparison
+## Template comparison
 
 | Feature | RPG | Platformer | Roguelike |
 |---------|-----|------------|-----------|
@@ -35,15 +35,15 @@ tags: [flame, flutter, dart, game-templates, starter]
 | Progression | Level + Equipment | Checkpoints | Permadeath + Meta |
 | Map | Static + Towns | Linear Levels | Procedural |
 
-## Quick Start
+## Quick start
 
-每個模板包含：
-- 完整 main.dart
-- Player 類別
-- 核心遊戲循環
-- 基礎 UI
+Each template includes:
+- `main.dart`
+- Player class
+- Core game loop
+- Basic UI
 
-## Related Skills
+## Related skills
 
-- `flame-core` - 引擎核心基礎
-- `flame-systems` - 14 個遊戲系統
+- `flame-core` — Engine fundamentals
+- `flame-systems` — 14 game systems

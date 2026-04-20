@@ -668,106 +668,106 @@ export class EventsGateway implements OnGatewayConnection, OnGatewayDisconnect {
 
 ---
 
-## Sharp Edges（常見陷阱）
+## Sharp edges (common pitfalls)
 
-> 這些是後端開發中最常見且代價最高的錯誤
+> High-impact mistakes in backend development
 
-### SE-1: 未處理的 Promise Rejection
-- **嚴重度**: critical
-- **情境**: Async 函數中的錯誤沒有被 catch，導致應用程式崩潰或無聲失敗
-- **原因**: 忘記 await、沒有錯誤處理、或在 callback 中使用 async
-- **症狀**:
+### SE-1: Unhandled promise rejections
+- **Severity**: critical
+- **Situation**: Errors in async code are not caught; crashes or silent failures
+- **Why**: Missing await; no handler; async in callbacks without awaiting
+- **Symptoms**:
   - UnhandledPromiseRejectionWarning
-  - API 請求 hang 住不回應
-  - 資料庫操作部分完成
-- **檢測**: `\.then\([^)]*\)(?!\s*\.catch)|async.*(?<!await\s)db\.|async.*(?<!await\s)fetch`
-- **解法**: 使用 try-catch 包裝、加上 global error handler、使用 ESLint no-floating-promises 規則
+  - Requests hang
+  - Partial DB writes
+- **Detect**: `\.then\([^)]*\)(?!\s*\.catch)|async.*(?<!await\s)db\.|async.*(?<!await\s)fetch`
+- **Fix**: try/catch; global handlers; ESLint `no-floating-promises`
 
-### SE-2: N+1 查詢問題
-- **嚴重度**: high
-- **情境**: 在迴圈中執行資料庫查詢，導致效能急劇下降
-- **原因**: ORM 的 lazy loading、沒有使用 batch fetch
-- **症狀**:
-  - 查詢數量與資料量成正比
-  - API 響應時間隨資料量線性增長
-  - 資料庫連接池耗盡
-- **檢測**: `for.*await.*findOne|forEach.*await.*find|\.map\(.*await.*query`
-- **解法**: 使用 eager loading (include/populate)、DataLoader、批次查詢
+### SE-2: N+1 queries
+- **Severity**: high
+- **Situation**: Queries inside loops; performance collapses
+- **Why**: ORM lazy loading; no batching
+- **Symptoms**:
+  - Query count scales with rows
+  - Latency grows linearly
+  - Connection pool exhaustion
+- **Detect**: `for.*await.*findOne|forEach.*await.*find|\.map\(.*await.*query`
+- **Fix**: Eager loading (include/populate), DataLoader, batch queries
 
-### SE-3: 敏感資訊洩露
-- **嚴重度**: critical
-- **情境**: 錯誤訊息、日誌、或 API 回應中包含敏感資訊
-- **原因**: 開發環境的 debug 設定被帶到生產、錯誤處理過於詳細
-- **症狀**:
-  - 錯誤回應包含 stack trace
-  - 日誌中有密碼或 token
-  - API 回應包含內部資料庫結構
-- **檢測**: `console\.log.*password|console\.log.*token|res\.json\(err\)|stack.*trace`
-- **解法**: 生產環境只回傳通用錯誤訊息、使用專門的錯誤序列化、過濾敏感欄位
+### SE-3: Sensitive data leakage
+- **Severity**: critical
+- **Situation**: Errors, logs, or responses expose secrets or internals
+- **Why**: Dev debug settings in prod; overly verbose errors
+- **Symptoms**:
+  - Stack traces to clients
+  - Passwords/tokens in logs
+  - Schema details in JSON errors
+- **Detect**: `console\.log.*password|console\.log.*token|res\.json\(err\)|stack.*trace`
+- **Fix**: Generic messages in prod; structured errors; redact fields
 
-### SE-4: 競態條件 (Race Condition)
-- **嚴重度**: high
-- **情境**: 多個請求同時修改同一資源，導致資料不一致
-- **原因**: 缺乏適當的鎖定機制、read-modify-write 沒有原子性
-- **症狀**:
-  - 庫存數量變成負數
-  - 重複扣款
-  - 資料覆蓋（後來的寫入覆蓋先前的）
-- **檢測**: `findOne.*update|get.*set|read.*write`
-- **解法**: 使用資料庫事務、樂觀鎖 (version field)、分散式鎖
+### SE-4: Race conditions
+- **Severity**: high
+- **Situation**: Concurrent requests mutate the same resource inconsistently
+- **Why**: No locking; non-atomic read-modify-write
+- **Symptoms**:
+  - Negative inventory
+  - Double charges
+  - Last write wins data loss
+- **Detect**: `findOne.*update|get.*set|read.*write`
+- **Fix**: Transactions; optimistic locking (version column); distributed locks
 
-### SE-5: 未驗證的用戶輸入
-- **嚴重度**: critical
-- **情境**: 直接使用用戶輸入進行資料庫查詢或系統命令
-- **原因**: 信任前端驗證、沒有後端驗證、拼接 SQL/命令字串
-- **症狀**:
-  - SQL Injection 攻擊
-  - NoSQL Injection
-  - Command Injection
-- **檢測**: `\$\{.*req\.body|query\(.*\+.*req\.|exec\(.*req\.|eval\(`
-- **解法**: 使用參數化查詢、輸入驗證（Zod/Joi）、白名單驗證
+### SE-5: Unvalidated user input
+- **Severity**: critical
+- **Situation**: User input fed straight into queries or shell commands
+- **Why**: Trusting client validation; string-concatenated SQL/commands
+- **Symptoms**:
+  - SQL injection
+  - NoSQL injection
+  - Command injection
+- **Detect**: `\$\{.*req\.body|query\(.*\+.*req\.|exec\(.*req\.|eval\(`
+- **Fix**: Parameterized queries; server-side validation (Zod/Joi); allowlists
 
 ---
 
 ## Validations
 
-### V-1: 禁止空的 catch block
-- **類型**: regex
-- **嚴重度**: critical
-- **模式**: `catch\s*\([^)]*\)\s*\{\s*\}`
-- **訊息**: Empty catch block silently swallows errors
-- **修復建議**: Add error logging: `console.error(err)` or `logger.error(err)`
-- **適用**: `*.ts`, `*.js`
+### V-1: Empty catch blocks
+- **Type**: regex
+- **Severity**: critical
+- **Pattern**: `catch\s*\([^)]*\)\s*\{\s*\}`
+- **Message**: Empty catch block silently swallows errors
+- **Fix**: Log errors: `console.error(err)` or `logger.error(err)`
+- **Applies to**: `*.ts`, `*.js`
 
-### V-2: 禁止 forEach + async
-- **類型**: regex
-- **嚴重度**: high
-- **模式**: `\.forEach\s*\(\s*async`
-- **訊息**: forEach does not await async callbacks - use for...of or Promise.all
-- **修復建議**: Replace with `for (const item of items)` or `await Promise.all(items.map(...))`
-- **適用**: `*.ts`, `*.js`
+### V-2: forEach with async
+- **Type**: regex
+- **Severity**: high
+- **Pattern**: `\.forEach\s*\(\s*async`
+- **Message**: forEach does not await async callbacks - use for...of or Promise.all
+- **Fix**: Use `for (const item of items)` or `await Promise.all(items.map(...))`
+- **Applies to**: `*.ts`, `*.js`
 
-### V-3: 檢測未處理的 Promise
-- **類型**: regex
-- **嚴重度**: high
-- **模式**: `(?<!await\s)(?<!return\s)(?<!\.\s*catch\()fetch\(|db\.(find|query|insert|update|delete)`
-- **訊息**: Async operation may not be awaited or caught
-- **修復建議**: Add `await` keyword or `.catch()` handler
-- **適用**: `*.ts`, `*.js`
+### V-3: Likely unhandled promises
+- **Type**: regex
+- **Severity**: high
+- **Pattern**: `(?<!await\s)(?<!return\s)(?<!\.\s*catch\()fetch\(|db\.(find|query|insert|update|delete)`
+- **Message**: Async operation may not be awaited or caught
+- **Fix**: Add `await` or `.catch()`
+- **Applies to**: `*.ts`, `*.js`
 
-### V-4: 禁止硬編碼密鑰
-- **類型**: regex
-- **嚴重度**: critical
-- **模式**: `(password|secret|api_key|apikey|token)\s*[=:]\s*["'][^"']+["']`
-- **訊息**: Hardcoded secret detected - use environment variables
-- **修復建議**: Move to environment variables: `process.env.SECRET_KEY`
-- **適用**: `*.ts`, `*.js`, `*.json`
+### V-4: Hard-coded secrets
+- **Type**: regex
+- **Severity**: critical
+- **Pattern**: `(password|secret|api_key|apikey|token)\s*[=:]\s*["'][^"']+["']`
+- **Message**: Hardcoded secret detected - use environment variables
+- **Fix**: `process.env.SECRET_KEY` and similar
+- **Applies to**: `*.ts`, `*.js`, `*.json`
 
-### V-5: 禁止 SELECT *
-- **類型**: regex
-- **嚴重度**: medium
-- **模式**: `SELECT\s+\*\s+FROM|\.findMany\s*\(\s*\)|\.find\s*\(\s*\{\s*\}\s*\)`
-- **訊息**: SELECT * fetches unnecessary data - specify fields
-- **修復建議**: Explicitly list needed fields: `SELECT id, name FROM...`
-- **適用**: `*.ts`, `*.js`, `*.sql`
+### V-5: SELECT *
+- **Type**: regex
+- **Severity**: medium
+- **Pattern**: `SELECT\s+\*\s+FROM|\.findMany\s*\(\s*\)|\.find\s*\(\s*\{\s*\}\s*\)`
+- **Message**: SELECT * fetches unnecessary data - specify fields
+- **Fix**: List columns explicitly: `SELECT id, name FROM...`
+- **Applies to**: `*.ts`, `*.js`, `*.sql`
 

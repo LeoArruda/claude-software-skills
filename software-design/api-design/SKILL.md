@@ -508,105 +508,105 @@ res.setHeader('X-RateLimit-Reset', '1640000000');
 
 ---
 
-## Sharp Edges（常見陷阱）
+## Sharp edges (common pitfalls)
 
-> 這些是 API 設計中最常見且代價最高的錯誤
+> These are among the most common and costly mistakes in API design.
 
-### SE-1: 破壞性變更 (Breaking Changes)
-- **嚴重度**: critical
-- **情境**: 修改現有 API 導致客戶端崩潰，沒有適當的版本控制
-- **原因**: 刪除欄位、改變欄位類型、修改必填性、重新命名
-- **症狀**:
-  - 客戶端突然出現錯誤
-  - 舊版 App 無法使用
-  - 用戶投訴「昨天還能用，今天就壞了」
-- **檢測**: `\-.*field|rename.*property|required.*true.*→.*false|type.*string.*→.*number`
-- **解法**: 使用 API 版本控制、只做 additive changes、設定 deprecation 期限
+### SE-1: Breaking changes
+- **Severity**: critical
+- **Situation**: Existing API changes break clients without a versioning strategy
+- **Causes**: Removing fields, changing types, tightening required fields, renaming
+- **Symptoms**:
+  - Clients suddenly error
+  - Older apps stop working
+  - “It worked yesterday” reports after a deploy
+- **Detection**: `\-.*field|rename.*property|required.*true.*→.*false|type.*string.*→.*number`
+- **Mitigation**: Version APIs; prefer additive changes; publish deprecation timelines
 
-### SE-2: 過度取得 (Over-fetching)
-- **嚴重度**: medium
-- **情境**: API 回傳太多客戶端不需要的資料
-- **原因**: 「反正都有就回傳」的心態、沒有考慮不同使用場景
-- **症狀**:
-  - API 響應很大但客戶端只用其中一小部分
-  - 行動裝置載入緩慢
-  - 頻寬浪費
-- **檢測**: `select\s*\*|findMany\(\)|findAll\(\)(?!.*select)`
-- **解法**: 使用 fields selection、GraphQL、按需求設計 endpoint
+### SE-2: Over-fetching
+- **Severity**: medium
+- **Situation**: Responses include far more data than clients need
+- **Causes**: Returning full rows by default; ignoring different client shapes
+- **Symptoms**:
+  - Large payloads with tiny usage
+  - Slow mobile clients
+  - Wasted bandwidth
+- **Detection**: `select\s*\*|findMany\(\)|findAll\(\)(?!.*select)`
+- **Mitigation**: Field selection, GraphQL, or purpose-built endpoints
 
-### SE-3: 取得不足 (Under-fetching)
-- **嚴重度**: medium
-- **情境**: 需要呼叫多個 API 才能取得完整資料
-- **原因**: 過度細分 endpoint、沒有考慮常見使用場景
-- **症狀**:
-  - 前端需要 5+ 個 API 呼叫才能渲染一個頁面
-  - 複雜的前端資料整合邏輯
-  - N+1 API 請求問題
-- **檢測**: `Promise\.all\(.*fetch.*fetch.*fetch|\.then\(.*fetch`
-- **解法**: 設計聚合 endpoint、使用 include/expand 參數、考慮 BFF pattern
+### SE-3: Under-fetching
+- **Severity**: medium
+- **Situation**: Clients need many calls to assemble one screen
+- **Causes**: Over-granular endpoints; ignoring common read patterns
+- **Symptoms**:
+  - Five or more calls per page
+  - Complex client-side stitching
+  - N+1 HTTP request patterns
+- **Detection**: `Promise\.all\(.*fetch.*fetch.*fetch|\.then\(.*fetch`
+- **Mitigation**: Aggregate endpoints, `include`/`expand`, or a BFF
 
-### SE-4: 不一致的錯誤格式
-- **嚴重度**: high
-- **情境**: 不同 endpoint 回傳不同格式的錯誤，客戶端難以統一處理
-- **原因**: 沒有統一的錯誤處理規範、不同開發者各自實作
-- **症狀**:
-  - 有的錯誤用 `error`，有的用 `message`，有的用 `errors`
-  - HTTP status code 使用不一致
-  - 客戶端需要寫很多 if-else 處理不同錯誤格式
-- **檢測**: `res\.json\(\{.*error|res\.json\(\{.*message|res\.status\(500\).*error`
-- **解法**: 定義統一的錯誤回應格式、使用 global error handler、建立錯誤碼系統
+### SE-4: Inconsistent error shapes
+- **Severity**: high
+- **Situation**: Different endpoints return different error formats
+- **Causes**: No shared error contract; per-developer handlers
+- **Symptoms**:
+  - Mix of `error`, `message`, `errors`
+  - Inconsistent HTTP status usage
+  - Client code full of special cases
+- **Detection**: `res\.json\(\{.*error|res\.json\(\{.*message|res\.status\(500\).*error`
+- **Mitigation**: One error envelope, global handler, documented error codes
 
-### SE-5: 缺乏 Rate Limiting
-- **嚴重度**: critical
-- **情境**: API 沒有請求頻率限制，容易被濫用或攻擊
-- **原因**: 「先做出來再說」、不了解風險
-- **症狀**:
-  - DDoS 攻擊導致服務癱瘓
-  - 單一用戶耗盡所有資源
-  - 雲端帳單爆炸
-- **檢測**: `app\.use\((?!.*rateLimit)|router\.(?!.*limit)|express\(\)(?!.*rate)`
-- **解法**: 實作 rate limiting middleware、使用 Redis 追蹤請求、設定合理的限制
+### SE-5: Missing rate limiting
+- **Severity**: critical
+- **Situation**: No throttling; easy to abuse or overload
+- **Causes**: Shipping fast without threat modeling
+- **Symptoms**:
+  - Availability loss under load or attack
+  - One tenant exhausting shared capacity
+  - Surprise cloud bills
+- **Detection**: `app\.use\((?!.*rateLimit)|router\.(?!.*limit)|express\(\)(?!.*rate)`
+- **Mitigation**: Rate-limit middleware, Redis-backed counters, sensible quotas
 
 ---
 
 ## Validations
 
-### V-1: 禁止 HTTP status 200 回傳錯誤
-- **類型**: regex
-- **嚴重度**: high
-- **模式**: `res\.json\(\s*\{\s*error|res\.send\(\s*\{\s*error|\.json\(\{.*success:\s*false`
-- **訊息**: Error responses should use appropriate HTTP status codes (4xx/5xx)
-- **修復建議**: Use `res.status(400).json({ error: ... })` for client errors
-- **適用**: `*.ts`, `*.js`
+### V-1: Disallow HTTP 200 for errors
+- **Type**: regex
+- **Severity**: high
+- **Pattern**: `res\.json\(\s*\{\s*error|res\.send\(\s*\{\s*error|\.json\(\{.*success:\s*false`
+- **Message**: Error responses should use appropriate HTTP status codes (4xx/5xx)
+- **Fix**: Use `res.status(400).json({ error: ... })` for client errors
+- **Applies to**: `*.ts`, `*.js`
 
-### V-2: API 路徑使用動詞
-- **類型**: regex
-- **嚴重度**: medium
-- **模式**: `(get|create|update|delete|fetch|remove|add)\/|\/get|\/create|\/update|\/delete`
-- **訊息**: REST API paths should use nouns, not verbs (use HTTP methods instead)
-- **修復建議**: Change `/getUsers` to `GET /users`, `/createUser` to `POST /users`
-- **適用**: `*.ts`, `*.js`
+### V-2: Verb-heavy API paths
+- **Type**: regex
+- **Severity**: medium
+- **Pattern**: `(get|create|update|delete|fetch|remove|add)\/|\/get|\/create|\/update|\/delete`
+- **Message**: REST API paths should use nouns, not verbs (use HTTP methods instead)
+- **Fix**: Change `/getUsers` to `GET /users`, `/createUser` to `POST /users`
+- **Applies to**: `*.ts`, `*.js`
 
-### V-3: 缺少輸入驗證
-- **類型**: regex
-- **嚴重度**: critical
-- **模式**: `req\.body\.\w+(?!.*validate|.*schema|.*zod|.*joi|.*yup)`
-- **訊息**: Request body accessed without apparent validation
-- **修復建議**: Add validation with Zod/Joi before using request data
-- **適用**: `*.ts`, `*.js`
+### V-3: Missing input validation
+- **Type**: regex
+- **Severity**: critical
+- **Pattern**: `req\.body\.\w+(?!.*validate|.*schema|.*zod|.*joi|.*yup)`
+- **Message**: Request body accessed without apparent validation
+- **Fix**: Add validation with Zod/Joi before using request data
+- **Applies to**: `*.ts`, `*.js`
 
-### V-4: 硬編碼 HTTP status code
-- **類型**: regex
-- **嚴重度**: low
-- **模式**: `res\.status\(\d{3}\)`
-- **訊息**: Consider using named status codes for readability
-- **修復建議**: Use `HttpStatus.OK` or constants instead of magic numbers
-- **適用**: `*.ts`, `*.js`
+### V-4: Magic-number HTTP status codes
+- **Type**: regex
+- **Severity**: low
+- **Pattern**: `res\.status\(\d{3}\)`
+- **Message**: Consider using named status codes for readability
+- **Fix**: Use `HttpStatus.OK` or shared constants instead of raw numbers
+- **Applies to**: `*.ts`, `*.js`
 
-### V-5: 缺少 API 版本控制
-- **類型**: regex
-- **嚴重度**: medium
-- **模式**: `app\.(get|post|put|delete)\s*\(\s*['"]\/(?!v\d|api\/v\d)`
-- **訊息**: API route missing version prefix
-- **修復建議**: Add version prefix: `/api/v1/users` or use header-based versioning
-- **適用**: `*.ts`, `*.js`
+### V-5: Missing API versioning
+- **Type**: regex
+- **Severity**: medium
+- **Pattern**: `app\.(get|post|put|delete)\s*\(\s*['"]\/(?!v\d|api\/v\d)`
+- **Message**: API route missing version prefix
+- **Fix**: Add a version prefix such as `/api/v1/users` or use header-based versioning
+- **Applies to**: `*.ts`, `*.js`

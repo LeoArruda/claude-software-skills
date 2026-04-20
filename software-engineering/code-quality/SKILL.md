@@ -509,105 +509,105 @@ module.exports = {
 
 ---
 
-## Sharp Edges（常見陷阱）
+## Sharp edges (common pitfalls)
 
-> 這些是程式碼品質中最常見且代價最高的錯誤
+> These are among the most common and costly mistakes affecting code quality.
 
-### SE-1: 過度工程 (Over-engineering)
-- **嚴重度**: high
-- **情境**: 為了「未來可能需要」而增加不必要的抽象和複雜度
-- **原因**: YAGNI 原則被忽視、設計模式濫用、「萬一以後要...」的心態
-- **症狀**:
-  - 簡單功能需要改動 10+ 個檔案
-  - 新人看不懂架構
-  - 程式碼比需求複雜 10 倍
-- **檢測**: `Factory.*Factory|Abstract.*Abstract|interface.*\{.*\}(?=.*interface.*\{.*\})|Strategy.*Strategy`
-- **解法**: YAGNI（You Aren't Gonna Need It）、先寫最簡單的實作、需要時再重構
+### SE-1: Over-engineering
+- **Severity**: high
+- **Situation**: Extra abstraction and complexity for “maybe someday” requirements
+- **Causes**: Ignoring YAGNI, pattern sprawl, “just in case” thinking
+- **Symptoms**:
+  - Simple changes touch 10+ files
+  - New contributors cannot follow the design
+  - Code is an order of magnitude harder than the problem
+- **Detection**: `Factory.*Factory|Abstract.*Abstract|interface.*\{.*\}(?=.*interface.*\{.*\})|Strategy.*Strategy`
+- **Mitigation**: YAGNI; ship the simplest thing that works; refactor when a real need appears
 
-### SE-2: 命名不一致
-- **嚴重度**: medium
-- **情境**: 同一個概念在不同地方用不同名稱，或不同概念用相似名稱
-- **原因**: 沒有統一術語、多人開發沒有對齊、複製貼上沒改名
-- **症狀**:
-  - `user`, `customer`, `client`, `account` 指同一件事
-  - 搜尋不到相關程式碼
-  - 新人經常問「這個和那個有什麼差別？」
-- **檢測**: `(user|customer|client|account).*=.*find|(get|fetch|retrieve|load).*User`
-- **解法**: 建立術語表（Ubiquitous Language）、Code Review 時檢查命名、重構統一命名
+### SE-2: Inconsistent naming
+- **Severity**: medium
+- **Situation**: One concept has many names, or different concepts share similar names
+- **Causes**: No shared glossary, parallel work without alignment, copy-paste without rename
+- **Symptoms**:
+  - `user`, `customer`, `client`, `account` used interchangeably
+  - Hard to grep for related logic
+  - Repeated questions about “what is the difference?”
+- **Detection**: `(user|customer|client|account).*=.*find|(get|fetch|retrieve|load).*User`
+- **Mitigation**: Ubiquitous language / glossary; naming checks in review; refactor to one term per concept
 
-### SE-3: 深層巢狀 (Deep Nesting)
-- **嚴重度**: medium
-- **情境**: if-else 或 callback 巢狀超過 3-4 層，難以閱讀
-- **原因**: 沒有提早 return、沒有抽取函數、callback hell
-- **症狀**:
-  - 需要橫向捲動才能看到程式碼
-  - 很難追蹤哪個 `}` 對應哪個 `{`
-  - Cyclomatic complexity 超高
-- **檢測**: `\{.*\{.*\{.*\{|if.*if.*if.*if|\.then\(.*\.then\(.*\.then\(`
-- **解法**: Guard clause（提早 return）、抽取函數、使用 async/await 取代 callback
+### SE-3: Deep nesting
+- **Severity**: medium
+- **Situation**: `if`/`else` or callbacks nested more than three or four levels
+- **Causes**: No early returns, no extraction, callback-heavy style
+- **Symptoms**:
+  - Wide lines and horizontal scrolling
+  - Brace matching is unclear
+  - Very high cyclomatic complexity
+- **Detection**: `\{.*\{.*\{.*\{|if.*if.*if.*if|\.then\(.*\.then\(.*\.then\(`
+- **Mitigation**: Guard clauses, smaller functions, `async`/`await` instead of long `.then` chains
 
-### SE-4: 神奇數字/字串 (Magic Numbers)
-- **嚴重度**: medium
-- **情境**: 程式碼中直接使用意義不明的數字或字串
-- **原因**: 懶得定義常數、「只用一次不用抽出來」
-- **症狀**:
-  - 看到 `86400` 不知道是什麼（一天的秒數）
-  - 修改時需要全域搜尋 replace
-  - 同一個數字在不同地方意義不同但值相同
-- **檢測**: `\b(86400|3600|1000|60000|1024|65535)\b|status\s*===?\s*['"][^'"]+['"]`
-- **解法**: 抽取為有意義名稱的常數、使用 enum、集中管理設定值
+### SE-4: Magic numbers and strings
+- **Severity**: medium
+- **Situation**: Raw literals whose meaning is unclear
+- **Causes**: Skipping named constants, “only used once” excuses
+- **Symptoms**:
+  - `86400` with no comment (seconds per day)
+  - Risky global search-and-replace
+  - Same value used for different meanings
+- **Detection**: `\b(86400|3600|1000|60000|1024|65535)\b|status\s*===?\s*['"][^'"]+['"]`
+- **Mitigation**: Named constants, enums, centralized configuration
 
-### SE-5: 大泥球 (Big Ball of Mud)
-- **嚴重度**: critical
-- **情境**: 程式碼沒有明確架構，所有東西混在一起，到處都有依賴
-- **原因**: 沒有模組化設計、趕時間「先 work 再說」、缺乏重構
-- **症狀**:
-  - 改 A 會壞 B
-  - 單一檔案 1000+ 行
-  - 所有東西都 import 所有東西
-- **檢測**: `import.*from.*\.\.\/\.\.\/\.\.\/|require\(.*\.\..*\.\..*\.\.\)|lines.*>\s*1000`
-- **解法**: 分層架構、明確的模組邊界、定期重構、嚴格的 import 規則
+### SE-5: Big ball of mud
+- **Severity**: critical
+- **Situation**: No clear boundaries; everything depends on everything
+- **Causes**: No modular design, “ship now, structure later,” missing refactors
+- **Symptoms**:
+  - Changing module A breaks unrelated module B
+  - Thousand-line files
+  - Circular or overly broad imports
+- **Detection**: `import.*from.*\.\.\/\.\.\/\.\.\/|require\(.*\.\..*\.\..*\.\.\)|lines.*>\s*1000`
+- **Mitigation**: Layering, explicit module boundaries, regular refactors, strict import rules
 
 ---
 
 ## Validations
 
-### V-1: 禁止 console.log (生產代碼)
-- **類型**: regex
-- **嚴重度**: medium
-- **模式**: `console\.(log|debug|info)\(`
-- **訊息**: console.log should not be in production code
-- **修復建議**: Use a proper logger (winston, pino) or remove debug statements
-- **適用**: `*.ts`, `*.js`
+### V-1: Disallow console.log in production code
+- **Type**: regex
+- **Severity**: medium
+- **Pattern**: `console\.(log|debug|info)\(`
+- **Message**: console.log should not be in production code
+- **Fix**: Use a proper logger (winston, pino) or remove debug statements
+- **Applies to**: `*.ts`, `*.js`
 
-### V-2: 禁止 any 類型
-- **類型**: ast
-- **嚴重度**: high
-- **模式**: `TSAnyKeyword`
-- **訊息**: 'any' type defeats TypeScript's type safety
-- **修復建議**: Use specific type, 'unknown', or generic type parameter
-- **適用**: `*.ts`, `*.tsx`
+### V-2: Disallow `any`
+- **Type**: ast
+- **Severity**: high
+- **Pattern**: `TSAnyKeyword`
+- **Message**: 'any' type defeats TypeScript's type safety
+- **Fix**: Use a specific type, `unknown`, or a generic parameter
+- **Applies to**: `*.ts`, `*.tsx`
 
-### V-3: 函數參數過多
-- **類型**: regex
-- **嚴重度**: medium
-- **模式**: `function\s+\w+\s*\([^)]*,\s*[^)]*,\s*[^)]*,\s*[^)]*,\s*[^)]*\)|=>\s*\([^)]*,\s*[^)]*,\s*[^)]*,\s*[^)]*,\s*[^)]*\)`
-- **訊息**: Function has more than 4 parameters - consider using an object
-- **修復建議**: Replace multiple params with single options object: `function(options: Options)`
-- **適用**: `*.ts`, `*.js`
+### V-3: Too many function parameters
+- **Type**: regex
+- **Severity**: medium
+- **Pattern**: `function\s+\w+\s*\([^)]*,\s*[^)]*,\s*[^)]*,\s*[^)]*,\s*[^)]*\)|=>\s*\([^)]*,\s*[^)]*,\s*[^)]*,\s*[^)]*,\s*[^)]*\)`
+- **Message**: Function has more than 4 parameters - consider using an object
+- **Fix**: Replace multiple parameters with one options object: `function(options: Options)`
+- **Applies to**: `*.ts`, `*.js`
 
-### V-4: TODO 無追蹤
-- **類型**: regex
-- **嚴重度**: low
-- **模式**: `//\s*TODO(?!.*#\d|.*JIRA|.*\w+-\d+)`
-- **訊息**: TODO comment without tracking reference
-- **修復建議**: Add issue reference: `// TODO(#123): description` or create ticket
-- **適用**: `*.ts`, `*.js`, `*.tsx`, `*.jsx`
+### V-4: TODO without tracking
+- **Type**: regex
+- **Severity**: low
+- **Pattern**: `//\s*TODO(?!.*#\d|.*JIRA|.*\w+-\d+)`
+- **Message**: TODO comment without tracking reference
+- **Fix**: Add an issue reference: `// TODO(#123): description` or file a ticket
+- **Applies to**: `*.ts`, `*.js`, `*.tsx`, `*.jsx`
 
-### V-5: 深層 import 路徑
-- **類型**: regex
-- **嚴重度**: medium
-- **模式**: `import.*from\s+['"]\.\.\/\.\.\/\.\.\/|require\s*\(\s*['"]\.\.\/\.\.\/\.\.\/`
-- **訊息**: Deep relative imports indicate poor module boundaries
-- **修復建議**: Use path aliases: `import { X } from '@/modules/x'`
-- **適用**: `*.ts`, `*.js`, `*.tsx`, `*.jsx`
+### V-5: Deep relative import paths
+- **Type**: regex
+- **Severity**: medium
+- **Pattern**: `import.*from\s+['"]\.\.\/\.\.\/\.\.\/|require\s*\(\s*['"]\.\.\/\.\.\/\.\.\/`
+- **Message**: Deep relative imports indicate poor module boundaries
+- **Fix**: Use path aliases: `import { X } from '@/modules/x'`
+- **Applies to**: `*.ts`, `*.js`, `*.tsx`, `*.jsx`

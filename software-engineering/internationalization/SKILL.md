@@ -2,124 +2,124 @@
 schema: "1.0"
 name: internationalization
 version: "1.0.0"
-description: 國際化與本地化開發：i18n/l10n 架構設計、翻譯管理、多語言應用最佳實踐
+description: Internationalization and localization — i18n/l10n architecture, translation workflows, and multilingual app best practices
 domain: software-engineering
 triggers:
   keywords:
-    primary: [i18n, l10n, 國際化, 本地化, internationalization, localization, 多語言]
-    secondary: [翻譯, translation, locale, language, intl, formatjs, react-intl]
+    primary: [i18n, l10n, internationalization, localization, multilingual]
+    secondary: [translation, locale, language, intl, formatjs, react-intl]
   context_boost: [multilingual, global, region, currency, date format]
   context_penalty: [backend, database, devops]
   priority: medium
 author: claude-software-skills
 ---
 
-# 國際化與本地化 Internationalization & Localization
+# Internationalization & Localization
 
-> 讓你的應用程式走向全世界
+> Ship your application globally
 
-## 核心概念
+## Core concepts
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│  i18n vs l10n                                                    │
+│  i18n vs l10n                                                   │
 │                                                                 │
-│  國際化 (Internationalization - i18n)                           │
-│  ├─ 設計支援多語言的架構                                        │
-│  ├─ 抽離可翻譯的字串                                            │
-│  ├─ 處理日期、數字、貨幣格式                                    │
-│  └─ 一次性工程工作                                              │
+│  Internationalization (i18n)                                    │
+│  ├─ Architecture that supports multiple languages               │
+│  ├─ Extract translatable strings                                │
+│  ├─ Handle dates, numbers, and currency formatting              │
+│  └─ One-time engineering effort                                 │
 │                                                                 │
-│  本地化 (Localization - l10n)                                   │
-│  ├─ 針對特定語言/地區的翻譯                                     │
-│  ├─ 文化適應（圖片、顏色、符號）                                │
-│  ├─ 法規遵循（隱私、內容）                                      │
-│  └─ 持續性工作                                                  │
+│  Localization (l10n)                                            │
+│  ├─ Translations for a specific language/region                 │
+│  ├─ Cultural adaptation (imagery, color, symbols)               │
+│  ├─ Regulatory compliance (privacy, content)                  │
+│  └─ Ongoing work                                                │
 │                                                                 │
-│  i18n = 讓應用「能」支援多語言                                  │
-│  l10n = 讓應用「實際」支援某語言                                │
+│  i18n = make the app *able* to support multiple languages       │
+│  l10n = make the app *actually* support a given language         │
 └─────────────────────────────────────────────────────────────────┘
 ```
 
-## 適用場景
+## When to use this skill
 
-- 新專案的多語言架構設計
-- 現有專案添加多語言支援
-- 翻譯工作流程優化
-- RTL (右到左) 語言支援
-- 日期/數字/貨幣格式化
+- Designing multilingual architecture for new projects
+- Adding languages to existing apps
+- Improving translation workflows
+- RTL (right-to-left) language support
+- Date, number, and currency formatting
 
-## i18n 架構設計
+## i18n architecture
 
-### 翻譯檔案結構
+### Translation file layout
 
 ```
-推薦結構：按語言分類
+Recommended: by language
 locales/
 ├── en/
-│   ├── common.json      # 共用詞彙
-│   ├── home.json        # 首頁
-│   └── settings.json    # 設定頁
-├── zh-TW/
+│   ├── common.json      # Shared strings
+│   ├── home.json        # Home page
+│   └── settings.json    # Settings
+├── es/
 │   ├── common.json
 │   ├── home.json
 │   └── settings.json
-└── ja/
+└── pt-BR/
     ├── common.json
     ├── home.json
     └── settings.json
 
-替代結構：按功能分類
+Alternative: by feature
 locales/
 ├── common/
 │   ├── en.json
-│   ├── zh-TW.json
-│   └── ja.json
+│   ├── es.json
+│   └── pt-BR.json
 └── settings/
     ├── en.json
-    ├── zh-TW.json
-    └── ja.json
+    ├── es.json
+    └── pt-BR.json
 ```
 
-### 翻譯 Key 命名規範
+### Translation key naming
 
 ```markdown
-## 命名原則
+## Naming rules
 
-1. **階層式命名**
-   ✅ `settings.notifications.email.title`
-   ❌ `settingsNotificationsEmailTitle`
+1. **Hierarchical keys**
+   `settings.notifications.email.title`
+   Avoid flat concatenations like `settingsNotificationsEmailTitle`
 
-2. **語意優先於位置**
-   ✅ `action.save`, `action.cancel`
-   ❌ `button1`, `button2`
+2. **Meaning over placement**
+   `action.save`, `action.cancel`
+   Avoid opaque names like `button1`, `button2`
 
-3. **避免縮寫**
-   ✅ `error.network.timeout`
-   ❌ `err.net.to`
+3. **Avoid abbreviations**
+   `error.network.timeout`
+   Not `err.net.to`
 
-4. **使用英文小寫**
-   ✅ `user.profile.avatar`
-   ❌ `User.Profile.Avatar`
+4. **Use lowercase English segments**
+   `user.profile.avatar`
+   Not `User.Profile.Avatar`
 
-## 常用前綴
+## Common prefixes
 
-| 前綴 | 用途 | 範例 |
-|------|------|------|
-| `action.` | 動作按鈕 | `action.submit`, `action.delete` |
-| `label.` | 表單標籤 | `label.email`, `label.password` |
-| `error.` | 錯誤訊息 | `error.required`, `error.invalid` |
-| `message.` | 一般訊息 | `message.success`, `message.loading` |
-| `title.` | 頁面標題 | `title.home`, `title.settings` |
-| `hint.` | 提示文字 | `hint.password_format` |
+| Prefix | Use | Examples |
+|--------|-----|----------|
+| `action.` | Buttons | `action.submit`, `action.delete` |
+| `label.` | Form labels | `label.email`, `label.password` |
+| `error.` | Errors | `error.required`, `error.invalid` |
+| `message.` | General copy | `message.success`, `message.loading` |
+| `title.` | Page titles | `title.home`, `title.settings` |
+| `hint.` | Hints | `hint.password_format` |
 ```
 
-## 主流框架實作
+## Framework implementations
 
 ### React (react-i18next)
 
 ```typescript
-// i18n.ts - 配置
+// i18n.ts - setup
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
@@ -129,7 +129,7 @@ i18n
   .use(initReactI18next)
   .init({
     fallbackLng: 'en',
-    supportedLngs: ['en', 'zh-TW', 'ja'],
+    supportedLngs: ['en', 'es', 'pt-BR'],
     ns: ['common', 'home', 'settings'],
     defaultNS: 'common',
     interpolation: {
@@ -141,7 +141,7 @@ i18n
     },
   });
 
-// 使用
+// Usage
 import { useTranslation } from 'react-i18next';
 
 function MyComponent() {
@@ -151,8 +151,8 @@ function MyComponent() {
     <div>
       <h1>{t('title.welcome')}</h1>
       <p>{t('message.greeting', { name: 'John' })}</p>
-      <button onClick={() => i18n.changeLanguage('zh-TW')}>
-        中文
+      <button onClick={() => i18n.changeLanguage('es')}>
+        Spanish
       </button>
     </div>
   );
@@ -171,11 +171,11 @@ const i18n = createI18n({
   fallbackLocale: 'en',
   messages: {
     en: { /* ... */ },
-    'zh-TW': { /* ... */ },
+    es: { /* ... */ },
   },
 });
 
-// 使用
+// Usage
 <template>
   <h1>{{ $t('title.welcome') }}</h1>
   <p>{{ $t('message.greeting', { name: 'John' }) }}</p>
@@ -194,7 +194,7 @@ const { t, locale } = useI18n();
 import createMiddleware from 'next-intl/middleware';
 
 export default createMiddleware({
-  locales: ['en', 'zh-TW', 'ja'],
+  locales: ['en', 'es', 'pt-BR'],
   defaultLocale: 'en',
   localePrefix: 'as-needed',
 });
@@ -216,7 +216,7 @@ export default async function LocaleLayout({
   );
 }
 
-// 使用
+// Usage
 import { useTranslations } from 'next-intl';
 
 function Page() {
@@ -225,9 +225,9 @@ function Page() {
 }
 ```
 
-## 複雜翻譯處理
+## Advanced translation patterns
 
-### 複數形式 (Pluralization)
+### Pluralization
 
 ```json
 // en.json
@@ -239,16 +239,20 @@ function Page() {
   }
 }
 
-// zh-TW.json (中文無複數變化)
+// es.json (plural rules differ by language)
 {
-  "items": "{{count}} 個項目"
+  "items": {
+    "zero": "Sin elementos",
+    "one": "{{count}} elemento",
+    "other": "{{count}} elementos"
+  }
 }
 
-// 使用
-t('items', { count: 5 }) // "5 items" / "5 個項目"
+// Usage
+t('items', { count: 5 }) // "5 items" / "5 elementos"
 ```
 
-### 插值與格式化
+### Interpolation and formatting
 
 ```json
 {
@@ -260,13 +264,13 @@ t('items', { count: 5 }) // "5 items" / "5 個項目"
 ```
 
 ```typescript
-// 使用 Intl API
+// With Intl-backed formatters
 t('date', { date: new Date() });
 t('price', { amount: 99.99 });
 t('percent', { value: 0.85 });
 ```
 
-### 巢狀與引用
+### Nesting and references
 
 ```json
 {
@@ -278,10 +282,10 @@ t('percent', { value: 0.85 });
 }
 ```
 
-## 日期時間處理
+## Dates and times
 
 ```typescript
-// 使用 Intl.DateTimeFormat
+// Intl.DateTimeFormat
 const formatDate = (date: Date, locale: string) => {
   return new Intl.DateTimeFormat(locale, {
     year: 'numeric',
@@ -291,10 +295,10 @@ const formatDate = (date: Date, locale: string) => {
 };
 
 formatDate(new Date(), 'en-US');    // "January 7, 2024"
-formatDate(new Date(), 'zh-TW');    // "2024年1月7日"
-formatDate(new Date(), 'ja-JP');    // "2024年1月7日"
+formatDate(new Date(), 'es-ES');    // "7 de enero de 2024"
+formatDate(new Date(), 'pt-BR');    // "7 de janeiro de 2024"
 
-// 相對時間
+// Relative time
 const formatRelative = (date: Date, locale: string) => {
   const rtf = new Intl.RelativeTimeFormat(locale, { numeric: 'auto' });
   const diff = Math.round((date.getTime() - Date.now()) / 86400000);
@@ -302,22 +306,22 @@ const formatRelative = (date: Date, locale: string) => {
 };
 
 formatRelative(yesterday, 'en');    // "yesterday"
-formatRelative(yesterday, 'zh-TW'); // "昨天"
+formatRelative(yesterday, 'es');    // "ayer"
 ```
 
-## 數字與貨幣
+## Numbers and currency
 
 ```typescript
-// 數字格式化
+// Number formatting
 const formatNumber = (num: number, locale: string) => {
   return new Intl.NumberFormat(locale).format(num);
 };
 
 formatNumber(1234567.89, 'en-US');  // "1,234,567.89"
 formatNumber(1234567.89, 'de-DE');  // "1.234.567,89"
-formatNumber(1234567.89, 'zh-TW');  // "1,234,567.89"
+formatNumber(1234567.89, 'es-ES');  // "1.234.567,89"
 
-// 貨幣格式化
+// Currency
 const formatCurrency = (amount: number, currency: string, locale: string) => {
   return new Intl.NumberFormat(locale, {
     style: 'currency',
@@ -326,111 +330,108 @@ const formatCurrency = (amount: number, currency: string, locale: string) => {
 };
 
 formatCurrency(99.99, 'USD', 'en-US');  // "$99.99"
-formatCurrency(99.99, 'TWD', 'zh-TW');  // "NT$99.99"
-formatCurrency(99.99, 'JPY', 'ja-JP');  // "￥100"
+formatCurrency(99.99, 'EUR', 'es-ES');  // "99,99 €"
+formatCurrency(99.99, 'BRL', 'pt-BR');  // "R$ 99,99"
 ```
 
-## RTL 語言支援
+## RTL language support
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│  RTL (Right-to-Left) 支援                                        │
+│  RTL (Right-to-Left) support                                    │
 │                                                                 │
-│  RTL 語言：阿拉伯語、希伯來語、波斯語、烏爾都語                │
+│  RTL languages: Arabic, Hebrew, Persian, Urdu                   │
 │                                                                 │
-│  HTML 設定                                                      │
+│  HTML                                                           │
 │  <html lang="ar" dir="rtl">                                     │
 │                                                                 │
-│  CSS 邏輯屬性                                                   │
+│  CSS logical properties                                         │
 │  ┌─────────────────────────────────────────────────────────┐   │
-│  │  LTR 屬性        →  邏輯屬性                            │   │
-│  │  margin-left     →  margin-inline-start                 │   │
-│  │  margin-right    →  margin-inline-end                   │   │
-│  │  padding-left    →  padding-inline-start                │   │
-│  │  text-align:left →  text-align: start                   │   │
-│  │  float: left     →  float: inline-start                 │   │
+│  │  Physical (LTR)   ->  Logical                           │   │
+│  │  margin-left      ->  margin-inline-start               │   │
+│  │  margin-right     ->  margin-inline-end                 │   │
+│  │  padding-left     ->  padding-inline-start              │   │
+│  │  text-align:left  ->  text-align: start                 │   │
+│  │  float: left      ->  float: inline-start               │   │
 │  └─────────────────────────────────────────────────────────┘   │
 │                                                                 │
-│  自動翻轉                                                       │
-│  • 圖標方向（箭頭、導航）                                       │
-│  • 表單欄位順序                                                 │
-│  • 滾動方向                                                     │
+│  Flip where needed                                              │
+│  • Icon direction (arrows, navigation)                        │
+│  • Form field order                                             │
+│  • Scroll direction                                             │
 └─────────────────────────────────────────────────────────────────┘
 ```
 
-### RTL CSS 範例
+### RTL CSS example
 
 ```css
-/* 使用 CSS 邏輯屬性 */
+/* Logical properties */
 .card {
   margin-inline-start: 1rem;
   padding-inline-end: 2rem;
   border-inline-start: 3px solid blue;
 }
 
-/* 針對 RTL 調整 */
+/* Mirror icons in RTL */
 [dir="rtl"] .icon-arrow {
   transform: scaleX(-1);
 }
 
-/* 使用 :dir() 偽類 */
+/* :dir() pseudo-class */
 .nav:dir(rtl) {
   flex-direction: row-reverse;
 }
 ```
 
-## 翻譯工作流程
+## Translation workflow
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│  翻譯工作流程                                                    │
+│  Translation workflow                                           │
 │                                                                 │
-│  開發者                         翻譯人員                        │
-│     │                              │                            │
-│     │  1. 新增 key + 預設文字     │                            │
-│     ├─────────────────────────────→│                            │
-│     │                              │                            │
-│     │  2. 同步到翻譯平台          │                            │
-│     ├─────────────────────────────→│                            │
-│     │                              │                            │
-│     │  3. 翻譯 + 審核             │                            │
-│     │←─────────────────────────────┤                            │
-│     │                              │                            │
-│     │  4. 拉取翻譯檔案            │                            │
-│     ├─────────────────────────────→│                            │
-│     │                              │                            │
-│     │  5. 測試 + 發布             │                            │
-│     ▼                              │                            │
+│  Developer                         Translator                 │
+│     │                                   │                       │
+│     │  1. Add keys + default copy       │                       │
+│     ├──────────────────────────────────>│                       │
+│     │                                   │                       │
+│     │  2. Sync to TMS                   │                       │
+│     ├──────────────────────────────────>│                       │
+│     │                                   │                       │
+│     │  3. Translate + review            │                       │
+│     │<──────────────────────────────────┤                       │
+│     │                                   │                       │
+│     │  4. Pull translation files        │                       │
+│     ├──────────────────────────────────>│                       │
+│     │                                   │                       │
+│     │  5. Test + ship                   │                       │
+│     ▼                                   │                       │
 │                                                                 │
-│  工具推薦：                                                     │
-│  • Lokalise, Crowdin, Phrase                                   │
-│  • Weblate (開源)                                              │
-│  • POEditor                                                     │
+│  Tools: Lokalise, Crowdin, Phrase, Weblate (open source), POEditor │
 └─────────────────────────────────────────────────────────────────┘
 ```
 
-## 翻譯品質保證
+## Translation quality
 
-```markdown
-## 翻譯 Checklist
+### Translation checklist
 
-### 技術檢查
-- [ ] 所有 key 都有翻譯
-- [ ] 插值變數正確
-- [ ] 複數形式完整
-- [ ] 特殊字元正確轉義
-- [ ] HTML 標籤完整
+#### Technical
+- [ ] Every key has a translation
+- [ ] Interpolation variables match
+- [ ] Plural forms covered
+- [ ] Special characters escaped correctly
+- [ ] HTML tags preserved where needed
 
-### 內容檢查
-- [ ] 翻譯準確
-- [ ] 語氣一致
-- [ ] 專有名詞統一
-- [ ] 長度適中（UI 不溢出）
-- [ ] 文化適宜
+#### Content
+- [ ] Accurate meaning
+- [ ] Consistent tone
+- [ ] Glossary terms unified
+- [ ] Length fits UI (no overflow)
+- [ ] Culturally appropriate
 
-### 自動化測試
+#### Automation
+
 ```typescript
-// 檢查遺漏翻譯
+// Detect missing keys
 function checkMissingTranslations(
   defaultLocale: object,
   targetLocale: object,
@@ -456,24 +457,25 @@ function checkMissingTranslations(
 }
 ```
 
-## 常見問題與解決
+## Common issues
 
-| 問題 | 解決方案 |
-|------|----------|
-| 翻譯後文字太長 | 預留空間、使用縮寫、調整 UI |
-| 專有名詞不一致 | 建立術語表 (Glossary) |
-| 翻譯遺漏 | CI 自動檢查 |
-| 上下文不清 | 為翻譯者提供截圖和說明 |
-| 硬編碼字串 | ESLint 規則檢查 |
-| 動態內容翻譯 | 使用插值，避免字串拼接 |
+| Issue | Mitigation |
+|-------|------------|
+| Translated text too long | Reserve space, abbreviate, adjust layout |
+| Inconsistent terminology | Maintain a glossary |
+| Missing strings | CI checks for missing keys |
+| Ambiguous context | Screenshots and notes for translators |
+| Hard-coded copy | ESLint rules for literals |
+| Dynamic content | Prefer interpolation over string concatenation |
 
-## 效能優化
+## Performance
 
-```markdown
-## 翻譯載入策略
+### Loading strategies
 
-### 1. 按需載入
-只載入當前語言，切換時再載入
+#### 1. Load on demand
+
+Load only the active locale; fetch others on switch.
+
 ```typescript
 const loadLocale = async (locale: string) => {
   const messages = await import(`./locales/${locale}.json`);
@@ -481,60 +483,59 @@ const loadLocale = async (locale: string) => {
 };
 ```
 
-### 2. 命名空間分割
-按頁面/功能分割翻譯檔案
+#### 2. Namespace split
+
+Split bundles by route or feature.
+
 ```typescript
-// 只載入首頁需要的翻譯
 await i18n.loadNamespaces(['common', 'home']);
 ```
 
-### 3. 預載入常用語言
+#### 3. Preload common locales
+
 ```typescript
-// 預載入可能使用的語言
-const preloadLocales = ['en', 'zh-TW'];
+const preloadLocales = ['en', 'es'];
 preloadLocales.forEach(locale => {
   i18n.loadLanguages(locale);
 });
 ```
 
-### 4. 快取策略
-使用 Service Worker 快取翻譯檔案
-```
+#### 4. Caching
 
-## 工具推薦
+Cache translation JSON with a service worker where appropriate.
 
-### 翻譯管理平台
-- **Lokalise** - 開發者友好，支援多種格式
-- **Crowdin** - 社群翻譯，開源專案免費
-- **Phrase** - 企業級，強大的工作流程
+## Recommended tools
 
-### 開發工具
-- **i18n Ally** - VS Code 擴展，即時預覽
-- **eslint-plugin-i18n** - 檢查硬編碼字串
-- **FormatJS** - 強大的格式化工具集
+### Translation management
+- **Lokalise** — Developer-friendly, many formats
+- **Crowdin** — Community translation; free for OSS
+- **Phrase** — Enterprise workflows
 
-### 測試工具
-- **pseudolocalization** - 偽本地化測試
-- **i18next-parser** - 自動提取 key
+### Development
+- **i18n Ally** — VS Code extension, inline preview
+- **eslint-plugin-i18n** — Catch hard-coded strings
+- **FormatJS** — Rich formatting utilities
 
-## 最佳實踐總結
+### Testing
+- **pseudolocalization** — Stretch UI safely
+- **i18next-parser** — Extract keys automatically
 
-```markdown
-## DO ✅
+## Best practices summary
 
-1. 從專案開始就考慮 i18n
-2. 使用語意化的 key 命名
-3. 避免字串拼接，使用插值
-4. 為翻譯者提供上下文
-5. 自動化翻譯檢查
-6. 測試所有支援的語言
+### DO
 
-## DON'T ❌
+1. Plan i18n from day one
+2. Use semantic keys
+3. Prefer interpolation over concatenation
+4. Give translators context
+5. Automate missing-key checks
+6. Test every supported locale
 
-1. 硬編碼任何用戶可見文字
-2. 假設所有語言長度相同
-3. 在 key 中使用預設文字
-4. 忽略複數和性別變化
-5. 手動管理翻譯同步
-6. 忽略 RTL 語言需求
-```
+### DON'T
+
+1. Hard-code user-visible strings
+2. Assume all languages have the same string length
+3. Put default copy inside the key
+4. Ignore plural and grammatical gender where relevant
+5. Manually sync translations without tooling
+6. Forget RTL requirements

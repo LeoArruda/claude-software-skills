@@ -15,145 +15,145 @@ triggers:
 
 # /analyze-repo v3.0
 
-> 企業級專案深度分析 — 分層視覺化 × 運作原理敘事 × 可執行建議
+> Enterprise-grade deep project analysis — layered visualization × how-it-works narrative × actionable recommendations
 
-## v3.0 新特性
+## What’s new in v3.0
 
-| 特性 | 說明 |
+| Feature | Description |
 |------|------|
-| 🎯 **三層分析架構** | Executive（5分鐘）→ Architecture Story（30分鐘）→ Deep Dive（按需）|
-| 🎬 **How It Works** | 新增「專案如何運作」敘事章節，快速理解核心流程 |
-| 📊 **視覺優先** | 每層以圖表開頭，文字輔助說明 |
-| 🔗 **證據鏈** | 所有發現附帶 `file:line` 程式碼引用 |
-| 🛠️ **可執行建議** | 每項建議含：問題程式碼 → 修復範例 → 驗證步驟 |
+| 🎯 **Three-layer analysis** | Executive (~5 min) → Architecture Story (~30 min) → Deep Dive (as needed) |
+| 🎬 **How It Works** | New narrative on how the project runs, for a fast grasp of core flows |
+| 📊 **Visual first** | Each layer leads with charts; text supports the visuals |
+| 🔗 **Evidence chain** | Every finding includes `file:line` code references |
+| 🛠️ **Actionable recommendations** | Each item: problematic code → fix example → verification steps |
 
-## 核心價值
+## Core value
 
-| 輸入 | 輸出 |
+| Input | Output |
 |------|------|
-| GitHub URL 或本地路徑 | **三層專業分析報告** — 視覺儀表板 + 運作原理敘事 + 可執行建議 |
+| GitHub URL or local path | **Three-layer professional report** — Executive Dashboard + how-it-works narrative + actionable recommendations |
 
-**適用場景**：
-- 🏢 **技術主管/CTO** — Layer 1 快速決策 + Layer 2 架構評估
-- 👨‍💻 **開發者** — Layer 2 理解運作原理 + Layer 3 上手指南
-- 💰 **投資人/Due Diligence** — Layer 1 風險摘要 + Layer 2 技術深度
-- 🔍 **Code Review** — Layer 3 逐檔案分析 + 可執行修復建議
+**When to use**:
+- 🏢 **Tech lead / CTO** — Layer 1 for fast decisions + Layer 2 for architecture review
+- 👨‍💻 **Developers** — Layer 2 for how it works + Layer 3 for onboarding detail
+- 💰 **Investors / due diligence** — Layer 1 risk summary + Layer 2 technical depth
+- 🔍 **Code review** — Layer 3 file-level analysis + actionable fixes
 
 ---
 
-## 報告三層架構
+## Three-layer report model
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│  📊 LAYER 1: Executive Dashboard（5-10 分鐘）                   │
+│  📊 LAYER 1: Executive Dashboard (5–10 min)                     │
 │  ─────────────────────────────────────────────────────────────  │
-│  目標：高層快速掌握專案狀態                                      │
-│  • 單頁視覺儀表板（健康雷達圖 + 風險熱力圖）                      │
-│  • 一句話定位 + 30 秒專案摘要                                    │
-│  • 3 個關鍵發現卡片（含即時行動建議）                            │
-│  • 競品定位矩陣                                                  │
+│  Goal: Executives grasp project status quickly                    │
+│  • Single-page dashboard (health radar + risk heat map)         │
+│  • One-line positioning + 30-second project summary             │
+│  • Three key finding cards (with immediate actions)               │
+│  • Competitive positioning matrix                                 │
 ├─────────────────────────────────────────────────────────────────┤
-│  🏗️ LAYER 2: Architecture Story（30-60 分鐘）                   │
+│  🏗️ LAYER 2: Architecture Story (30–60 min)                   │
 │  ─────────────────────────────────────────────────────────────  │
-│  目標：理解專案如何運作                                          │
-│  • 🎬「這個專案如何運作」流程敘事（核心創新）                     │
-│  • C4 四層架構圖（Context → Container → Component → Code）       │
-│  • 資料流序列圖（主要使用場景）                                   │
-│  • 技術決策分析（為什麼用 X 而非 Y）                              │
-│  • 8 維度品質評估詳解                                            │
+│  Goal: Understand how the project works                           │
+│  • 🎬 “How this project works” flow narrative (core addition)     │
+│  • C4 four layers (Context → Container → Component → Code)       │
+│  • Data-flow sequence diagrams (main scenarios)                   │
+│  • Technical decision analysis (why X vs Y)                       │
+│  • Eight-dimension quality deep dive                              │
 ├─────────────────────────────────────────────────────────────────┤
-│  🔬 LAYER 3: Deep Dive Reference（按需查閱）                     │
+│  🔬 LAYER 3: Deep Dive Reference (as needed)                     │
 │  ─────────────────────────────────────────────────────────────  │
-│  目標：可執行的改進行動                                          │
-│  • 每個發現附帶 file:line 證據鏈                                 │
-│  • 可執行建議：問題碼 → 修復範例 → 驗證步驟                       │
-│  • 技術債務修復清單（含優先級 + 工時估算）                        │
-│  • 完整檔案結構與關鍵入口點                                      │
+│  Goal: Executable improvement actions                             │
+│  • Every finding tied to file:line evidence                     │
+│  • Actionable recommendations: bad code → fix → verify            │
+│  • Technical debt backlog (priority + effort estimate)            │
+│  • Full tree and key entry points                                 │
 └─────────────────────────────────────────────────────────────────┘
 ```
 
-## 使用方式
+## Usage
 
 ```bash
-# 基本分析（預設輸出完整三層報告）
+# Default: full three-layer report
 /analyze-repo https://github.com/owner/repo
 /analyze-repo .
 /analyze-repo /path/to/project
 
-# 指定深度（可選）
-/analyze-repo . --depth=executive    # 僅 Layer 1（快速摘要）
-/analyze-repo . --depth=story        # Layer 1 + 2（含運作原理）
-/analyze-repo . --depth=full         # 完整三層（預設）
+# Optional depth
+/analyze-repo . --depth=executive    # Layer 1 only (quick summary)
+/analyze-repo . --depth=story        # Layers 1 + 2 (includes how it works)
+/analyze-repo . --depth=full         # All three layers (default)
 
-# 指定視角（可選，影響內容側重）
-/analyze-repo . --perspective=executive    # 側重決策指標
-/analyze-repo . --perspective=architect    # 側重架構設計
-/analyze-repo . --perspective=developer    # 側重上手指南
-/analyze-repo . --perspective=investor     # 側重風險評估
+# Optional perspective (shapes emphasis)
+/analyze-repo . --perspective=executive    # Decision metrics
+/analyze-repo . --perspective=architect    # Architecture and design
+/analyze-repo . --perspective=developer    # Onboarding
+/analyze-repo . --perspective=investor     # Risk lens
 
-# 組合使用
+# Combined
 /analyze-repo . --depth=story --perspective=developer
 ```
 
 ---
 
-## 分析框架
+## Analysis framework
 
-你是資深軟體架構顧問，具備 arc42、C4 Model、SOLID/DDD 專業知識。
+You are a senior software architect with arc42, C4 Model, and SOLID/DDD expertise.
 
-### Phase 1: 資料收集與情境建立
+### Phase 1: Data collection and context
 
-#### 1.1 來源判斷
-- `https://github.com/` → GitHub API + 原始碼分析
-- 本地路徑 → 直接檔案系統存取
+#### 1.1 Source
+- `https://github.com/` → GitHub API + source analysis
+- Local path → direct filesystem access
 
-#### 1.2 關鍵檔案掃描（優先順序）
+#### 1.2 Key files (priority order)
 
-| 類別 | 檔案 | 分析目的 |
+| Category | Files | Purpose |
 |------|------|----------|
-| **套件管理** | `package.json`, `requirements.txt`, `pyproject.toml`, `Cargo.toml`, `go.mod`, `pom.xml`, `build.gradle` | 依賴分析、版本檢查 |
-| **容器化** | `Dockerfile`, `docker-compose.yml`, `k8s/` | 部署架構 |
-| **文件** | `README.md`, `CLAUDE.md`, `docs/`, `ARCHITECTURE.md` | 專案意圖 |
-| **配置** | `tsconfig.json`, `next.config.*`, `.env.example`, `config/` | 技術決策 |
-| **CI/CD** | `.github/workflows/`, `.gitlab-ci.yml`, `Jenkinsfile` | 自動化成熟度 |
-| **測試** | `tests/`, `__tests__/`, `spec/`, `*_test.go`, `*.spec.ts` | 測試覆蓋 |
-| **入口點** | `main.*`, `index.*`, `app.*`, `src/` | 程式碼結構 |
-| **安全** | `.env`, `secrets/`, `credentials*`, `*.pem`, `*.key` | 敏感資訊檢查 |
+| **Package managers** | `package.json`, `requirements.txt`, `pyproject.toml`, `Cargo.toml`, `go.mod`, `pom.xml`, `build.gradle` | Dependencies and versions |
+| **Containers** | `Dockerfile`, `docker-compose.yml`, `k8s/` | Deployment shape |
+| **Docs** | `README.md`, `CLAUDE.md`, `docs/`, `ARCHITECTURE.md` | Intent and context |
+| **Config** | `tsconfig.json`, `next.config.*`, `.env.example`, `config/` | Technical choices |
+| **CI/CD** | `.github/workflows/`, `.gitlab-ci.yml`, `Jenkinsfile` | Automation maturity |
+| **Tests** | `tests/`, `__tests__/`, `spec/`, `*_test.go`, `*.spec.ts` | Test coverage |
+| **Entry points** | `main.*`, `index.*`, `app.*`, `src/` | Code structure |
+| **Security** | `.env`, `secrets/`, `credentials*`, `*.pem`, `*.key` | Sensitive data |
 
-#### 1.3 專案元數據收集
-- 程式碼行數（按語言分類）
-- 提交歷史（活躍度、貢獻者分佈）
-- Issue/PR 統計（如為 GitHub）
-- License 類型
+#### 1.3 Project metadata
+- Lines of code by language
+- Commit history (activity, contributor spread)
+- Issue/PR stats (GitHub)
+- License type
 
 ---
 
-### Phase 2: 專案運作原理（How It Works）🆕
+### Phase 2: How the project works (How It Works) 🆕
 
-> **核心創新**：讓讀者在 5 分鐘內理解「這個專案到底在做什麼、怎麼做」
+> **Core idea**: Let readers understand what the project does and how, within ~5 minutes.
 
-#### 2.1 核心流程敘事
+#### 2.1 Core flow narrative
 
-必須回答的問題：
-1. **輸入是什麼？** — 用戶/系統觸發什麼
-2. **處理過程？** — 核心邏輯如何運作
-3. **輸出是什麼？** — 最終產生什麼結果
+Answer:
+1. **What is the input?** — What user/system action starts it
+2. **What happens in the middle?** — How core logic runs
+3. **What is the output?** — What is produced at the end
 
-**格式**：
+**Format**:
 ```
-一句話版本：
-用戶 {觸發方式} → 系統 {處理流程} → 產生 {最終結果}
+One-liner:
+User {trigger} → system {processing} → {final_result}
 
-詳細版本（3-5 段）：
-1. 觸發點：{描述入口}
-2. 核心處理：{描述主要邏輯}
-3. 資料流向：{描述資料如何流動}
-4. 輸出結果：{描述產出}
+Detail (3–5 paragraphs):
+1. Trigger: {entry}
+2. Core processing: {main_logic}
+3. Data flow: {how_data_moves}
+4. Output: {what_is_produced}
 ```
 
-#### 2.2 主要使用場景序列圖
+#### 2.2 Main scenario sequence diagrams
 
-識別 2-3 個最重要的使用場景，為每個場景生成：
+Pick 2–3 critical scenarios; for each, produce:
 
 ```mermaid
 sequenceDiagram
@@ -163,227 +163,227 @@ sequenceDiagram
     participant Service
     participant DB
 
-    Note over User,DB: 場景：{場景名稱}
-    User->>Frontend: 1. {觸發動作}
-    Frontend->>API: 2. {API 呼叫}
-    API->>Service: 3. {業務處理}
-    Service->>DB: 4. {資料操作}
-    DB-->>Service: 5. {回傳資料}
-    Service-->>API: 6. {處理結果}
-    API-->>Frontend: 7. {回應}
-    Frontend-->>User: 8. {展示結果}
+    Note over User,DB: Scenario: {scenario_name}
+    User->>Frontend: 1. {trigger_action}
+    Frontend->>API: 2. {api_call}
+    API->>Service: 3. {business_logic}
+    Service->>DB: 4. {data_operation}
+    DB-->>Service: 5. {returned_data}
+    Service-->>API: 6. {result}
+    API-->>Frontend: 7. {response}
+    Frontend-->>User: 8. {presentation}
 ```
 
-#### 2.3 關鍵程式碼入口點
+#### 2.3 Key code entry points
 
-每個流程必須標註具體檔案位置：
+Every flow must cite concrete file locations:
 
-| 階段 | 檔案位置 | 函數/類別 | 說明 |
+| Stage | File | Function/class | Notes |
 |------|----------|-----------|------|
-| 入口 | `src/main.ts:15` | `bootstrap()` | 應用啟動 |
-| 路由 | `src/routes/index.ts:42` | `router.get()` | 請求分發 |
-| 邏輯 | `src/services/core.ts:128` | `processRequest()` | 核心處理 |
-| 資料 | `src/models/data.ts:23` | `DataModel` | 資料結構 |
+| Entry | `src/main.ts:15` | `bootstrap()` | App startup |
+| Routing | `src/routes/index.ts:42` | `router.get()` | Request dispatch |
+| Logic | `src/services/core.ts:128` | `processRequest()` | Core processing |
+| Data | `src/models/data.ts:23` | `DataModel` | Data structures |
 
-#### 2.4 核心演算法/邏輯說明
+#### 2.4 Core algorithms / logic
 
-如果專案有獨特的演算法或邏輯，用以下格式說明：
+If the project has distinctive algorithms or logic, document:
 
 ```
-演算法名稱：{名稱}
-用途：{解決什麼問題}
-複雜度：O(n) / O(log n) / etc.
+Algorithm: {name}
+Purpose: {problem_solved}
+Complexity: O(n) / O(log n) / etc.
 
-虛擬碼：
-1. {步驟 1}
-2. {步驟 2}
-3. {步驟 3}
+Pseudocode:
+1. {step_1}
+2. {step_2}
+3. {step_3}
 
-實際程式碼位置：`src/algorithms/xxx.ts:45-78`
+Code reference: `src/algorithms/xxx.ts:45-78`
 ```
 
 ---
 
-### Phase 3: 架構分析（C4 Model 四層）
+### Phase 3: Architecture (C4 four layers)
 
-#### Level 1: System Context（系統情境）
-- 識別系統邊界
-- 外部使用者/角色
-- 外部系統整合
-- **🆕 附帶說明**：用 2-3 句話解釋圖表含義
+#### Level 1: System Context
+- System boundary
+- External users/roles
+- External integrations
+- **🆕 Caption**: 2–3 sentences explaining the diagram
 
-#### Level 2: Container（容器）
-- 應用程式
-- 資料儲存
-- 訊息佇列
-- 容器間通訊協定
-- **🆕 技術選型原因**：為什麼選這個技術
+#### Level 2: Container
+- Applications
+- Data stores
+- Message queues
+- Inter-container protocols
+- **🆕 Rationale**: why each technology was chosen
 
-#### Level 3: Component（元件）
-- 主要模組/套件
-- 關鍵類別/函數
-- 模組職責劃分
-- **🆕 程式碼位置**：每個元件的檔案路徑
+#### Level 3: Component
+- Major modules/packages
+- Key classes/functions
+- Responsibility split
+- **🆕 File paths** per component
 
-#### Level 4: Code（程式碼層級）
-- 核心演算法
-- 設計模式使用
-- 關鍵資料結構
-- **🆕 程式碼片段**：展示關鍵實作
+#### Level 4: Code
+- Core algorithms
+- Design patterns
+- Key data structures
+- **🆕 Snippets** of important implementation
 
 ---
 
-### Phase 3: 品質評估（8 維度）
+### Phase 3: Quality assessment (8 dimensions)
 
-使用 1-100 分制評估：
+Score each dimension 1–100:
 
-| 維度 | 評估標準 | 權重 |
+| Dimension | Criteria | Weight |
 |------|----------|------|
-| **可維護性** | 程式碼複雜度、命名規範、模組化程度、Maintainability Index | 15% |
-| **可測試性** | 測試覆蓋率、測試品質、Mock/Stub 使用 | 12% |
-| **可擴展性** | 架構彈性、水平/垂直擴展能力、設計模式 | 12% |
-| **安全性** | 依賴漏洞、敏感資訊暴露、OWASP Top 10 | 15% |
-| **文件完整度** | README、API 文件、架構文件、註解品質 | 10% |
-| **架構健康度** | SOLID 合規、關注點分離、層次清晰 | 15% |
-| **依賴健康度** | 依賴數量、版本過時程度、循環依賴 | 11% |
-| **開發者體驗** | 上手難度、開發工具配置、錯誤訊息品質 | 10% |
+| **Maintainability** | Complexity, naming, modularity, Maintainability Index | 15% |
+| **Testability** | Coverage, test quality, mocks/stubs | 12% |
+| **Scalability** | Architectural flexibility, horizontal/vertical scale, patterns | 12% |
+| **Security** | Dependency CVEs, secret exposure, OWASP Top 10 | 15% |
+| **Documentation** | README, API docs, architecture docs, comment quality | 10% |
+| **Architecture health** | SOLID, separation of concerns, layering | 15% |
+| **Dependency health** | Dependency count, staleness, cycles | 11% |
+| **Developer experience** | Onboarding, tooling setup, error-message quality | 10% |
 
-**綜合健康分數** = 加權平均
+**Overall health score** = weighted average
 
 ---
 
-### Phase 4: 技術債務分析
+### Phase 4: Technical debt
 
-#### 4.1 債務分類（SQALE 模型）
-| 類別 | 偵測指標 |
+#### 4.1 Debt categories (SQALE-style)
+| Category | Signals |
 |------|----------|
-| **可靠性債務** | 未處理例外、空指標風險、資源洩漏 |
-| **安全性債務** | 已知漏洞、硬編碼密鑰、SQL 注入風險 |
-| **可維護性債務** | 重複程式碼、過長函數、過深巢狀 |
-| **效能債務** | N+1 查詢、無快取策略、同步阻塞 |
-| **測試債務** | 低覆蓋率、無整合測試、脆弱測試 |
+| **Reliability debt** | Unhandled errors, null risks, resource leaks |
+| **Security debt** | Known CVEs, hard-coded keys, SQL injection risk |
+| **Maintainability debt** | Duplication, long functions, deep nesting |
+| **Performance debt** | N+1 queries, missing cache, blocking I/O |
+| **Test debt** | Low coverage, no integration tests, brittle tests |
 
-#### 4.2 債務量化
-- **修復時間估算**（人天）
-- **優先級排序**（Impact × Effort 矩陣）
-- **債務趨勢**（如有歷史資料）
+#### 4.2 Quantification
+- **Fix effort** (person-days)
+- **Prioritization** (Impact × Effort matrix)
+- **Trend** (if historical data exists)
 
 ---
 
-### Phase 5: 依賴關係分析
+### Phase 5: Dependencies
 
-#### 5.1 依賴圖譜
-- 內部模組依賴關係
-- 外部套件依賴
-- **循環依賴偵測**
-- **扇入/扇出分析**（Afferent/Efferent Coupling）
+#### 5.1 Dependency map
+- Internal module graph
+- External packages
+- **Cycle detection**
+- **Fan-in/fan-out** (afferent/efferent coupling)
 
-#### 5.2 依賴健康檢查
-| 檢查項 | 風險等級 |
+#### 5.2 Dependency health
+| Check | Risk |
 |--------|----------|
-| 已知 CVE 漏洞 | 🔴 Critical |
-| 重大版本落後（>2 版） | 🟠 High |
-| 無維護套件（>2 年無更新） | 🟠 High |
-| 次要版本落後 | 🟡 Medium |
-| 授權合規風險 | 🟡 Medium |
+| Known CVEs | 🔴 Critical |
+| Major version lag (>2) | 🟠 High |
+| Unmaintained (>2 years) | 🟠 High |
+| Minor version lag | 🟡 Medium |
+| License compliance | 🟡 Medium |
 
 ---
 
-### Phase 6: 安全性評估
+### Phase 6: Security
 
-#### 6.1 靜態掃描摘要
-- 依賴漏洞（npm audit / pip-audit / cargo-audit 等效分析）
-- 敏感資訊暴露（API Keys、密碼、Token）
-- 不安全程式碼模式
+#### 6.1 Static analysis summary
+- Dependency vulnerabilities (npm audit / pip-audit / cargo-audit equivalents)
+- Secret exposure (API keys, passwords, tokens)
+- Unsafe code patterns
 
-#### 6.2 OWASP Top 10 檢查清單
-| 風險 | 檢查項目 |
+#### 6.2 OWASP Top 10 checklist
+| Risk | Checks |
 |------|----------|
-| A01 Broken Access Control | 授權檢查、路由保護 |
-| A02 Cryptographic Failures | 加密演算法、密鑰管理 |
-| A03 Injection | 輸入驗證、參數化查詢 |
-| A07 Authentication | 身份驗證機制、Session 管理 |
-| A09 Logging & Monitoring | 日誌記錄、異常追蹤 |
+| A01 Broken Access Control | Authorization, route protection |
+| A02 Cryptographic Failures | Crypto algorithms, key management |
+| A03 Injection | Input validation, parameterized queries |
+| A07 Authentication | Auth mechanisms, session handling |
+| A09 Logging & Monitoring | Logging, anomaly tracking |
 
 ---
 
-### Phase 7: 競品與價值分析
+### Phase 7: Competition and value
 
-#### 7.1 獨特價值主張 (UVP)
-- 核心解決的問題
-- 差異化特點
-- 目標使用者
+#### 7.1 Unique value proposition (UVP)
+- Core problems solved
+- Differentiators
+- Target users
 
-#### 7.2 不可替代性評估（5 分制）
-| 維度 | 評估 |
+#### 7.2 Replaceability (1–5 scale)
+| Dimension | Assess |
 |------|------|
-| 技術獨特性 | 核心演算法、專利、獨特實現 |
-| 生態整合深度 | 與其他系統的整合程度 |
-| 遷移成本 | 換到替代方案的成本 |
-| 學習曲線 | 團隊上手難度 |
-| 社群活躍度 | 維護者、貢獻者、Issue 回應 |
+| Technical uniqueness | Algorithms, patents, unique implementation |
+| Ecosystem depth | Integration with other systems |
+| Migration cost | Cost to switch alternatives |
+| Learning curve | Team onboarding difficulty |
+| Community vitality | Maintainers, contributors, issue response |
 
-#### 7.3 競品比較矩陣
+#### 7.3 Competitor matrix
 
-識別 2-3 個主要競品/替代方案，進行功能對比：
+Identify 2–3 main competitors/alternatives:
 
-**必須包含的比較維度**：
-| 維度 | 說明 |
+**Required comparison dimensions**:
+| Dimension | Meaning |
 |------|------|
-| 核心功能 | 主要解決的問題 |
-| 技術架構 | 技術選型差異 |
-| 擴展性 | 是否支援插件/擴展 |
-| 學習曲線 | 上手難度 |
-| 社群活躍度 | 維護狀態、Issue 回應 |
-| 授權方式 | 開源/商業/混合 |
+| Core features | Main problems solved |
+| Technical architecture | Stack differences |
+| Extensibility | Plugins/extensions |
+| Learning curve | Onboarding difficulty |
+| Community | Maintenance, issue response |
+| Licensing | Open/commercial/mixed |
 
-**範例格式**：
+**Example**:
 ```markdown
-| 特性 | 本專案 | 競品 A | 競品 B | 競品 C |
+| Aspect | This project | Comp A | Comp B | Comp C |
 |------|--------|--------|--------|--------|
-| 核心功能 | ✅ 完整 | ⚠️ 部分 | ✅ 完整 | ❌ 無 |
-| 擴展性 | ✅ Plugin | ❌ 無 | ⚠️ 有限 | ✅ 完整 |
-| 學習曲線 | ⚠️ 中等 | ✅ 簡單 | ❌ 困難 | ⚠️ 中等 |
+| Core features | ✅ Full | ⚠️ Partial | ✅ Full | ❌ None |
+| Extensibility | ✅ Plugin | ❌ None | ⚠️ Limited | ✅ Full |
+| Learning curve | ⚠️ Medium | ✅ Easy | ❌ Hard | ⚠️ Medium |
 ```
 
-#### 7.4 適用場景分析 🆕
+#### 7.4 Fit scenarios 🆕
 
-用餅圖呈現最適合的使用場景佔比：
+Pie chart of best-fit use cases:
 
 ```mermaid
-pie title 最適合使用場景
-    "場景 A" : 35
-    "場景 B" : 25
-    "場景 C" : 20
-    "場景 D" : 15
-    "其他" : 5
+pie title Best-fit scenarios
+    "Scenario A" : 35
+    "Scenario B" : 25
+    "Scenario C" : 20
+    "Scenario D" : 15
+    "Other" : 5
 ```
 
-並提供採用建議矩陣：
+Adoption guidance matrix:
 
-| 情境 | 建議 | 說明 |
+| Situation | Recommendation | Notes |
 |------|------|------|
-| **情境 A** | ✅ 強烈推薦 | {為什麼適合} |
-| **情境 B** | ✅ 推薦 | {為什麼適合} |
-| **情境 C** | ⚠️ 可能過重 | {為什麼可能不適合} |
-| **情境 D** | ❌ 不適用 | {為什麼不適合} |
+| **Situation A** | ✅ Strong fit | {why} |
+| **Situation B** | ✅ Good fit | {why} |
+| **Situation C** | ⚠️ May be heavy | {why_not} |
+| **Situation D** | ❌ Poor fit | {why_not} |
 
 ---
 
-### Phase 7.5: 市場未來價值分析
+### Phase 7.5: Market and future value
 
-#### 7.5.1 技術趨勢對齊度
-評估專案與當前/未來技術趨勢的契合程度：
+#### 7.5.1 Technology trend alignment
+Assess fit with current and emerging trends:
 
-| 趨勢領域 | 評估項目 |
+| Trend area | What to assess |
 |----------|----------|
-| **AI/ML 整合能力** | 是否有 AI 整合點、LLM 友好 API、向量資料庫支援 |
-| **雲原生成熟度** | 容器化、K8s 支援、Serverless 適配性 |
-| **邊緣運算準備度** | 輕量化可能性、離線能力、低延遲設計 |
-| **Web3/去中心化** | 區塊鏈整合潛力、去中心化架構可能性 |
-| **永續性/綠色運算** | 資源效率、能耗優化潛力 |
+| **AI/ML readiness** | AI hooks, LLM-friendly APIs, vector DB support |
+| **Cloud-native maturity** | Containers, K8s, serverless fit |
+| **Edge readiness** | Footprint, offline, low latency |
+| **Web3 / decentralization** | Blockchain hooks, decentralized options |
+| **Sustainability / green ops** | Resource efficiency, energy optimization |
 
-#### 7.5.2 市場定位分析
+#### 7.5.2 Market position
 ```mermaid
 quadrantChart
     title Market Position Matrix
@@ -395,63 +395,63 @@ quadrantChart
     quadrant-4 Cash Cow (Maintain)
 ```
 
-#### 7.5.3 成長潛力指標
-| 指標 | 評估方式 |
+#### 7.5.3 Growth signals
+| Signal | How to assess |
 |------|----------|
-| **TAM/SAM/SOM 估算** | 目標市場規模、可服務市場、可獲取市場 |
-| **成長動能** | GitHub Stars 趨勢、npm 下載量、社群活躍度成長率 |
-| **網路效應潛力** | 使用者越多價值越高的特性 |
-| **平台化可能性** | 是否可發展為生態平台 |
-| **商業模式彈性** | 開源/SaaS/企業版等多元變現路徑 |
+| **TAM/SAM/SOM** | Market sizing |
+| **Growth momentum** | GitHub stars, npm downloads, community growth |
+| **Network effects** | Value that scales with users |
+| **Platform potential** | Ecosystem/platform path |
+| **Business model flexibility** | Open source / SaaS / enterprise, etc. |
 
-#### 7.5.4 風險與機會矩陣（SWOT 延伸）
-| 類別 | 內部 | 外部 |
+#### 7.5.4 Risk/opportunity (SWOT-style)
+| | Internal | External |
 |------|------|------|
-| **正面** | 優勢 Strengths | 機會 Opportunities |
-| **負面** | 劣勢 Weaknesses | 威脅 Threats |
+| **Positive** | Strengths | Opportunities |
+| **Negative** | Weaknesses | Threats |
 
-#### 7.5.5 投資/採用建議
-基於以上分析，給出明確建議：
-- 🟢 **強烈推薦** — 技術先進、市場前景佳、風險可控
-- 🟡 **謹慎考慮** — 有價值但存在特定風險或限制
-- 🔴 **不建議** — 技術過時、市場萎縮、或風險過高
+#### 7.5.5 Investment / adoption stance
+From the above:
+- 🟢 **Strong fit** — Solid tech, good outlook, manageable risk
+- 🟡 **Cautious** — Valuable but with specific risks or limits
+- 🔴 **Not recommended** — Outdated tech, shrinking market, or excessive risk
 
-#### 7.5.6 版本演進分析 🆕
+#### 7.5.6 Version history 🆕
 
-如果專案有 CHANGELOG 或 Git 歷史，分析版本演進：
+If CHANGELOG or Git history exists, analyze evolution:
 
-**Gantt 時間軸視覺化**：
+**Gantt-style timeline**:
 ```mermaid
 gantt
-    title 專案版本演進
+    title Project version history
     dateFormat  YYYY-MM-DD
-    section 核心功能
-    v1.0 初始版本       :done, 2024-01-01, 30d
-    v2.0 重大更新       :done, 2024-03-01, 60d
-    v3.0 架構重構       :done, 2024-06-01, 90d
-    section 整合功能
-    Plugin 系統         :done, 2024-04-01, 45d
-    API 擴展           :active, 2024-08-01, 60d
+    section Core
+    v1.0 initial       :done, 2024-01-01, 30d
+    v2.0 major update       :done, 2024-03-01, 60d
+    v3.0 refactor       :done, 2024-06-01, 90d
+    section Integrations
+    Plugin system         :done, 2024-04-01, 45d
+    API expansion           :active, 2024-08-01, 60d
 ```
 
-**關鍵版本里程碑表**：
-| 版本 | 日期 | 重點功能 | 影響 |
+**Milestone table**:
+| Version | Date | Highlights | Impact |
 |------|------|----------|------|
-| v1.0 | YYYY-MM-DD | 初始發布 | 建立基礎 |
-| v2.0 | YYYY-MM-DD | {重大功能} | {帶來的改變} |
-| v3.0 | YYYY-MM-DD | {重大功能} | {帶來的改變} |
+| v1.0 | YYYY-MM-DD | Initial release | Foundation |
+| v2.0 | YYYY-MM-DD | {major_feature} | {change} |
+| v3.0 | YYYY-MM-DD | {major_feature} | {change} |
 
-**演進趨勢分析**：
-- 開發節奏：{活躍/穩定/緩慢}
-- 版本策略：{語意化版本/日期版本/其他}
-- 向後相容性：{良好/需注意/經常破壞}
+**Trends**:
+- Release cadence: {active/stable/slow}
+- Versioning policy: {semver/date/other}
+- Backward compatibility: {good/watch/breaking_often}
 
 ---
 
-### Phase 8: 策略建議生成
+### Phase 8: Strategic recommendations
 
-#### 8.1 優先級矩陣
-使用 Impact × Effort 矩陣對所有發現進行分類：
+#### 8.1 Priority matrix
+Classify all findings with Impact × Effort:
 
 ```mermaid
 quadrantChart
@@ -464,78 +464,78 @@ quadrantChart
     quadrant-4 Evaluate (Consider Later)
 ```
 
-#### 8.2 可執行建議框架 🆕
+#### 8.2 Actionable recommendation template 🆕
 
-> **核心原則**：每項建議必須可立即執行，不需額外研究
+> **Rule**: Each recommendation must be executable without extra research.
 
-每項建議必須包含以下結構：
+Each item must include:
 
-| 欄位 | 說明 | 必填 |
+| Field | Description | Required |
 |------|------|------|
-| **ID** | 唯一識別碼（如 REC-001） | ✅ |
-| **類別** | Architecture / Security / Performance / Quality / Documentation / DevOps | ✅ |
-| **標題** | 簡潔描述（< 10 字） | ✅ |
-| **重要性** | ⭐⭐⭐ 核心/必要 / ⭐⭐ 重要/建議 / ⭐ 可選/增強 | ✅ |
-| **優先級** | 🔴 Critical / 🟠 High / 🟡 Medium / 🟢 Low | ✅ |
-| **問題位置** | 🆕 `file:line` 具體程式碼位置 | ✅ |
-| **問題程式碼** | 🆕 展示有問題的實際程式碼片段 | ✅ |
-| **修復範例** | 🆕 展示修復後的程式碼範例 | ✅ |
-| **驗證步驟** | 🆕 如何驗證修復成功（命令或測試） | ✅ |
-| **成功指標** | 可衡量的驗收標準 | ✅ |
+| **ID** | Unique id (e.g. REC-001) | ✅ |
+| **Category** | Architecture / Security / Performance / Quality / Documentation / DevOps | ✅ |
+| **Title** | Short (under ~10 words) | ✅ |
+| **Importance** | ⭐⭐⭐ core / ⭐⭐ important / ⭐ optional | ✅ |
+| **Priority** | 🔴 Critical / 🟠 High / 🟡 Medium / 🟢 Low | ✅ |
+| **Location** | 🆕 `file:line` | ✅ |
+| **Bad code** | 🆕 Actual snippet | ✅ |
+| **Fix example** | 🆕 Corrected snippet | ✅ |
+| **Verification** | 🆕 How to prove the fix (command or test) | ✅ |
+| **Success criteria** | Measurable acceptance | ✅ |
 
-**建議格式範例**：
+**Example**:
 
 ```markdown
-### REC-001: 修復 SQL 注入漏洞
+### REC-001: Fix SQL injection
 
-| 屬性 | 值 |
+| Attribute | Value |
 |------|-----|
-| 類別 | 🔒 Security |
-| 重要性 | ⭐⭐⭐ 核心 |
-| 優先級 | 🔴 Critical |
+| Category | 🔒 Security |
+| Importance | ⭐⭐⭐ Core |
+| Priority | 🔴 Critical |
 
-#### 📍 問題位置
+#### 📍 Location
 - `src/api/users.ts:87`
 - `src/api/products.ts:142`
 
-#### ❌ 問題程式碼
+#### ❌ Bad code
 ```typescript
 // src/api/users.ts:87
 const query = `SELECT * FROM users WHERE id = ${userId}`;
-//                                            ^^^^^^^^^ SQL 注入風險
+//                                            ^^^^^^^^^ SQL injection risk
 ```
 
-#### ✅ 修復範例
+#### ✅ Fix example
 ```typescript
 // src/api/users.ts:87
 const query = 'SELECT * FROM users WHERE id = $1';
 const result = await db.query(query, [userId]);
 ```
 
-#### 🧪 驗證步驟
+#### 🧪 Verification
 ```bash
-# 1. 執行安全掃描
+# 1. Security scan
 npm run security:audit
 
-# 2. 測試注入防護
+# 2. Injection probe
 curl "localhost:3000/api/users/1'%20OR%20'1'='1"
-# 預期：400 Bad Request（而非資料洩漏）
+# Expect: 400 Bad Request (not data leak)
 ```
 
-#### ✓ 成功指標
-- [ ] 所有 SQL 查詢使用參數化
-- [ ] `npm audit` 無 Critical 警告
+#### ✓ Success criteria
+- [ ] All SQL uses parameters
+- [ ] `npm audit` has no Critical issues
 ```
 
-#### 8.2.1 重要性與優先級的區別
+#### 8.2.1 Importance vs priority
 
-- **重要性 (Importance)**：對專案長期健康的影響程度
-  - ⭐⭐⭐ **核心/必要** — 不做會導致專案失敗或嚴重風險
-  - ⭐⭐ **重要/建議** — 顯著提升專案品質或降低風險
-  - ⭐ **可選/增強** — 錦上添花，提升體驗
+- **Importance**: Long-term impact on project health
+  - ⭐⭐⭐ **Core** — Skipping risks failure or severe exposure
+  - ⭐⭐ **Important** — Strong quality or risk improvement
+  - ⭐ **Optional** — Polish and ergonomics
 
-- **優先級 (Priority)**：應該何時執行
-  - 結合重要性 + 緊迫性
+- **Priority**: When to execute
+  - Combine importance and urgency
 
 ```mermaid
 quadrantChart
@@ -548,43 +548,43 @@ quadrantChart
     quadrant-4 Quick Wins (Easy Wins)
 ```
 
-#### 8.3 建議優先順序規則
-1. **安全性 Critical** → 必須立即處理
-2. **影響生產環境穩定性** → 高優先級
-3. **Quick Wins（高影響、易修復）** → 優先執行
-4. **技術債務** → 按累積風險排序
-5. **增強功能** → 按業務價值排序
+#### 8.3 Ordering rules
+1. **Security Critical** → address immediately
+2. **Production stability** → high priority
+3. **Quick wins (high impact, easy fix)** → next
+4. **Technical debt** → by accumulated risk
+5. **Enhancements** → by business value
 
-#### 8.4 建議分類視覺化
+#### 8.4 Recommendation buckets (visual)
 
 ```mermaid
 flowchart TB
-    subgraph Critical["🔴 立即處理"]
-        C1[安全漏洞]
-        C2[生產環境風險]
+    subgraph Critical["🔴 Address now"]
+        C1[Security issues]
+        C2[Production risk]
     end
 
-    subgraph High["🟠 短期處理"]
-        H1[架構問題]
-        H2[效能瓶頸]
+    subgraph High["🟠 Short term"]
+        H1[Architecture]
+        H2[Performance]
     end
 
-    subgraph Medium["🟡 規劃處理"]
-        M1[技術債務]
-        M2[測試覆蓋]
+    subgraph Medium["🟡 Plan"]
+        M1[Technical debt]
+        M2[Test coverage]
     end
 
-    subgraph Low["🟢 適時處理"]
-        L1[文件完善]
-        L2[程式碼風格]
+    subgraph Low["🟢 When convenient"]
+        L1[Documentation]
+        L2[Code style]
     end
 ```
 
 ---
 
-### Phase 9: Mermaid 圖表生成
+### Phase 9: Mermaid charts
 
-必須產生以下圖表：
+Produce at least:
 
 #### 9.1 C4 Context Diagram
 ```mermaid
@@ -606,7 +606,7 @@ C4Container
     ContainerDb(db, "Database", "PostgreSQL")
 ```
 
-#### 9.3 模組依賴圖
+#### 9.3 Module dependency graph
 ```mermaid
 flowchart LR
     subgraph Core
@@ -616,7 +616,7 @@ flowchart LR
     A --> B
 ```
 
-#### 9.4 技術棧總覽
+#### 9.4 Tech stack overview
 ```mermaid
 flowchart TB
     subgraph Frontend
@@ -632,126 +632,126 @@ flowchart TB
 
 ---
 
-## 輸出結構（三層架構）
+## Output shape (three layers)
 
-產生完整 Markdown 報告（詳見 [extended/output-template.md](./extended/output-template.md)）：
+Emit full Markdown (see [extended/output-template.md](./extended/output-template.md)):
 
 ```
 ╔════════════════════════════════════════════════════════════════╗
-║  📊 LAYER 1: Executive Dashboard（5-10 分鐘）                  ║
+║  📊 LAYER 1: Executive Dashboard (5–10 min)                   ║
 ╠════════════════════════════════════════════════════════════════╣
 
-1. Executive Summary（視覺儀表板）
-   - 🎯 一句話定位
-   - 📊 健康分數雷達圖（視覺化）
-   - ⚠️ 3 個關鍵風險卡片
-   - 🚀 立即行動建議（Top 3）
-   - 📈 競品定位矩陣圖
+1. Executive Summary (visual dashboard)
+   - 🎯 One-line positioning
+   - 📊 Health score radar (visual)
+   - ⚠️ Three key risk cards
+   - 🚀 Immediate recommendations (Top 3)
+   - 📈 Competitive positioning matrix
 
-2. 30 秒專案摘要
-   - 這是什麼？（一段話）
-   - 解決什麼問題？
-   - 技術棧一覽
-
-╠════════════════════════════════════════════════════════════════╣
-║  🏗️ LAYER 2: Architecture Story（30-60 分鐘）                  ║
-╠════════════════════════════════════════════════════════════════╣
-
-3. 🎬 How It Works（專案如何運作）🆕
-   - 核心流程敘事（輸入 → 處理 → 輸出）
-   - 主要使用場景序列圖（2-3 個）
-   - 關鍵程式碼入口點表
-   - 核心演算法/邏輯說明
-
-4. Architecture Analysis（架構分析）
-   - C4 四層圖表（附說明文字）
-   - 架構模式識別
-   - 技術選型分析（為什麼選 X）
-   - 架構決策記錄 (ADR) 推測
-
-5. Quality Assessment（品質評估）
-   - 8 維度雷達圖
-   - 各維度詳細評分與說明
-   - 優勢與風險清單
-
-6. Value & Competitive Analysis（價值分析）
-   - UVP 陳述
-   - 不可替代性評分
-   - 競品比較矩陣
-   - 市場定位分析
+2. 30-second project summary
+   - What is it? (one paragraph)
+   - What problem does it solve?
+   - Tech stack overview
 
 ╠════════════════════════════════════════════════════════════════╣
-║  🔬 LAYER 3: Deep Dive Reference（按需查閱）                   ║
+║  🏗️ LAYER 2: Architecture Story (30–60 min)                  ║
 ╠════════════════════════════════════════════════════════════════╣
 
-7. Technical Debt Report（技術債務報告）
-   - 債務分類清單（附 file:line）
-   - 優先級矩陣
-   - 修復建議（含程式碼範例）
+3. 🎬 How It Works 🆕
+   - Core flow (input → process → output)
+   - Main scenario sequence diagrams (2–3)
+   - Key code entry table
+   - Core algorithms / logic
 
-8. Dependency Analysis（依賴分析）
-   - 依賴圖譜
-   - 健康檢查報告
-   - 循環依賴警告
+4. Architecture Analysis
+   - C4 four layers (with captions)
+   - Architecture pattern identification
+   - Technology choices (why X)
+   - Inferred ADRs
 
-9. Security Assessment（安全評估）
-   - 漏洞掃描摘要
-   - OWASP 檢查清單
-   - 風險等級分類（附 file:line）
+5. Quality Assessment
+   - Eight-dimension radar
+   - Per-dimension scores and notes
+   - Strengths and risks
 
-10. 🛠️ Actionable Recommendations（可執行建議）🆕
-    - 按優先級分類：
-      * 🔴 立即處理
-      * 🟠 短期處理
-      * 🟡 規劃處理
-      * 🟢 適時處理
-    - 每項建議包含：
-      * 📍 問題位置（file:line）
-      * ❌ 問題程式碼
-      * ✅ 修復範例
-      * 🧪 驗證步驟
-      * ✓ 成功指標
+6. Value & Competitive Analysis
+   - UVP
+   - Replaceability score
+   - Competitor matrix
+   - Market position
 
-11. Appendix（附錄）
-    - 完整目錄結構
-    - 關鍵檔案清單與說明
-    - 術語表
-    - 分析方法說明
+╠════════════════════════════════════════════════════════════════╣
+║  🔬 LAYER 3: Deep Dive Reference (as needed)                   ║
+╠════════════════════════════════════════════════════════════════╣
+
+7. Technical Debt Report
+   - Debt list (with file:line)
+   - Priority matrix
+   - Fixes (with code examples)
+
+8. Dependency Analysis
+   - Dependency map
+   - Health report
+   - Cycle warnings
+
+9. Security Assessment
+   - Vulnerability summary
+   - OWASP checklist
+   - Risk levels (with file:line)
+
+10. 🛠️ Actionable Recommendations 🆕
+    - By priority:
+      * 🔴 Now
+      * 🟠 Short term
+      * 🟡 Plan
+      * 🟢 When convenient
+    - Each item:
+      * 📍 Location (file:line)
+      * ❌ Bad code
+      * ✅ Fix example
+      * 🧪 Verification
+      * ✓ Success criteria
+
+11. Appendix
+    - Full directory tree
+    - Key files
+    - Glossary
+    - Methodology
 ```
 
 ---
 
-## 執行準則
+## Execution rules
 
-### ✅ 必須遵守
-1. **完整讀取** — 確保足夠檔案進行準確分析
-2. **客觀評估** — 基於實際品質評分，避免過度樂觀或悲觀
-3. **具體量化** — 盡可能提供數字而非模糊描述
-4. **圖表正確** — 確保 Mermaid 語法正確可渲染
-5. **可行建議** — 每項建議必須具體可執行
+### ✅ Must do
+1. **Read enough** — Enough files for an accurate analysis
+2. **Stay objective** — Score from evidence; avoid undue optimism or pessimism
+3. **Quantify** — Prefer numbers over vague wording
+4. **Valid Mermaid** — Syntax must render
+5. **Actionable** — Every recommendation must be concrete
 
-### ❌ 避免事項
-1. 沒有根據的推測
-2. 過度技術術語（根據 perspective 調整）
-3. 模糊的評語（如「還不錯」、「有待改進」）
-4. 遺漏關鍵風險
-
----
-
-## 參考資源
-
-- [arc42 Template](https://arc42.org/overview) — 軟體架構文件標準
-- [C4 Model](https://c4model.com/) — 架構視覺化方法
-- [SQALE Method](https://www.sqale.org/) — 技術債務評估
-- [OWASP Top 10](https://owasp.org/www-project-top-ten/) — Web 安全風險
+### ❌ Avoid
+1. Unsupported speculation
+2. Jargon overload (tailor to `perspective`)
+3. Vague praise (“pretty good”, “room to improve”)
+4. Missing major risks
 
 ---
 
-## 相關 Skills
+## References
 
-- `/evolve` — 自主完成複雜目標
-- `/commit` — 提交程式碼變更
-- `/code-review` — 深度程式碼審查
+- [arc42 Template](https://arc42.org/overview) — Architecture documentation
+- [C4 Model](https://c4model.com/) — Architecture visualization
+- [SQALE Method](https://www.sqale.org/) — Technical debt
+- [OWASP Top 10](https://owasp.org/www-project-top-ten/) — Web risks
+
+---
+
+## Related skills
+
+- `/evolve` — Autonomous multi-step goals
+- `/commit` — Commit workflow
+- `/code-review` — Deep code review
 
 ---
 

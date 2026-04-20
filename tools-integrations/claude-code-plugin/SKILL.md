@@ -2,11 +2,11 @@
 schema: "1.0"
 name: claude-code-plugin
 version: "1.1.0"
-description: Claude Code Plugin 開發、發布、安裝、更新與 Marketplace 管理完整指南
+description: Complete guide to developing, publishing, installing, updating, and managing Claude Code plugins and marketplaces
 triggers:
   keywords:
-    primary: [plugin, claude-code, claude code plugin, 插件, hooks, commands, marketplace]
-    secondary: [mcp, skill, subagent, 版本控管, version, publish, 發布, 安裝, 更新, sync]
+    primary: [plugin, claude-code, claude code plugin, hooks, commands, marketplace]
+    secondary: [mcp, skill, subagent, version control, version, publish, install, update, sync]
   context_boost: [claude, anthropic, cli, automation, workflow]
   context_penalty: [game, trading, design]
   priority: high
@@ -16,54 +16,54 @@ dependencies:
 author: claude-software-skills
 ---
 
-# Claude Code Plugin 完整指南
+# Claude Code Plugin — Complete Guide
 
-> 建立、發布、安裝、更新、同步 Claude Code Plugin 的完整指南
+> Create, publish, install, update, and sync Claude Code plugins
 
-## 適用場景
+## When to use this skill
 
-- 開發新的 Claude Code Plugin
-- 發布 Plugin 到 Marketplace
-- 安裝和更新 Plugin
-- 管理 Plugin 版本
-- 同步最新版本
-- 建立自訂 Marketplace
+- Building a new Claude Code plugin
+- Publishing a plugin to a marketplace
+- Installing and updating plugins
+- Managing plugin versions
+- Syncing to the latest release
+- Creating a custom marketplace
 
 ---
 
-## Part 1: Plugin 架構
+## Part 1: Plugin structure
 
-### 目錄結構
+### Directory layout
 
 ```
 my-plugin/
 ├── .claude-plugin/
-│   ├── plugin.json          # Plugin manifest（必要）
-│   └── marketplace.json     # Marketplace 索引（選用）
-├── commands/                # Slash 命令（在根目錄！）
+│   ├── plugin.json          # Plugin manifest (required)
+│   └── marketplace.json     # Marketplace index (optional)
+├── commands/                # Slash commands (at repo root!)
 │   └── my-command.md
-├── skills/                  # Agent Skills
+├── skills/                  # Agent skills
 │   └── my-skill/
 │       └── SKILL.md
 ├── hooks/
-│   └── hooks.json           # Hook 配置
-├── agents/                  # Subagent 定義
-├── .mcp.json               # MCP 伺服器配置
+│   └── hooks.json           # Hook configuration
+├── agents/                  # Subagent definitions
+├── .mcp.json               # MCP server configuration
 ├── CHANGELOG.md
 └── README.md
 ```
 
-⚠️ **重要**：commands/、skills/、hooks/ 必須在根目錄，不要放進 .claude-plugin/
+**Important**: `commands/`, `skills/`, and `hooks/` must live at the plugin root, not inside `.claude-plugin/`.
 
-### plugin.json 規範
+### `plugin.json` basics
 
 ```json
 {
   "name": "my-plugin",
   "version": "1.0.0",
-  "description": "Plugin 功能描述",
+  "description": "What the plugin does",
   "author": {
-    "name": "作者名稱",
+    "name": "Author name",
     "email": "email@example.com"
   },
   "license": "MIT",
@@ -71,28 +71,28 @@ my-plugin/
 }
 ```
 
-### 四大組件
+### Four main building blocks
 
-| 組件 | 用途 | 觸發方式 | 檔案格式 |
-|------|------|----------|----------|
-| **Commands** | 用戶執行的斜線命令 | `/command` 手動 | Markdown |
-| **Skills** | 教 Claude 如何做事 | 自動根據上下文 | SKILL.md |
-| **Hooks** | 事件驅動自動化 | 系統事件觸發 | JSON + Shell |
-| **MCP** | 提供工具能力 | Claude 呼叫 | .mcp.json |
+| Component | Purpose | How it runs | Format |
+|-----------|---------|-------------|--------|
+| **Commands** | Slash commands users run | `/command` manually | Markdown |
+| **Skills** | Teach Claude how to behave | Auto from context | SKILL.md |
+| **Hooks** | Event-driven automation | System events | JSON + shell |
+| **MCP** | External tools | Claude invokes | `.mcp.json` |
 
 ---
 
-## Part 2: 發布 Plugin
+## Part 2: Publishing a plugin
 
-### 方式一：GitHub Marketplace（推薦）
+### Option A: GitHub marketplace (recommended)
 
-**Step 1: 建立 marketplace.json**
+**Step 1: Create `marketplace.json`**
 
 ```json
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "my-marketplace",
-  "description": "我的 Plugin 集合",
+  "description": "My plugin collection",
   "owner": {
     "name": "username",
     "email": "email@example.com"
@@ -102,14 +102,14 @@ my-plugin/
       "name": "my-plugin",
       "version": "1.0.0",
       "source": "./",
-      "description": "Plugin 描述",
+      "description": "Plugin description",
       "category": "development"
     }
   ]
 }
 ```
 
-**Step 2: 推送到 GitHub**
+**Step 2: Push to GitHub**
 
 ```bash
 git add .
@@ -119,252 +119,252 @@ git push origin main
 git push origin v1.0.0
 ```
 
-**Step 3: 用戶安裝**
+**Step 3: User installs**
 
 ```bash
-# 添加 marketplace
+# Add marketplace
 /plugin marketplace add owner/repo
 
-# 安裝 plugin
+# Install plugin
 /plugin install my-plugin@my-marketplace
 ```
 
-### 方式二：npm 發布
+### Option B: npm publish
 
 ```bash
-# 1. 在 package.json 中命名（加 claude-plugin- 前綴）
+# 1. Name in package.json (claude-plugin- prefix)
 {
   "name": "claude-plugin-my-plugin",
   "version": "1.0.0"
 }
 
-# 2. 發布
+# 2. Publish
 npm publish
 
-# 3. 用戶安裝
+# 3. User installs
 npm install -g claude-plugin-my-plugin
 ```
 
-### 方式三：直接分享
+### Option C: Direct share
 
 ```bash
-# 用戶下載後本地安裝
+# User downloads and installs locally
 /plugin install /path/to/my-plugin
 ```
 
 ---
 
-## Part 3: 安裝 Plugin
+## Part 3: Installing plugins
 
-### 從 Marketplace 安裝
+### From a marketplace
 
 ```bash
-# 1. 先添加 marketplace（只需一次）
+# 1. Add marketplace (once)
 /plugin marketplace add owner/repo
 
-# 2. 列出可用 plugins
+# 2. List available plugins
 /plugin marketplace list
 
-# 3. 安裝 plugin
+# 3. Install plugin
 /plugin install plugin-name@marketplace-name
 ```
 
-### 從 GitHub 直接安裝
+### From GitHub directly
 
 ```bash
-# 完整路徑安裝
+# Full path install
 /plugin install github:owner/repo#path/to/plugin
 
-# 範例
+# Example
 /plugin install github:miles990/evolve-plugin
 ```
 
-### 本地安裝
+### Local install
 
 ```bash
-# 從本地目錄安裝
+# From a local directory
 /plugin install /path/to/my-plugin
 ```
 
-### 查看已安裝
+### List installed plugins
 
 ```bash
-# 列出所有已安裝的 plugins
+# All installed plugins
 /plugin list
 
-# 查看詳細資訊
+# Details
 /plugin info plugin-name@marketplace
 ```
 
-### 解除安裝
+### Uninstall
 
 ```bash
-# 解除安裝特定 plugin
+# Uninstall a specific plugin
 /plugin uninstall plugin-name@marketplace
 
-# 範例
+# Example
 /plugin uninstall evolve@evolve-plugin
 
-# 強制解除安裝（忽略相依性）
+# Force (ignore dependencies)
 /plugin uninstall plugin-name@marketplace --force
 ```
 
-**解除安裝注意事項**：
-- 解除安裝不會移除 marketplace，只移除已安裝的 plugin
-- 如果其他 plugin 依賴此 plugin，會警告
-- 解除安裝後可隨時重新安裝
+**Uninstall notes**:
+- Uninstalling does not remove the marketplace entry; only the installed plugin
+- If other plugins depend on this one, you will see a warning
+- You can reinstall anytime
 
 ---
 
-## Part 4: 更新 Plugin
+## Part 4: Updating plugins
 
-### 檢查更新
+### Check for updates
 
 ```bash
-# 檢查所有 plugins 是否有更新
+# Check all plugins
 /plugin update --check
 
-# 檢查特定 plugin
+# Check one plugin
 /plugin update --check plugin-name@marketplace
 ```
 
-### 執行更新
+### Apply updates
 
 ```bash
-# 更新特定 plugin
+# Update one plugin
 /plugin update plugin-name@marketplace
 
-# 更新所有 plugins
+# Update all plugins
 /plugin update --all
 ```
 
-### 自動版本檢查流程
+### Automatic version check flow
 
 ```
-本地版本 → 遠端版本 → 比較
-    ↓           ↓
-plugin.json  GitHub API / marketplace.json
-    ↓
-若遠端較新 → 提示用戶更新
+Local version -> Remote version -> Compare
+    |                |
+plugin.json    GitHub API / marketplace.json
+    |
+If remote is newer -> prompt user to update
 ```
 
-### 手動版本檢查
+### Manual version check
 
 ```bash
-# 取得本地版本
+# Local version
 cat ~/.claude/plugins/installed_plugins.json | jq '.plugins["plugin@marketplace"][0].version'
 
-# 取得遠端版本
+# Remote version
 curl -s https://raw.githubusercontent.com/owner/repo/main/.claude-plugin/plugin.json | jq -r '.version'
 ```
 
 ---
 
-## Part 5: 版本控管
+## Part 5: Version management
 
-### 版本位置（必須同步）
+### Places versions must stay in sync
 
-| 位置 | 說明 |
-|------|------|
+| Location | Role |
+|----------|------|
 | `.claude-plugin/plugin.json` | Plugin manifest |
-| `.claude-plugin/marketplace.json` | Marketplace 索引 |
-| `skills/*/SKILL.md` | Skill 版本（如適用） |
-| `CHANGELOG.md` | 變更記錄 |
-| Git tag | 發布標記 |
+| `.claude-plugin/marketplace.json` | Marketplace index |
+| `skills/*/SKILL.md` | Skill version (if used) |
+| `CHANGELOG.md` | Change log |
+| Git tag | Release marker |
 
-### 語意化版本
+### Semantic versioning
 
 ```
 MAJOR.MINOR.PATCH
-  │     │     └── Bug fixes（修復）
-  │     └── 新功能（向後相容）
-  └── 破壞性變更（不相容）
+  |     |     └── Bug fixes
+  |     └── New features (backward compatible)
+  └── Breaking changes
 ```
 
-### 發布檢查清單
+### Release checklist
 
 ```bash
-# 更新所有版本位置
-- [ ] plugin.json → version
-- [ ] marketplace.json → plugins[].version
-- [ ] SKILL.md → version: (如適用)
-- [ ] CHANGELOG.md → 新條目
-- [ ] README.md → 版本徽章
+# Update every version location
+- [ ] plugin.json -> version
+- [ ] marketplace.json -> plugins[].version
+- [ ] SKILL.md -> version: (if applicable)
+- [ ] CHANGELOG.md -> new entry
+- [ ] README.md -> version badge
 
-# Git 操作
+# Git
 git add .
 git commit -m "chore: bump version to vX.Y.Z"
-git tag -a vX.Y.Z -m "Release vX.Y.Z: 描述"
+git tag -a vX.Y.Z -m "Release vX.Y.Z: description"
 git push origin main
 git push origin vX.Y.Z
 ```
 
-### CHANGELOG.md 格式
+### CHANGELOG format
 
 ```markdown
 ## [1.1.0] - 2026-01-16
 
 ### Added
-- 新功能描述
+- New feature description
 
 ### Changed
-- 變更描述
+- Change description
 
 ### Fixed
-- 修復描述
+- Fix description
 
 ### Security
-- 安全修復
+- Security fix
 ```
 
 ---
 
-## Part 6: 同步最新版本
+## Part 6: Syncing the latest version
 
-### 從主 repo 同步到獨立 plugin repo
+### Sync from main repo to a standalone plugin repo
 
-當 plugin 是從主專案分離出來時：
+When the plugin was split from a monorepo:
 
 ```bash
-# 1. 複製 skills 目錄
+# 1. Copy skills directory
 cp -r /path/to/main-project/skills /path/to/plugin-repo/
 
-# 2. 更新版本
-# 編輯 plugin.json, marketplace.json
+# 2. Bump versions
+# Edit plugin.json, marketplace.json
 
-# 3. 提交並推送
+# 3. Commit and push
 cd /path/to/plugin-repo
 git add -A
 git commit -m "chore: sync with main-project vX.Y.Z"
 git push origin main
 ```
 
-### 同步腳本範例
+### Example sync script
 
 ```bash
 #!/bin/bash
-# sync-plugin.sh - 同步 plugin 到獨立 repo
+# sync-plugin.sh - sync plugin to standalone repo
 
 MAIN_REPO="$1"
 PLUGIN_REPO="$2"
 VERSION="$3"
 
-# 複製 skills
+# Copy skills
 rm -rf "$PLUGIN_REPO/skills"
 cp -r "$MAIN_REPO/skills" "$PLUGIN_REPO/"
 
-# 更新版本
+# Update version
 sed -i '' "s/\"version\": \".*\"/\"version\": \"$VERSION\"/" \
     "$PLUGIN_REPO/.claude-plugin/plugin.json"
 
-# 提交
+# Commit
 cd "$PLUGIN_REPO"
 git add -A
 git commit -m "chore: sync with main-project v$VERSION"
 git push origin main
 ```
 
-### 自動同步（使用 GitHub Actions）
+### Automated sync (GitHub Actions)
 
 ```yaml
 # .github/workflows/sync-plugin.yml
@@ -401,17 +401,17 @@ jobs:
 
 ---
 
-## Part 7: Marketplace 管理
+## Part 7: Marketplace management
 
-### 建立自己的 Marketplace
+### Create your own marketplace
 
-**Step 1: 建立 marketplace.json**
+**Step 1: Create `marketplace.json`**
 
 ```json
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "my-marketplace",
-  "description": "我的 Plugin 集合",
+  "description": "My plugin collection",
   "owner": {
     "name": "username"
   },
@@ -420,21 +420,21 @@ jobs:
       "name": "plugin-a",
       "version": "1.0.0",
       "source": "./plugin-a",
-      "description": "Plugin A 描述",
+      "description": "Plugin A description",
       "category": "development"
     },
     {
       "name": "plugin-b",
       "version": "2.0.0",
       "source": "./plugin-b",
-      "description": "Plugin B 描述",
+      "description": "Plugin B description",
       "category": "productivity"
     }
   ]
 }
 ```
 
-**Step 2: 組織目錄結構**
+**Step 2: Organize directories**
 
 ```
 my-marketplace/
@@ -452,23 +452,23 @@ my-marketplace/
 └── README.md
 ```
 
-### 管理已添加的 Marketplace
+### Manage added marketplaces
 
 ```bash
-# 列出已添加的 marketplaces
+# List marketplaces
 /plugin marketplace list
 
-# 添加新 marketplace
+# Add marketplace
 /plugin marketplace add owner/repo
 
-# 移除 marketplace
+# Remove marketplace
 /plugin marketplace remove marketplace-name
 
-# 更新 marketplace 索引
+# Refresh marketplace index
 /plugin marketplace refresh
 ```
 
-### 已知 Marketplaces 儲存位置
+### Where known marketplaces are stored
 
 ```
 ~/.claude/plugins/known_marketplaces.json
@@ -476,21 +476,21 @@ my-marketplace/
 
 ---
 
-## Part 8: Hooks 開發
+## Part 8: Hook development
 
-### Hook 事件類型
+### Hook event types
 
-| 事件 | 時機 | 用途 |
-|------|------|------|
-| **PreToolUse** | 工具執行前 | 阻擋/修改工具調用 |
-| **PostToolUse** | 工具執行後 | 後處理、通知 |
-| **UserPromptSubmit** | 用戶輸入時 | 輸入驗證 |
-| **SessionStart** | 會話開始 | 初始化 |
-| **SessionEnd** | 會話結束 | 清理 |
-| **Stop** | AI 完成回應 | 後處理 |
-| **SubagentStop** | Subagent 完成 | 子任務處理 |
+| Event | When | Use |
+|-------|------|-----|
+| **PreToolUse** | Before a tool runs | Block or modify tool calls |
+| **PostToolUse** | After a tool runs | Post-processing, notifications |
+| **UserPromptSubmit** | User submits input | Input validation |
+| **SessionStart** | Session starts | Initialization |
+| **SessionEnd** | Session ends | Cleanup |
+| **Stop** | AI finishes response | Post-processing |
+| **SubagentStop** | Subagent finishes | Subtask handling |
 
-### hooks.json 配置
+### `hooks.json` example
 
 ```json
 {
@@ -514,7 +514,7 @@ my-marketplace/
 }
 ```
 
-### 範例 Hook：保護敏感檔案
+### Example hook: protect sensitive files
 
 ```bash
 #!/bin/bash
@@ -530,7 +530,7 @@ fi
 exit 0
 ```
 
-### 範例 Hook：自動格式化
+### Example hook: auto-format
 
 ```bash
 #!/bin/bash
@@ -547,65 +547,65 @@ exit 0
 
 ---
 
-## Part 9: 常見錯誤與解決
+## Part 9: Common issues and fixes
 
-### Sharp Edges
+### Sharp edges
 
-#### SE-1: 目錄結構錯誤
-- **嚴重度**: critical
-- **症狀**: `/plugin list` 顯示 plugin 但命令不存在
-- **原因**: commands/、skills/ 放進 .claude-plugin/ 目錄
-- **解決**: 把所有組件目錄移到 plugin 根目錄
+#### SE-1: Wrong directory layout
+- **Severity**: critical
+- **Symptom**: `/plugin list` shows the plugin but commands are missing
+- **Cause**: `commands/` or `skills/` were placed under `.claude-plugin/`
+- **Fix**: Move component folders to the plugin root
 
-#### SE-2: 版本不同步
-- **嚴重度**: high
-- **症狀**: `/plugin list` 與 CHANGELOG 版本不符
-- **原因**: plugin.json、marketplace.json 版本不一致
-- **解決**: 建立發布 checklist，每次都檢查所有位置
+#### SE-2: Version drift
+- **Severity**: high
+- **Symptom**: `/plugin list` version does not match CHANGELOG
+- **Cause**: `plugin.json` and `marketplace.json` versions differ
+- **Fix**: Use a release checklist and verify every location
 
-#### SE-3: Hook 權限過高
-- **嚴重度**: high
-- **症狀**: 意外的檔案變更、數據丟失
-- **原因**: Hook 以用戶權限執行，範圍太廣
-- **解決**: 精確指定 Hook 目標，加入安全檢查
+#### SE-3: Hooks with too much power
+- **Severity**: high
+- **Symptom**: Unexpected file changes or data loss
+- **Cause**: Hooks run as the user with a broad scope
+- **Fix**: Narrow hook targets and add safety checks
 
-#### SE-4: MCP Prompt Injection
-- **嚴重度**: critical
-- **症狀**: Claude 執行意外操作
-- **原因**: MCP 從不信任來源獲取內容
-- **解決**: 只使用信任來源的 MCP
+#### SE-4: MCP prompt injection
+- **Severity**: critical
+- **Symptom**: Claude performs unintended actions
+- **Cause**: MCP content from untrusted sources
+- **Fix**: Only use MCP from trusted sources
 
-### 常見錯誤對照表
+### Quick reference
 
-| 錯誤 | 正確做法 |
-|------|----------|
-| 把 commands/ 放進 .claude-plugin/ | 放在 plugin 根目錄 |
-| 版本號不一致 | 同步更新所有位置 |
-| Hook 範圍太廣 | 精確指定目標工具 |
-| 忘記 git tag | 每次發布都要 tag |
-| 直接上線未測試 | 先用 --plugin-dir 測試 |
+| Mistake | Correct approach |
+|---------|------------------|
+| Putting `commands/` under `.claude-plugin/` | Put it at the plugin root |
+| Mismatched version numbers | Update all locations together |
+| Hooks too broad | Target specific tools |
+| Forgetting git tags | Tag every release |
+| Shipping untested code | Test with `--plugin-dir` first |
 
 ---
 
-## Part 10: 本地測試
+## Part 10: Local testing
 
 ```bash
-# 測試 plugin（不安裝）
+# Test plugin without installing
 claude-code --plugin-dir /path/to/my-plugin
 
-# 驗證結構
+# Verify structure
 tree /path/to/my-plugin
 
-# 檢查 plugin.json 語法
+# Validate plugin.json
 cat /path/to/my-plugin/.claude-plugin/plugin.json | jq .
 
-# 驗證 hooks
+# Validate hooks
 cat /path/to/my-plugin/hooks/hooks.json | jq .
 ```
 
 ---
 
-## 官方文檔
+## Official documentation
 
 - [Plugins](https://code.claude.com/docs/en/plugins)
 - [Plugins Reference](https://code.claude.com/docs/en/plugins-reference)
@@ -617,8 +617,8 @@ cat /path/to/my-plugin/hooks/hooks.json | jq .
 - [Subagents](https://code.claude.com/docs/en/sub-agents)
 - [Slash Commands](https://code.claude.com/docs/en/slash-commands)
 
-## 延伸資源
+## Additional resources
 
 - [Claude Code GitHub](https://github.com/anthropics/claude-code)
 - [Official Plugins](https://github.com/anthropics/claude-plugins-official)
-- evolve-plugin 範例：參考 `evolve-plugin/.claude-plugin/` 結構
+- evolve-plugin example: see `evolve-plugin/.claude-plugin/` layout

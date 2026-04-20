@@ -1,49 +1,49 @@
 # 🤖 Auto-Dev System
 
-> Human-in-the-Loop 自動化開發系統
+> Human-in-the-loop automated development
 >
-> 使用 [claude-code-action](https://github.com/anthropics/claude-code-action) 官方 GitHub Action
+> Uses the official [claude-code-action](https://github.com/anthropics/claude-code-action) GitHub Action
 
-## 快速安裝
+## Quick install
 
-### 方式 1: API Key
+### Option 1: API key
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/miles990/claude-software-skills/main/scripts/setup-auto-dev-apikey.sh | bash
 ```
 
-安裝後：
-1. 到 https://console.anthropic.com/settings/keys 取得 API Key
-2. 設定 GitHub Secret：`ANTHROPIC_API_KEY`
+After install:
+1. Get an API key at https://console.anthropic.com/settings/keys
+2. Add GitHub Secret: `ANTHROPIC_API_KEY`
 
-### 方式 2: Claude Max（推薦）
+### Option 2: Claude Max (recommended)
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/miles990/claude-software-skills/main/scripts/setup-auto-dev-max.sh | bash
 ```
 
-安裝後：
+After install:
 ```bash
 claude /install-github-app
 ```
-這會自動設定 `CLAUDE_CODE_OAUTH_TOKEN`（費用包含在 Max 訂閱中）
+This configures `CLAUDE_CODE_OAUTH_TOKEN` (usage included in the Max subscription).
 
 ---
 
-## 比較
+## Comparison
 
-| 方式 | 費用 | 設定難度 | 適合 |
-|------|------|----------|------|
-| API Key | 用量計費 | 簡單 | 一般開發者 |
-| Claude Max | 訂閱包含 | 需安裝 App | Max 訂閱用戶 |
+| Option | Cost | Setup | Best for |
+|--------|------|--------|----------|
+| API key | Pay per use | Simple | Most developers |
+| Claude Max | Included in subscription | Requires app install | Max subscribers |
 
 ---
 
-## 概述
+## Overview
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│                        Auto-Dev 架構                            │
+│                        Auto-Dev architecture                     │
 │                                                                 │
 │  ┌─────────────┐     ┌─────────────┐     ┌─────────────┐       │
 │  │   Issue     │     │   GitHub    │     │   Claude    │       │
@@ -53,8 +53,8 @@ claude /install-github-app
 │                             │                    │              │
 │                             ↓                    ↓              │
 │                      ┌─────────────┐     ┌─────────────┐       │
-│                      │     PR      │←────│   程式碼    │       │
-│                      │   Review    │     │   變更      │       │
+│                      │     PR      │←────│   Code      │       │
+│                      │   Review    │     │   changes   │       │
 │                      └──────┬──────┘     └─────────────┘       │
 │                             │                                   │
 │               ┌─────────────┼─────────────┐                    │
@@ -66,235 +66,235 @@ claude /install-github-app
 │              │             │             │                     │
 │              ↓             ↓             ↓                     │
 │         ┌─────────┐   ┌─────────┐   ┌─────────┐               │
-│         │ 記錄成功 │   │繼續迭代 │   │ 記錄失敗│               │
-│         │  經驗   │   │         │   │  教訓   │               │
+│         │ Record  │   │ Continue│   │ Record  │               │
+│         │ success │   │ iterate │   │ failure │               │
 │         └─────────┘   └─────────┘   └─────────┘               │
 │                             │                                   │
-│              .claude/memory/ ← 累積經驗                        │
+│              .claude/memory/ ← cumulative experience           │
 └─────────────────────────────────────────────────────────────────┘
 ```
 
-## 快速開始
+## Quick start
 
-### 1. 設定 Secrets
+### 1. Configure secrets
 
-在 Repository Settings → Secrets and variables → Actions 加入：
+In Repository Settings → Secrets and variables → Actions add:
 
 ```
 ANTHROPIC_API_KEY=sk-ant-...
 ```
 
-### 2. 建立 Issue 觸發自動開發
+### 2. Open an issue to trigger auto-dev
 
 ```markdown
-Title: 實作用戶登入功能
+Title: Implement user login
 
 Body:
-需求：
-- Email + 密碼登入
-- JWT Token 驗證
-- 記住我功能
+Requirements:
+- Email + password login
+- JWT validation
+- Remember me
 
-驗收標準：
-- 登入成功返回 token
-- 錯誤時顯示適當訊息
-- 有單元測試
+Acceptance:
+- Successful login returns token
+- Errors show clear messages
+- Unit tests included
 ```
 
-然後加上 `auto-dev` label。
+Then add the `auto-dev` label.
 
-### 3. 等待 PR
+### 3. Wait for the PR
 
-Bot 會自動：
-1. 建立分支
-2. 執行 Claude Code + Evolve
-3. 提交程式碼
-4. 建立 PR
+The bot will:
+1. Create a branch
+2. Run Claude Code + Evolve
+3. Commit changes
+4. Open a PR
 
-### 4. 審查與互動
+### 4. Review and interact
 
-#### ✅ 滿意 → 直接合併
-系統會自動記錄成功經驗
+#### ✅ Happy path → merge
+Success is recorded in memory automatically.
 
-#### ✏️ 需要調整 → 留言
+#### ✏️ Needs changes → comment
 ```
-/evolve 不要用 session，改用 JWT，另外加上 refresh token
+/evolve Do not use sessions; use JWT and add a refresh token
 ```
-Bot 會繼續在同一個 PR 上迭代
+The bot keeps iterating on the same PR.
 
-#### ➕ 發現新需求 → 開新 Issue
-加上 `auto-dev` label，會自動加入佇列
+#### ➕ New scope → new issue
+Add the `auto-dev` label; it joins the queue.
 
-#### ❌ 完全不行 → 關閉 PR
-系統會記錄失敗經驗，避免重蹈覆轍
+#### ❌ Reject → close PR
+Failure is recorded so similar mistakes are avoided later.
 
 ---
 
-## 觸發方式
+## Triggers
 
-### 方式 1: Issue Label（推薦）
+### 1. Issue label (recommended)
 
-1. 建立 Issue 描述目標
-2. 加上 `auto-dev` label
-3. 可選：加上 `priority:high` / `priority:low`
+1. Open an issue describing the goal
+2. Add the `auto-dev` label
+3. Optional: `priority:high` / `priority:low`
 
-### 方式 2: Comment 命令
+### 2. Comment command
 
-在任何 Issue 或 PR 上：
+On any issue or PR:
 ```
-/evolve 實作 XXX 功能
+/evolve Implement feature X
 
-可選參數：
+Optional flags:
 --priority=high
 --max-iterations=15
 ```
 
-### 方式 3: 手動觸發
+### 3. Manual run
 
 Actions → Auto Development → Run workflow
 
 ---
 
-## Labels 說明
+## Labels
 
-| Label | 說明 |
-|-------|------|
-| `auto-dev` | 觸發自動開發 |
-| `🤖 auto-dev` | 由 bot 建立的 PR |
-| `priority:high` | 高優先級（佇列優先處理） |
-| `priority:low` | 低優先級 |
-| `⏳ processing` | 正在處理中 |
-| `needs-review` | 等待人類審查 |
+| Label | Meaning |
+|-------|---------|
+| `auto-dev` | Triggers auto-dev |
+| `🤖 auto-dev` | PR created by the bot |
+| `priority:high` | Higher priority in queue |
+| `priority:low` | Lower priority |
+| `⏳ processing` | In progress |
+| `needs-review` | Waiting for human review |
 
 ---
 
-## 記憶系統
+## Memory system
 
-所有經驗都儲存在 `.claude/memory/`：
+Experience is stored under `.claude/memory/`:
 
 ```
 .claude/memory/
-├── index.md              # 快速索引
-├── learnings/            # 成功經驗
+├── index.md              # Quick index
+├── learnings/            # Success patterns
 │   └── 2025-01-05-user-login.md
-├── failures/             # 失敗教訓
+├── failures/             # Failure lessons
 │   └── 2025-01-04-oauth-attempt.md
-├── decisions/            # 技術決策
-├── patterns/             # 推理模式
-└── strategies/           # 策略記錄
+├── decisions/            # Technical decisions
+├── patterns/             # Recurring patterns
+└── strategies/           # Strategy notes
 ```
 
-### 經驗會被學習
+### Learning from experience
 
 ```markdown
-# 範例：learnings/2025-01-05-jwt-preference.md
+# Example: learnings/2025-01-05-jwt-preference.md
 
-## 情境
-實作認證功能
+## Context
+Building authentication
 
-## 人類 Feedback
-「不要用 session，這個專案統一用 JWT」
+## Human feedback
+“Do not use sessions; this project standardizes on JWT.”
 
-## 學到的偏好
-- 此專案的認證策略：JWT only
+## Preference learned
+- Auth strategy for this project: JWT only
 
-## 影響
-未來所有 auth 相關任務優先選擇 JWT
+## Impact
+Future auth-related tasks should prefer JWT
 ```
 
 ---
 
-## 工作流程檔案
+## Workflow files
 
-| 檔案 | 功能 |
+| File | Role |
 |------|------|
-| `auto-dev.yml` | 主要執行流程 |
-| `auto-dev-feedback.yml` | 處理審查 feedback |
-| `auto-dev-queue.yml` | 任務佇列管理（每小時） |
+| `auto-dev.yml` | Main execution flow |
+| `auto-dev-feedback.yml` | Review feedback handling |
+| `auto-dev-queue.yml` | Queue management (hourly) |
 
 ---
 
-## 配置選項
+## Configuration
 
-### 調整最大執行時間
+### Max runtime
 
 ```yaml
 # auto-dev.yml
-timeout-minutes: 60  # 預設 1 小時
+timeout-minutes: 60  # Default 1 hour
 ```
 
-### 調整最大迭代次數
+### Max iterations
 
 ```yaml
-# 透過 label 或 command 參數
-/evolve --max-iterations=20 實作 XXX
+# Via label or command
+/evolve --max-iterations=20 Implement X
 ```
 
-### 調整佇列處理頻率
+### Queue frequency
 
 ```yaml
 # auto-dev-queue.yml
 schedule:
-  - cron: '0 */2 * * *'  # 改為每 2 小時
+  - cron: '0 */2 * * *'  # Every 2 hours
 ```
 
 ---
 
-## 安全注意事項
+## Security notes
 
-1. **API Key 保護**
-   - 使用 GitHub Secrets
-   - 不要在程式碼中硬編碼
+1. **API keys**
+   - Use GitHub Secrets
+   - Never hard-code keys in the repo
 
-2. **執行限制**
-   - 設定合理的 timeout
-   - 設定最大迭代次數
-   - 監控 API 使用量
+2. **Execution limits**
+   - Set reasonable timeouts
+   - Cap max iterations
+   - Monitor API usage
 
-3. **審查 Gate**
-   - 所有變更都需要 PR
-   - 建議開啟 Branch Protection
-   - 重要分支要求 approval
+3. **Review gate**
+   - All changes go through PRs
+   - Enable branch protection where appropriate
+   - Require approval on important branches
 
-4. **成本控制**
-   - 監控 Anthropic API 費用
-   - 設定 budget alerts
-   - 考慮使用較便宜的模型做初步工作
-
----
-
-## 常見問題
-
-### Q: 執行失敗怎麼辦？
-A: 檢查 Actions log，常見原因：
-- API Key 無效
-- 目標描述不夠明確
-- 達到迭代上限
-
-### Q: 如何停止執行中的任務？
-A: 到 Actions 頁面 Cancel workflow run
-
-### Q: PR 太大怎麼辦？
-A: 將目標拆分成更小的 Issues
-
-### Q: 如何讓 bot 記住我的偏好？
-A: 在 PR review 時明確說明，bot 會記錄到 memory
+4. **Cost control**
+   - Monitor Anthropic API spend
+   - Set budget alerts
+   - Consider cheaper models for exploratory steps
 
 ---
 
-## 整合 GitHub Copilot
+## FAQ
 
-由於記憶存在 `.claude/memory/`，GitHub Copilot 也能讀取：
+### Q: The run failed—what now?
+A: Check Actions logs. Common causes:
+- Invalid API key
+- Vague goal description
+- Hit iteration limit
+
+### Q: How do I stop a running job?
+A: Cancel the workflow run on the Actions tab.
+
+### Q: The PR is too large?
+A: Split the work into smaller issues.
+
+### Q: How does the bot remember preferences?
+A: Explain clearly in PR review; entries go into memory.
+
+---
+
+## GitHub Copilot integration
+
+Because memory lives under `.claude/memory/`, Copilot can read it too:
 
 ```
 .github/
-├── copilot/              # Copilot 設定
-│   └── instructions.md   # 可引用 memory
-└── memory/               # 共享記憶
+├── copilot/              # Copilot config
+│   └── instructions.md   # Can reference memory
+└── memory/               # Shared memory
     └── ...
 ```
 
-在 `instructions.md` 中：
+In `instructions.md`:
 ```markdown
-參考 .claude/memory/ 了解專案偏好和過去經驗
+See `.claude/memory/` for project preferences and past experience.
 ```

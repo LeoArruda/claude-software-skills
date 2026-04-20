@@ -1,48 +1,48 @@
-# 輸出模板 v3.0
+# Output template v3.0
 
-> 三層架構：Executive Dashboard → Architecture Story → Deep Dive Reference
+> Three-layer structure: Executive Dashboard → Architecture Story → Deep Dive Reference
 
-完整的 Markdown 報告模板：
+Full Markdown report template:
 
 ```markdown
-# 專案分析報告：{專案名稱}
+# Project analysis report: {project_name}
 
-> 分析日期：{YYYY-MM-DD}
-> 分析版本：v3.0
-> 分析工具：Claude Code analyze-repo Skill
+> Analysis date: {YYYY-MM-DD}
+> Report version: v3.0
+> Tool: Claude Code analyze-repo Skill
 
 ---
 
 # 📊 LAYER 1: Executive Dashboard
 
-> 預計閱讀時間：5-10 分鐘
+> Estimated reading time: 5–10 minutes
 
 ---
 
 ## 1. Executive Summary
 
-### 一句話定位
+### One-line positioning
 
-> {用一句話描述這個專案的核心功能、目標使用者和獨特價值}
+> {One sentence on core functionality, target users, and unique value}
 
-### 健康分數總覽
+### Health score overview
 
 ```
-綜合健康分數：{score}/100  {健康等級}
+Overall health score: {score}/100  {health_tier}
 
-可維護性      ████████░░  {score1}/100
-可測試性      ███████░░░  {score2}/100
-可擴展性      ██████░░░░  {score3}/100
-安全性        █████████░  {score4}/100
-文件完整度    ███████░░░  {score5}/100
-架構健康度    ████████░░  {score6}/100
-依賴健康度    ██████░░░░  {score7}/100
-開發者體驗    ███████░░░  {score8}/100
+Maintainability     ████████░░  {score1}/100
+Testability         ███████░░░  {score2}/100
+Scalability         ██████░░░░  {score3}/100
+Security            █████████░  {score4}/100
+Documentation       ███████░░░  {score5}/100
+Architecture health ████████░░  {score6}/100
+Dependency health   ██████░░░░  {score7}/100
+Developer experience ███████░░░  {score8}/100
 ```
 
-### 關鍵發現（Top 5）
+### Key findings (Top 5)
 
-| # | 發現 | 影響 | 緊急度 |
+| # | Finding | Impact | Urgency |
 |---|------|------|--------|
 | 1 | {finding1} | {impact} | 🔴 |
 | 2 | {finding2} | {impact} | 🟠 |
@@ -50,28 +50,28 @@
 | 4 | {finding4} | {impact} | 🟡 |
 | 5 | {finding5} | {impact} | 🟢 |
 
-### 立即行動建議
+### Immediate recommendations
 
-1. 🔴 **{action1}** — {原因} → [詳見 REC-001](#rec-001)
-2. 🟠 **{action2}** — {原因} → [詳見 REC-002](#rec-002)
-3. 🟡 **{action3}** — {原因} → [詳見 REC-003](#rec-003)
+1. 🔴 **{action1}** — {reason} → [See REC-001](#rec-001)
+2. 🟠 **{action2}** — {reason} → [See REC-002](#rec-002)
+3. 🟡 **{action3}** — {reason} → [See REC-003](#rec-003)
 
 ---
 
-## 2. 30 秒專案摘要
+## 2. 30-second project summary
 
-### 這是什麼？
+### What is it?
 
-> {一段話描述專案的本質和目的}
+> {One paragraph on what the project is and why it exists}
 
-### 解決什麼問題？
+### What problem does it solve?
 
-| 問題 | 本專案的解法 |
+| Problem | How this project addresses it |
 |------|--------------|
 | {problem1} | {solution1} |
 | {problem2} | {solution2} |
 
-### 技術棧一覽
+### Tech stack overview
 
 ```mermaid
 flowchart LR
@@ -91,44 +91,44 @@ flowchart LR
     B --> I
 ```
 
-### 競品定位
+### Competitive positioning
 
 ```mermaid
 quadrantChart
-    title 競品定位矩陣
-    x-axis 低複雜度 --> 高複雜度
-    y-axis 低市場需求 --> 高市場需求
-    quadrant-1 明星產品
-    quadrant-2 潛力股
-    quadrant-3 邊緣產品
-    quadrant-4 現金牛
-    "{本專案}": [{x}, {y}]
-    "{競品A}": [{x}, {y}]
-    "{競品B}": [{x}, {y}]
+    title Competitive positioning matrix
+    x-axis Low complexity --> High complexity
+    y-axis Low market demand --> High market demand
+    quadrant-1 Stars
+    quadrant-2 Question marks
+    quadrant-3 Dogs
+    quadrant-4 Cash cows
+    "{project_name}": [{x}, {y}]
+    "{competitor_a}": [{x}, {y}]
+    "{competitor_b}": [{x}, {y}]
 ```
 
 ---
 
 # 🏗️ LAYER 2: Architecture Story
 
-> 預計閱讀時間：30-60 分鐘
+> Estimated reading time: 30–60 minutes
 
 ---
 
-## 3. 🎬 How It Works（專案如何運作）
+## 3. 🎬 How It Works (how the project runs)
 
-### 核心流程敘事
+### Core flow narrative
 
-**一句話版本**：
-> 用戶 {觸發方式} → 系統 {處理流程} → 產生 {最終結果}
+**One-liner**:
+> User {trigger} → system {processing} → {final_result}
 
-**詳細說明**：
+**Detail**:
 
-{2-3 段話描述專案核心運作邏輯}
+{2–3 paragraphs on core runtime behavior}
 
-### 主要使用場景
+### Main scenarios
 
-#### 場景 1: {場景名稱}
+#### Scenario 1: {scenario_name}
 
 ```mermaid
 sequenceDiagram
@@ -138,91 +138,91 @@ sequenceDiagram
     participant Service
     participant DB
 
-    Note over User,DB: {場景描述}
-    User->>Frontend: 1. {動作}
-    Frontend->>API: 2. {API 呼叫}
-    API->>Service: 3. {處理}
-    Service->>DB: 4. {資料操作}
-    DB-->>Service: 5. {回傳}
-    Service-->>API: 6. {結果}
-    API-->>Frontend: 7. {回應}
-    Frontend-->>User: 8. {展示}
+    Note over User,DB: {scenario_description}
+    User->>Frontend: 1. {action}
+    Frontend->>API: 2. {api_call}
+    API->>Service: 3. {processing}
+    Service->>DB: 4. {data_operation}
+    DB-->>Service: 5. {return_value}
+    Service-->>API: 6. {result}
+    API-->>Frontend: 7. {response}
+    Frontend-->>User: 8. {presentation}
 ```
 
-#### 場景 2: {場景名稱}
+#### Scenario 2: {scenario_name}
 
 ```mermaid
 sequenceDiagram
-    {類似格式}
+    {same_pattern_as_above}
 ```
 
-### 關鍵程式碼入口點
+### Key code entry points
 
-| 階段 | 檔案位置 | 函數/類別 | 職責 |
+| Stage | File | Function/class | Responsibility |
 |------|----------|-----------|------|
-| 🚪 入口 | `{file}:{line}` | `{function}` | {說明} |
-| 🛣️ 路由 | `{file}:{line}` | `{function}` | {說明} |
-| ⚙️ 邏輯 | `{file}:{line}` | `{function}` | {說明} |
-| 💾 資料 | `{file}:{line}` | `{class}` | {說明} |
+| 🚪 Entry | `{file}:{line}` | `{function}` | {description} |
+| 🛣️ Routing | `{file}:{line}` | `{function}` | {description} |
+| ⚙️ Logic | `{file}:{line}` | `{function}` | {description} |
+| 💾 Data | `{file}:{line}` | `{class}` | {description} |
 
-### 核心演算法/邏輯
+### Core algorithms / logic
 
-**{演算法名稱}**
+**{algorithm_name}**
 
-用途：{解決什麼問題}
+Purpose: {problem_solved}
 
 ```
-虛擬碼：
-1. {步驟 1}
-2. {步驟 2}
-3. {步驟 3}
+Pseudocode:
+1. {step_1}
+2. {step_2}
+3. {step_3}
 ```
 
-實際程式碼位置：`{file}:{start_line}-{end_line}`
+Code reference: `{file}:{start_line}-{end_line}`
 
 ---
 
 ## 4. Project Overview
 
-### 基本資訊
+### Basics
 
-| 項目 | 內容 |
+| Field | Value |
 |------|------|
-| 專案名稱 | {name} |
-| 描述 | {description} |
-| 主要語言 | {language} ({percentage}%) |
-| 程式碼行數 | {total_loc} |
-| 授權 | {license} |
-| 建立時間 | {created_at} |
-| 最後更新 | {updated_at} |
+| Project name | {name} |
+| Description | {description} |
+| Primary languages | {language} ({percentage}%) |
+| Lines of code | {total_loc} |
+| License | {license} |
+| Created | {created_at} |
+| Last updated | {updated_at} |
 | GitHub Stars | {stars} |
 | Contributors | {contributors_count} |
 
-### 技術棧摘要
+### Tech stack summary
 
-| 類別 | 技術 | 版本 |
+| Category | Technology | Version |
 |------|------|------|
-| 程式語言 | {languages} | {versions} |
-| 框架 | {frameworks} | {versions} |
-| 建置工具 | {build_tools} | {versions} |
-| 測試框架 | {test_frameworks} | {versions} |
-| 資料庫 | {databases} | {versions} |
-| 基礎設施 | {infra} | - |
+| Languages | {languages} | {versions} |
+| Frameworks | {frameworks} | {versions} |
+| Build | {build_tools} | {versions} |
+| Test | {test_frameworks} | {versions} |
+| Databases | {databases} | {versions} |
+| Infrastructure | {infra} | - |
 
-### 專案生命週期階段
+### Project lifecycle stage
 
 ```mermaid
 flowchart LR
-    A[🌱 初創] --> B[📈 成長]
-    B --> C[🏢 成熟]
-    C --> D[🔧 維護]
-    D --> E[📉 衰退]
+    A[🌱 Seed] --> B[📈 Growth]
+    B --> C[🏢 Mature]
+    C --> D[🔧 Maintenance]
+    D --> E[📉 Decline]
 
     style {current_stage} fill:#4CAF50,color:#fff
 ```
 
-**當前階段**: {stage_name}
-**判斷依據**: {stage_reason}
+**Current stage**: {stage_name}
+**Rationale**: {stage_reason}
 
 ---
 
@@ -230,221 +230,221 @@ flowchart LR
 
 ### 5.1 System Context Diagram (C4 Level 1)
 
-> **圖表說明**：{2-3 句話解釋這張圖在說什麼}
+> **Caption**: {2–3 sentences on what this diagram shows}
 
 ```mermaid
 C4Context
-    title System Context Diagram - {專案名稱}
+    title System Context Diagram - {project_name}
 
-    Person(user, "終端使用者", "使用系統的主要角色")
-    Person(admin, "管理員", "系統管理者")
+    Person(user, "End user", "Primary person using the system")
+    Person(admin, "Administrator", "Operations / admin role")
 
-    System(system, "{專案名稱}", "核心系統描述")
+    System(system, "{project_name}", "Core system description")
 
-    System_Ext(ext1, "外部系統 1", "第三方服務")
-    System_Ext(ext2, "外部系統 2", "資料來源")
+    System_Ext(ext1, "External system 1", "Third-party service")
+    System_Ext(ext2, "External system 2", "Data source")
 
-    Rel(user, system, "使用")
-    Rel(admin, system, "管理")
-    Rel(system, ext1, "整合", "API")
-    Rel(system, ext2, "讀取", "HTTP")
+    Rel(user, system, "Uses")
+    Rel(admin, system, "Administers")
+    Rel(system, ext1, "Integrates", "API")
+    Rel(system, ext2, "Reads", "HTTP")
 ```
 
 ### 5.2 Container Diagram (C4 Level 2)
 
-> **圖表說明**：{2-3 句話解釋這張圖在說什麼}
+> **Caption**: {2–3 sentences on what this diagram shows}
 
 ```mermaid
 C4Container
-    title Container Diagram - {專案名稱}
+    title Container Diagram - {project_name}
 
-    Person(user, "使用者")
+    Person(user, "User")
 
-    System_Boundary(system, "{專案名稱}") {
-        Container(web, "Web Application", "React/Vue", "使用者介面")
-        Container(api, "API Server", "Node.js/Python", "業務邏輯處理")
-        Container(worker, "Background Worker", "同技術棧", "非同步任務處理")
-        ContainerDb(db, "Database", "PostgreSQL", "持久化儲存")
-        ContainerDb(cache, "Cache", "Redis", "快取層")
+    System_Boundary(system, "{project_name}") {
+        Container(web, "Web Application", "React/Vue", "User interface")
+        Container(api, "API Server", "Node.js/Python", "Business logic")
+        Container(worker, "Background Worker", "Same stack", "Async jobs")
+        ContainerDb(db, "Database", "PostgreSQL", "Persistent storage")
+        ContainerDb(cache, "Cache", "Redis", "Cache layer")
     }
 
-    Rel(user, web, "使用", "HTTPS")
-    Rel(web, api, "呼叫", "REST/GraphQL")
-    Rel(api, db, "讀寫")
-    Rel(api, cache, "快取")
-    Rel(api, worker, "派發任務", "Message Queue")
+    Rel(user, web, "Uses", "HTTPS")
+    Rel(web, api, "Calls", "REST/GraphQL")
+    Rel(api, db, "Read/write")
+    Rel(api, cache, "Cache")
+    Rel(api, worker, "Enqueue jobs", "Message queue")
 ```
 
 ### 5.3 Component Diagram (C4 Level 3)
 
-> **圖表說明**：{2-3 句話解釋這張圖在說什麼}
+> **Caption**: {2–3 sentences on what this diagram shows}
 
 ```mermaid
 C4Component
     title Component Diagram - API Server
 
     Container_Boundary(api, "API Server") {
-        Component(routes, "Routes/Controllers", "處理 HTTP 請求")
-        Component(services, "Services", "業務邏輯")
-        Component(repos, "Repositories", "資料存取")
-        Component(models, "Models", "資料模型")
-        Component(utils, "Utilities", "共用工具")
+        Component(routes, "Routes/Controllers", "HTTP handling")
+        Component(services, "Services", "Business logic")
+        Component(repos, "Repositories", "Data access")
+        Component(models, "Models", "Domain models")
+        Component(utils, "Utilities", "Shared helpers")
     }
 
-    Rel(routes, services, "呼叫")
-    Rel(services, repos, "使用")
-    Rel(repos, models, "操作")
-    Rel(services, utils, "使用")
+    Rel(routes, services, "Invokes")
+    Rel(services, repos, "Uses")
+    Rel(repos, models, "Maps")
+    Rel(services, utils, "Uses")
 ```
 
-### 5.4 架構模式識別
+### 5.4 Architecture pattern identification
 
-**主要架構模式**: {pattern_name}
+**Primary pattern**: {pattern_name}
 
-| 模式 | 說明 | 符合度 |
+| Pattern | Description | Fit |
 |------|------|--------|
-| {pattern1} | {description} | ✅ 高 |
-| {pattern2} | {description} | ⚠️ 部分 |
-| {pattern3} | {description} | ❌ 無 |
+| {pattern1} | {description} | ✅ Strong |
+| {pattern2} | {description} | ⚠️ Partial |
+| {pattern3} | {description} | ❌ None |
 
-### 5.5 主要元件與職責
+### 5.5 Main components and responsibilities
 
-| 元件 | 路徑 | 職責 | 依賴 |
+| Component | Path | Responsibility | Dependencies |
 |------|------|------|------|
 | {component1} | `src/{path}` | {responsibility} | {deps} |
 | {component2} | `src/{path}` | {responsibility} | {deps} |
 
-### 5.6 技術選型分析 🆕
+### 5.6 Technology choices 🆕
 
-> **為什麼選這些技術？**
+> **Why these technologies?**
 
-| 技術 | 選擇 | 為什麼選它 | 替代方案 |
+| Area | Choice | Rationale | Alternatives |
 |------|------|------------|----------|
-| 語言 | {lang} | {reason} | {alternatives} |
-| 框架 | {framework} | {reason} | {alternatives} |
-| 資料庫 | {db} | {reason} | {alternatives} |
-| 部署 | {deploy} | {reason} | {alternatives} |
+| Language | {lang} | {reason} | {alternatives} |
+| Framework | {framework} | {reason} | {alternatives} |
+| Database | {db} | {reason} | {alternatives} |
+| Deployment | {deploy} | {reason} | {alternatives} |
 
-### 5.7 架構決策記錄 (ADR) 推測
+### 5.7 Inferred architecture decision records (ADR)
 
-| ADR | 決策 | 可能原因 | 影響 |
+| ADR | Decision | Likely reason | Impact |
 |-----|------|----------|------|
-| ADR-001 | 選用 {framework} | {reason} | {impact} |
-| ADR-002 | 採用 {pattern} | {reason} | {impact} |
+| ADR-001 | Adopt {framework} | {reason} | {impact} |
+| ADR-002 | Use {pattern} | {reason} | {impact} |
 
-### 5.8 目錄結構
+### 5.8 Directory layout
 
 ```
-{專案名稱}/
-├── src/                    # 原始碼
-│   ├── components/         # UI 元件
-│   ├── services/           # 業務邏輯
-│   ├── models/             # 資料模型
-│   └── utils/              # 工具函數
-├── tests/                  # 測試
-├── docs/                   # 文件
-├── config/                 # 配置
-└── package.json            # 套件管理
+{project_name}/
+├── src/                    # Source code
+│   ├── components/         # UI components
+│   ├── services/           # Business logic
+│   ├── models/             # Data models
+│   └── utils/              # Utilities
+├── tests/                  # Tests
+├── docs/                   # Documentation
+├── config/                 # Configuration
+└── package.json            # Package manifest
 ```
 
 ---
 
 ## 6. Quality Assessment
 
-### 6.1 八維度雷達圖
+### 6.1 Eight-dimension chart
 
 ```mermaid
 %%{init: {'theme': 'base'}}%%
 pie showData
     title Quality Dimensions Distribution
-    "可維護性" : {score1}
-    "可測試性" : {score2}
-    "可擴展性" : {score3}
-    "安全性" : {score4}
-    "文件完整度" : {score5}
-    "架構健康度" : {score6}
-    "依賴健康度" : {score7}
-    "開發者體驗" : {score8}
+    "Maintainability" : {score1}
+    "Testability" : {score2}
+    "Scalability" : {score3}
+    "Security" : {score4}
+    "Documentation" : {score5}
+    "Architecture health" : {score6}
+    "Dependency health" : {score7}
+    "Developer experience" : {score8}
 ```
 
-### 6.2 各維度詳細評分
+### 6.2 Dimension scores
 
-#### 6.2.1 可維護性 ({score1}/100)
+#### 6.2.1 Maintainability ({score1}/100)
 
-| 指標 | 評分 | 說明 |
+| Metric | Score | Notes |
 |------|------|------|
-| 程式碼複雜度 | {sub_score} | Cyclomatic Complexity 平均值 |
-| 命名規範 | {sub_score} | 一致性與可讀性 |
-| 模組化程度 | {sub_score} | 單一職責原則遵守 |
-| 重複程式碼 | {sub_score} | DRY 原則遵守 |
+| Code complexity | {sub_score} | Average cyclomatic complexity |
+| Naming | {sub_score} | Consistency and readability |
+| Modularity | {sub_score} | Single-responsibility adherence |
+| Duplication | {sub_score} | DRY adherence |
 
-**優勢**: {strengths}
-**風險**: {risks}
+**Strengths**: {strengths}
+**Risks**: {risks}
 
-#### 6.2.2 可測試性 ({score2}/100)
+#### 6.2.2 Testability ({score2}/100)
 
-| 指標 | 評分 | 說明 |
+| Metric | Score | Notes |
 |------|------|------|
-| 測試覆蓋率 | {coverage}% | 程式碼覆蓋百分比 |
-| 測試品質 | {sub_score} | 測試案例有效性 |
-| Mock 使用 | {sub_score} | 依賴隔離程度 |
+| Test coverage | {coverage}% | Line/branch coverage |
+| Test quality | {sub_score} | Usefulness of cases |
+| Mocking | {sub_score} | Dependency isolation |
 
-#### 6.2.3 可擴展性 ({score3}/100)
+#### 6.2.3 Scalability ({score3}/100)
 
-| 指標 | 評分 | 說明 |
+| Metric | Score | Notes |
 |------|------|------|
-| 架構彈性 | {sub_score} | 新增功能的難易度 |
-| 水平擴展 | {sub_score} | 多實例部署能力 |
-| 設計模式 | {sub_score} | 擴展性模式使用 |
+| Architectural flexibility | {sub_score} | Ease of adding features |
+| Horizontal scale | {sub_score} | Multi-instance readiness |
+| Design patterns | {sub_score} | Extensibility patterns |
 
-#### 6.2.4 安全性 ({score4}/100)
+#### 6.2.4 Security ({score4}/100)
 
-| 指標 | 評分 | 說明 |
+| Metric | Score | Notes |
 |------|------|------|
-| 依賴漏洞 | {sub_score} | CVE 數量與嚴重度 |
-| 敏感資訊 | {sub_score} | 暴露風險 |
-| 輸入驗證 | {sub_score} | 注入攻擊防護 |
+| Dependency CVEs | {sub_score} | Count and severity |
+| Sensitive data | {sub_score} | Exposure risk |
+| Input validation | {sub_score} | Injection defenses |
 
-#### 6.2.5 文件完整度 ({score5}/100)
+#### 6.2.5 Documentation ({score5}/100)
 
-| 指標 | 評分 | 說明 |
+| Metric | Score | Notes |
 |------|------|------|
-| README | {sub_score} | 專案說明品質 |
-| API 文件 | {sub_score} | 介面文件 |
-| 程式碼註解 | {sub_score} | 內部文件 |
+| README | {sub_score} | Project overview quality |
+| API docs | {sub_score} | Interface documentation |
+| Code comments | {sub_score} | Inline documentation |
 
-#### 6.2.6 架構健康度 ({score6}/100)
+#### 6.2.6 Architecture health ({score6}/100)
 
-| 指標 | 評分 | 說明 |
+| Metric | Score | Notes |
 |------|------|------|
-| SOLID 合規 | {sub_score} | 設計原則遵守 |
-| 關注點分離 | {sub_score} | 層次清晰度 |
-| 依賴方向 | {sub_score} | 依賴規則遵守 |
+| SOLID alignment | {sub_score} | Design principles |
+| Separation of concerns | {sub_score} | Layer clarity |
+| Dependency direction | {sub_score} | Dependency rules |
 
-#### 6.2.7 依賴健康度 ({score7}/100)
+#### 6.2.7 Dependency health ({score7}/100)
 
-| 指標 | 評分 | 說明 |
+| Metric | Score | Notes |
 |------|------|------|
-| 依賴數量 | {sub_score} | 直接依賴數 |
-| 版本更新 | {sub_score} | 過時依賴比例 |
-| 循環依賴 | {sub_score} | 循環依賴數量 |
+| Dependency count | {sub_score} | Direct dependencies |
+| Version currency | {sub_score} | Outdated share |
+| Cycles | {sub_score} | Circular dependency count |
 
-#### 6.2.8 開發者體驗 ({score8}/100)
+#### 6.2.8 Developer experience ({score8}/100)
 
-| 指標 | 評分 | 說明 |
+| Metric | Score | Notes |
 |------|------|------|
-| 上手難度 | {sub_score} | 新人 onboarding 時間 |
-| 開發工具 | {sub_score} | 工具配置完整性 |
-| 錯誤訊息 | {sub_score} | 錯誤可讀性 |
+| Onboarding difficulty | {sub_score} | Time to first contribution |
+| Tooling | {sub_score} | Dev environment completeness |
+| Error messages | {sub_score} | Actionability |
 
-### 6.3 優勢與風險摘要
+### 6.3 Strengths and risks
 
-#### 優勢 ✅
+#### Strengths ✅
 1. {strength1}
 2. {strength2}
 3. {strength3}
 
-#### 風險 ⚠️
+#### Risks ⚠️
 1. {risk1}
 2. {risk2}
 3. {risk3}
@@ -453,158 +453,158 @@ pie showData
 
 ## 7. Value & Competitive Analysis
 
-### 7.1 專案解決的問題
+### 7.1 Problems this project addresses
 
-| 問題 | 痛點程度 | 現有解決方案 | 本專案優勢 |
+| Problem | Pain level | Alternatives today | This project’s edge |
 |------|----------|--------------|------------|
-| {problem1} | 🔴 高 | {alternatives} | {advantage} |
-| {problem2} | 🟠 中 | {alternatives} | {advantage} |
+| {problem1} | 🔴 High | {alternatives} | {advantage} |
+| {problem2} | 🟠 Medium | {alternatives} | {advantage} |
 
-### 7.2 獨特價值主張 (UVP)
+### 7.2 Unique value proposition (UVP)
 
-> **「{一句話 UVP}」**
+> **“{one_line_uvp}”**
 
-核心價值：
+Core value:
 1. **{value1}** — {description}
 2. **{value2}** — {description}
 3. **{value3}** — {description}
 
-### 7.3 不可替代性評估
+### 7.3 Replaceability assessment
 
-| 維度 | 評分 | 說明 |
+| Dimension | Score | Notes |
 |------|------|------|
-| 技術獨特性 | ★★★★☆ | {說明} |
-| 生態整合深度 | ★★★☆☆ | {說明} |
-| 遷移成本 | ★★★★☆ | {說明} |
-| 學習曲線 | ★★★☆☆ | {說明} |
-| 社群活躍度 | ★★★★★ | {說明} |
+| Technical uniqueness | ★★★★☆ | {notes} |
+| Ecosystem depth | ★★★☆☆ | {notes} |
+| Migration cost | ★★★★☆ | {notes} |
+| Learning curve | ★★★☆☆ | {notes} |
+| Community vitality | ★★★★★ | {notes} |
 
-**綜合不可替代性分數：{X.X}/5**
+**Overall replaceability score: {X.X}/5**
 
-### 7.4 競品比較矩陣
+### 7.4 Competitor comparison matrix
 
-> **詳細比較 3-6 個主要競品/替代方案**
+> **Compare 3–6 primary competitors or alternatives**
 
-| 維度 | 本專案 | {競品A} | {競品B} | {競品C} |
+| Dimension | This project | {competitor_a} | {competitor_b} | {competitor_c} |
 |------|--------|---------|---------|---------|
-| **核心功能** | {描述} | {描述} | {描述} | {描述} |
-| **技術架構** | {描述} | {描述} | {描述} | {描述} |
-| **擴展性** | ✅ 插件系統 | ⚠️ 有限 | ❌ 無 | ✅ 完整 |
-| **學習曲線** | 🟡 中等 | 🟢 低 | 🔴 高 | 🟡 中等 |
-| **社群活躍度** | ⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐ | ⭐⭐⭐ |
-| **授權方式** | MIT | Apache-2.0 | GPL-3.0 | 商業 |
-| **最後更新** | {日期} | {日期} | {日期} | {日期} |
+| **Core features** | {description} | {description} | {description} | {description} |
+| **Architecture** | {description} | {description} | {description} | {description} |
+| **Extensibility** | ✅ Plugin system | ⚠️ Limited | ❌ None | ✅ Full |
+| **Learning curve** | 🟡 Medium | 🟢 Low | 🔴 High | 🟡 Medium |
+| **Community** | ⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐ | ⭐⭐⭐ |
+| **Licensing** | MIT | Apache-2.0 | GPL-3.0 | Commercial |
+| **Last updated** | {date} | {date} | {date} | {date} |
 
-**選擇建議**：
-- 選 **本專案** 如果：{適用場景}
-- 選 **{競品A}** 如果：{適用場景}
-- 選 **{競品B}** 如果：{適用場景}
+**When to choose what**:
+- **This project** if: {fit_scenario}
+- **{competitor_a}** if: {fit_scenario}
+- **{competitor_b}** if: {fit_scenario}
 
-### 7.5 適用場景分析
+### 7.5 Fit scenarios
 
-> **用餅圖呈現最適合的使用場景佔比**
+> **Pie chart of best-fit use cases**
 
 ```mermaid
-pie title 最適合使用場景
-    "{場景A}" : 35
-    "{場景B}" : 30
-    "{場景C}" : 20
-    "{場景D}" : 15
+pie title Best-fit use cases
+    "{scenario_a}" : 35
+    "{scenario_b}" : 30
+    "{scenario_c}" : 20
+    "{scenario_d}" : 15
 ```
 
-**場景說明**：
+**Scenario notes**:
 
-| 場景 | 推薦指數 | 說明 |
+| Scenario | Fit index | Notes |
 |------|----------|------|
-| {場景A} | ⭐⭐⭐⭐⭐ | {為什麼特別適合} |
-| {場景B} | ⭐⭐⭐⭐ | {為什麼適合} |
-| {場景C} | ⭐⭐⭐ | {條件限制} |
-| {場景D} | ⭐⭐ | {注意事項} |
+| {scenario_a} | ⭐⭐⭐⭐⭐ | {why_strong_fit} |
+| {scenario_b} | ⭐⭐⭐⭐ | {why_fit} |
+| {scenario_c} | ⭐⭐⭐ | {constraints} |
+| {scenario_d} | ⭐⭐ | {caveats} |
 
-**採用建議矩陣**：
+**Adoption guidance matrix**:
 
-| 你的情況 | 建議 | 原因 |
+| Your situation | Guidance | Reason |
 |----------|------|------|
-| {情況1} | 🟢 強烈推薦 | {原因} |
-| {情況2} | 🟡 謹慎考慮 | {原因} |
-| {情況3} | 🔴 不建議 | {原因} |
+| {situation_1} | 🟢 Strong fit | {reason} |
+| {situation_2} | 🟡 Cautious | {reason} |
+| {situation_3} | 🔴 Not recommended | {reason} |
 
-### 7.6 版本演進分析
+### 7.6 Version history
 
-> **如果專案有 CHANGELOG 或 Git 歷史，分析版本演進**
+> **If CHANGELOG or Git history exists, analyze evolution**
 
-#### 版本時間軸
+#### Timeline
 
 ```mermaid
 gantt
-    title 專案版本演進
+    title Project version history
     dateFormat  YYYY-MM-DD
-    section 主要版本
+    section Major releases
     v1.0 Initial Release     :done, v1, 2024-01-01, 30d
     v2.0 Major Rewrite       :done, v2, 2024-02-01, 60d
     v3.0 Current             :active, v3, 2024-04-01, 90d
-    section 里程碑
+    section Milestones
     Core Features Complete   :milestone, m1, 2024-01-30, 0d
     Production Ready         :milestone, m2, 2024-03-31, 0d
 ```
 
-#### 關鍵版本里程碑
+#### Milestones
 
-| 版本 | 日期 | 重點功能 | 影響 |
+| Version | Date | Highlights | Impact |
 |------|------|----------|------|
-| v1.0 | {日期} | {功能描述} | 🌱 奠定基礎 |
-| v2.0 | {日期} | {功能描述} | 📈 重大改進 |
-| v3.0 | {日期} | {功能描述} | 🚀 當前穩定版 |
+| v1.0 | {date} | {feature_summary} | 🌱 Foundation |
+| v2.0 | {date} | {feature_summary} | 📈 Major improvement |
+| v3.0 | {date} | {feature_summary} | 🚀 Current stable |
 
-#### 演進趨勢分析
+#### Trends
 
-- **開發活躍度**：{高/中/低}，過去 6 個月有 {N} 次提交
-- **版本頻率**：平均每 {N} 週發布一個版本
-- **Breaking Changes**：過去 {N} 個版本有 {M} 次破壞性變更
-- **未來方向**：根據 Issues/Roadmap，預計 {方向描述}
+- **Activity**: {high/medium/low}; {N} commits in the last 6 months
+- **Release cadence**: about one release every {N} weeks
+- **Breaking changes**: {M} breaking changes across the last {N} releases
+- **Direction**: from Issues/Roadmap, expect {direction_summary}
 
 ---
 
 # 🔬 LAYER 3: Deep Dive Reference
 
-> 按需查閱，包含具體程式碼位置與可執行建議
+> Consult as needed; includes file:line references and actionable recommendations
 
 ---
 
 ## 8. Technical Debt Report
 
-### 8.1 債務總覽
+### 8.1 Debt overview
 
-| 類別 | 項目數 | 估計修復時間 | 風險等級 |
+| Category | Items | Est. fix effort | Risk |
 |------|--------|--------------|----------|
-| 可靠性債務 | {count} | {days} 人天 | 🔴 |
-| 安全性債務 | {count} | {days} 人天 | 🔴 |
-| 可維護性債務 | {count} | {days} 人天 | 🟠 |
-| 效能債務 | {count} | {days} 人天 | 🟡 |
-| 測試債務 | {count} | {days} 人天 | 🟡 |
-| **總計** | **{total}** | **{total_days} 人天** | - |
+| Reliability debt | {count} | {days} person-days | 🔴 |
+| Security debt | {count} | {days} person-days | 🔴 |
+| Maintainability debt | {count} | {days} person-days | 🟠 |
+| Performance debt | {count} | {days} person-days | 🟡 |
+| Test debt | {count} | {days} person-days | 🟡 |
+| **Total** | **{total}** | **{total_days} person-days** | - |
 
-### 8.2 債務明細（含程式碼位置）
+### 8.2 Debt detail (with code locations)
 
-#### 可靠性債務
+#### Reliability debt
 
-| ID | 問題 | 位置 | 風險 | 修復時間 |
+| ID | Issue | Location | Risk | Fix effort |
 |----|------|------|------|----------|
 | TD-001 | {issue} | `{file}:{line}` | 🔴 | {hours}h |
 
-#### 安全性債務
+#### Security debt
 
-| ID | 問題 | 位置 | 風險 | 修復時間 |
+| ID | Issue | Location | Risk | Fix effort |
 |----|------|------|------|----------|
 | TD-002 | {issue} | `{file}:{line}` | 🔴 | {hours}h |
 
-#### 可維護性債務
+#### Maintainability debt
 
-| ID | 問題 | 位置 | 風險 | 修復時間 |
+| ID | Issue | Location | Risk | Fix effort |
 |----|------|------|------|----------|
 | TD-003 | {issue} | `{file}:{line}` | 🟠 | {hours}h |
 
-### 8.3 優先級矩陣
+### 8.3 Priority matrix
 
 ```mermaid
 quadrantChart
@@ -624,30 +624,30 @@ quadrantChart
 
 ## 9. Dependency Analysis
 
-### 9.1 依賴總覽
+### 9.1 Dependency overview
 
-| 類型 | 數量 |
+| Kind | Count |
 |------|------|
-| 直接依賴 | {direct_count} |
-| 間接依賴 | {transitive_count} |
-| 開發依賴 | {dev_count} |
-| **總計** | **{total_count}** |
+| Direct | {direct_count} |
+| Transitive | {transitive_count} |
+| Dev | {dev_count} |
+| **Total** | **{total_count}** |
 
-### 9.2 模組依賴圖
+### 9.2 Module dependency graph
 
 ```mermaid
 flowchart LR
-    subgraph Core["核心模組"]
+    subgraph Core["Core modules"]
         A["{module1}"]
         B["{module2}"]
     end
 
-    subgraph Services["服務層"]
+    subgraph Services["Service layer"]
         C["{service1}"]
         D["{service2}"]
     end
 
-    subgraph Data["資料層"]
+    subgraph Data["Data layer"]
         E["{repo1}"]
     end
 
@@ -656,52 +656,52 @@ flowchart LR
     C --> E
     D --> E
 
-    %% 循環依賴警告
-    %% C -.->|⚠️ 循環| A
+    %% Cycle warning
+    %% C -.->|⚠️ cycle| A
 ```
 
-### 9.3 依賴健康檢查
+### 9.3 Dependency health
 
-| 套件 | 當前版本 | 最新版本 | 狀態 | 風險 |
+| Package | Current | Latest | Status | Risk |
 |------|----------|----------|------|------|
 | {package1} | {current} | {latest} | 🔴 CVE | Critical |
-| {package2} | {current} | {latest} | 🟠 落後 2+ 版 | High |
-| {package3} | {current} | {latest} | 🟡 小版本落後 | Medium |
-| {package4} | {current} | {latest} | ✅ 最新 | None |
+| {package2} | {current} | {latest} | 🟠 2+ versions behind | High |
+| {package3} | {current} | {latest} | 🟡 Minor behind | Medium |
+| {package4} | {current} | {latest} | ✅ Up to date | None |
 
-### 9.4 循環依賴警告
+### 9.4 Circular dependency warnings
 
-| 循環路徑 | 影響 | 建議 |
+| Cycle | Impact | Recommendation |
 |----------|------|------|
 | A → B → C → A | {impact} | {suggestion} |
 
-### 9.5 授權合規檢查
+### 9.5 License compliance
 
-| 授權類型 | 套件數 | 合規風險 |
+| License | Packages | Compliance risk |
 |----------|--------|----------|
-| MIT | {count} | ✅ 無 |
-| Apache-2.0 | {count} | ✅ 無 |
-| GPL-3.0 | {count} | ⚠️ 可能傳染 |
-| 未知 | {count} | 🔴 需確認 |
+| MIT | {count} | ✅ None |
+| Apache-2.0 | {count} | ✅ None |
+| GPL-3.0 | {count} | ⚠️ Possible copyleft |
+| Unknown | {count} | 🔴 Needs review |
 
 ---
 
 ## 10. Security Assessment
 
-### 10.1 安全分數：{score}/100
+### 10.1 Security score: {score}/100
 
-### 10.2 漏洞掃描摘要
+### 10.2 Vulnerability scan summary
 
-| 嚴重度 | 數量 | 範例 |
+| Severity | Count | Example |
 |--------|------|------|
 | 🔴 Critical | {count} | {example} |
 | 🟠 High | {count} | {example} |
 | 🟡 Medium | {count} | {example} |
 | 🟢 Low | {count} | {example} |
 
-### 10.3 OWASP Top 10 檢查
+### 10.3 OWASP Top 10 checklist
 
-| 風險 | 狀態 | 說明 |
+| Risk | Status | Notes |
 |------|------|------|
 | A01:2021 Broken Access Control | ✅/⚠️/🔴 | {detail} |
 | A02:2021 Cryptographic Failures | ✅/⚠️/🔴 | {detail} |
@@ -714,35 +714,35 @@ flowchart LR
 | A09:2021 Logging Failures | ✅/⚠️/🔴 | {detail} |
 | A10:2021 SSRF | ✅/⚠️/🔴 | {detail} |
 
-### 10.4 敏感資訊檢查
+### 10.4 Sensitive data review
 
-| 類型 | 位置 | 風險 | 建議 |
+| Type | Location | Risk | Recommendation |
 |------|------|------|------|
-| API Key 暴露 | `{file}` | 🔴 | 移至環境變數 |
-| 硬編碼密碼 | `{file}` | 🔴 | 使用密鑰管理 |
+| Exposed API key | `{file}` | 🔴 | Move to environment variables |
+| Hard-coded password | `{file}` | 🔴 | Use a secrets manager |
 
 ---
 
-## 11. 🛠️ Actionable Recommendations（可執行建議）
+## 11. 🛠️ Actionable Recommendations
 
-> **每項建議都包含：問題位置 → 問題程式碼 → 修復範例 → 驗證步驟**
+> **Each recommendation: location → bad code → fix → verification**
 
-### 11.1 建議摘要表
+### 11.1 Recommendations summary
 
-| ID | 標題 | 類別 | 重要性 | 優先級 | 問題位置 |
+| ID | Title | Category | Importance | Priority | Location |
 |----|------|------|--------|--------|----------|
 | REC-001 | {title} | Security | ⭐⭐⭐ | 🔴 | `{file}:{line}` |
 | REC-002 | {title} | Architecture | ⭐⭐⭐ | 🟠 | `{file}:{line}` |
 | REC-003 | {title} | Performance | ⭐⭐ | 🟡 | `{file}:{line}` |
 | REC-004 | {title} | Quality | ⭐ | 🟢 | `{file}:{line}` |
 
-### 11.2 優先級矩陣
+### 11.2 Priority matrix
 
 ```mermaid
 quadrantChart
     title Recommendations Priority Matrix
-    x-axis 低緊迫性 --> 高緊迫性
-    y-axis 低重要性 --> 高重要性
+    x-axis Low urgency --> High urgency
+    y-axis Low importance --> High importance
     quadrant-1 Strategic
     quadrant-2 Critical
     quadrant-3 Optional
@@ -755,109 +755,109 @@ quadrantChart
 
 ---
 
-### 🔴 立即處理
+### 🔴 Address now
 
-#### REC-001: {標題}
+#### REC-001: {title}
 
-| 屬性 | 值 |
+| Attribute | Value |
 |------|-----|
-| 類別 | 🔒 Security |
-| 重要性 | ⭐⭐⭐ 核心 |
-| 優先級 | 🔴 Critical |
+| Category | 🔒 Security |
+| Importance | ⭐⭐⭐ Core |
+| Priority | 🔴 Critical |
 
-##### 📍 問題位置
+##### 📍 Location
 - `{file1}:{line1}`
 - `{file2}:{line2}`
 
-##### ❌ 問題程式碼
+##### ❌ Bad code
 ```{language}
 // {file}:{line}
 {problematic_code}
-//   ^^^^^^^^^ {問題說明}
+//   ^^^^^^^^^ {issue_summary}
 ```
 
-##### ✅ 修復範例
+##### ✅ Fix example
 ```{language}
 // {file}:{line}
 {fixed_code}
 ```
 
-##### 🧪 驗證步驟
+##### 🧪 Verification
 ```bash
-# 1. {步驟說明}
+# 1. {step_description}
 {command1}
 
-# 2. {步驟說明}
+# 2. {step_description}
 {command2}
-# 預期結果：{expected}
+# Expected: {expected}
 ```
 
-##### ✓ 成功指標
-- [ ] {指標 1}
-- [ ] {指標 2}
+##### ✓ Success criteria
+- [ ] {criterion_1}
+- [ ] {criterion_2}
 
 ---
 
-### 🟠 短期處理
+### 🟠 Short term
 
-#### REC-002: {標題}
+#### REC-002: {title}
 
-{同上格式...}
-
----
-
-### 🟡 規劃處理
-
-#### REC-003: {標題}
-
-{同上格式...}
+{same_structure_as_above}
 
 ---
 
-### 🟢 適時處理
+### 🟡 Planned
 
-#### REC-004: {標題}
+#### REC-003: {title}
 
-{同上格式...}
+{same_structure_as_above}
 
 ---
 
-## 12. Appendix（附錄）
+### 🟢 When convenient
 
-### A. 完整目錄結構
+#### REC-004: {title}
+
+{same_structure_as_above}
+
+---
+
+## 12. Appendix
+
+### A. Full directory tree
 
 ```
-{詳細目錄結構}
+{directory_tree}
 ```
 
-### B. 關鍵檔案清單
+### B. Key files
 
-| 檔案 | 用途 | 重要性 |
+| File | Purpose | Importance |
 |------|------|--------|
 | `{file1}` | {purpose} | ⭐⭐⭐ |
 | `{file2}` | {purpose} | ⭐⭐ |
 
-### C. 術語表
+### C. Glossary
 
-| 術語 | 定義 |
+| Term | Definition |
 |------|------|
 | {term1} | {definition} |
 | {term2} | {definition} |
 
-### D. 分析方法說明
+### D. Methodology
 
-本報告採用以下分析框架：
+This report uses:
 
-- **架構文件**: [arc42](https://arc42.org/) + [C4 Model](https://c4model.com/)
-- **技術債務**: [SQALE](https://www.sqale.org/) 方法
-- **安全評估**: [OWASP Top 10](https://owasp.org/www-project-top-ten/)
-- **品質評估**: 自訂 8 維度模型
+- **Architecture**: [arc42](https://arc42.org/) + [C4 Model](https://c4model.com/)
+- **Technical debt**: [SQALE](https://www.sqale.org/)
+- **Security**: [OWASP Top 10](https://owasp.org/www-project-top-ten/)
+- **Quality**: Custom eight-dimension model
 
-### E. 分數條生成參考
+### E. Score-bar reference
 
 ```
-█ = 10 分
-░ = 空位
+█ = 10 points
+░ = empty
 
 100/100 = ██████████
 90/100  = █████████░
@@ -869,32 +869,32 @@ quadrantChart
 
 ---
 
-*此報告由 Claude Code analyze-repo Skill v3.0 自動產生*
-*分析日期: {YYYY-MM-DD}*
+*Generated by Claude Code analyze-repo Skill v3.0*
+*Analysis date: {YYYY-MM-DD}*
 ```
 
-## Mermaid 圖表範例集
+## Mermaid examples
 
-### C4 Context Diagram 範例
+### C4 Context Diagram (example)
 
 ```mermaid
 C4Context
     title System Context Diagram - E-Commerce Platform
 
-    Person(customer, "Customer", "購買商品的終端用戶")
-    Person(admin, "Admin", "平台管理員")
+    Person(customer, "Customer", "End user purchasing goods")
+    Person(admin, "Admin", "Platform operator")
 
-    System(ecommerce, "E-Commerce Platform", "線上購物平台")
+    System(ecommerce, "E-Commerce Platform", "Online storefront")
 
-    System_Ext(payment, "Payment Gateway", "第三方支付")
-    System_Ext(shipping, "Shipping Service", "物流服務")
-    System_Ext(email, "Email Service", "郵件通知")
+    System_Ext(payment, "Payment Gateway", "Third-party payments")
+    System_Ext(shipping, "Shipping Service", "Logistics")
+    System_Ext(email, "Email Service", "Notifications")
 
-    Rel(customer, ecommerce, "瀏覽、購買", "HTTPS")
-    Rel(admin, ecommerce, "管理", "HTTPS")
-    Rel(ecommerce, payment, "處理付款", "API")
-    Rel(ecommerce, shipping, "建立訂單", "API")
-    Rel(ecommerce, email, "發送通知", "SMTP")
+    Rel(customer, ecommerce, "Browse, purchase", "HTTPS")
+    Rel(admin, ecommerce, "Administer", "HTTPS")
+    Rel(ecommerce, payment, "Process payment", "API")
+    Rel(ecommerce, shipping, "Create shipment", "API")
+    Rel(ecommerce, email, "Send notification", "SMTP")
 ```
 
 ### Quality Radar Chart Alternative

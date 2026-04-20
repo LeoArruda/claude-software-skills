@@ -1,68 +1,68 @@
 #!/bin/bash
 # ============================================================================
-# Auto-Dev 快速設定腳本
+# Auto-Dev quick setup script
 # ============================================================================
-# 使用方式：
+# Usage:
 #   curl -fsSL https://raw.githubusercontent.com/user/claude-software-skills/main/scripts/setup-auto-dev.sh | bash
 #
-# 或下載後執行：
+# Or download and run:
 #   chmod +x setup-auto-dev.sh
 #   ./setup-auto-dev.sh
 # ============================================================================
 
 set -e
 
-echo "🤖 Auto-Dev 設定腳本"
+echo "🤖 Auto-Dev setup script"
 echo "===================="
 echo ""
 
-# 顏色定義
+# Colors
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
-# 檢查是否在 git repo 中
+# Ensure we are in a git repo
 if [ ! -d .git ]; then
-    echo -e "${RED}錯誤：請在 Git repository 根目錄執行此腳本${NC}"
+    echo -e "${RED}Error: run this script from the root of a Git repository${NC}"
     exit 1
 fi
 
-# 取得 repo 資訊
+# Get repo info
 REPO_URL=$(git config --get remote.origin.url 2>/dev/null || echo "")
 if [ -z "$REPO_URL" ]; then
-    echo -e "${YELLOW}警告：無法取得 remote URL${NC}"
+    echo -e "${YELLOW}Warning: could not get remote URL${NC}"
 fi
 
-echo -e "${BLUE}📁 建立目錄結構...${NC}"
+echo -e "${BLUE}📁 Creating directory layout...${NC}"
 
-# 建立目錄
+# Create directories
 mkdir -p .github/workflows
 mkdir -p .claude/memory/{learnings,failures,decisions,patterns,strategies}
 mkdir -p .github/ISSUE_TEMPLATE
 
-echo -e "${GREEN}✓ 目錄建立完成${NC}"
+echo -e "${GREEN}✓ Directories created${NC}"
 
 # ============================================================================
-# 方式選擇
+# Choose setup mode
 # ============================================================================
 echo ""
-echo "請選擇設定方式："
-echo "  1) 使用 Reusable Workflow（推薦，自動取得更新）"
-echo "  2) 複製完整 Workflow（獨立，可自訂）"
+echo "Choose a setup mode:"
+echo "  1) Reusable workflow (recommended; pulls updates automatically)"
+echo "  2) Copy full workflows (standalone; fully customizable)"
 echo ""
-read -p "選擇 [1/2]: " CHOICE
+read -p "Choice [1/2]: " CHOICE
 
 if [ "$CHOICE" = "1" ]; then
     # ========================================================================
-    # 方式 1: Reusable Workflow
+    # Mode 1: Reusable workflow
     # ========================================================================
-    echo -e "${BLUE}📝 建立 Reusable Workflow 設定...${NC}"
+    echo -e "${BLUE}📝 Creating reusable workflow config...${NC}"
 
     cat > .github/workflows/auto-dev.yml << 'EOF'
 # Auto-Dev Workflow
-# 使用 claude-software-skills 的 reusable workflow
+# Uses the reusable workflow from claude-software-skills
 
 name: 🤖 Auto-Dev
 
@@ -74,7 +74,7 @@ on:
   workflow_dispatch:
     inputs:
       goal:
-        description: '開發目標'
+        description: 'Development goal'
         required: true
         type: string
 
@@ -84,24 +84,24 @@ concurrency:
 
 jobs:
   auto-dev:
-    # TODO: 替換成你的 skills repo
+    # TODO: replace with your skills repo
     uses: user/claude-software-skills/.github/workflows/auto-dev-reusable.yml@main
     with:
       goal: ${{ github.event.inputs.goal || '' }}
-      # skills_repo: 'user/claude-software-skills'  # 可選：載入額外 skills
-      # custom_instructions: '使用 TypeScript，遵循專案風格'  # 可選
+      # skills_repo: 'user/claude-software-skills'  # optional: load extra skills
+      # custom_instructions: 'Use TypeScript; follow project style'  # optional
     secrets:
       ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
 EOF
 
-    echo -e "${YELLOW}⚠️  請編輯 .github/workflows/auto-dev.yml${NC}"
-    echo -e "${YELLOW}   將 'user/claude-software-skills' 替換成正確的 repo 路徑${NC}"
+    echo -e "${YELLOW}⚠️  Edit .github/workflows/auto-dev.yml${NC}"
+    echo -e "${YELLOW}   Replace 'user/claude-software-skills' with the correct repo path${NC}"
 
 else
     # ========================================================================
-    # 方式 2: 完整複製
+    # Mode 2: Full copy
     # ========================================================================
-    echo -e "${BLUE}📝 下載完整 Workflow...${NC}"
+    echo -e "${BLUE}📝 Downloading full workflows...${NC}"
 
     SKILLS_REPO="https://raw.githubusercontent.com/user/claude-software-skills/main"
 
@@ -109,100 +109,100 @@ else
     curl -fsSL "$SKILLS_REPO/.github/workflows/auto-dev-feedback.yml" -o .github/workflows/auto-dev-feedback.yml
     curl -fsSL "$SKILLS_REPO/.github/workflows/auto-dev-queue.yml" -o .github/workflows/auto-dev-queue.yml
 
-    echo -e "${GREEN}✓ Workflow 檔案下載完成${NC}"
+    echo -e "${GREEN}✓ Workflow files downloaded${NC}"
 fi
 
 # ============================================================================
-# 共用設定
+# Shared setup
 # ============================================================================
 
-echo -e "${BLUE}📝 建立 Issue Template...${NC}"
+echo -e "${BLUE}📝 Creating issue template...${NC}"
 
 cat > .github/ISSUE_TEMPLATE/auto-dev.yml << 'EOF'
 name: 🤖 Auto-Dev Task
-description: 建立一個自動開發任務
+description: Create an automated development task
 title: "[Auto-Dev] "
 labels: ["auto-dev"]
 body:
   - type: textarea
     id: goal
     attributes:
-      label: 目標
-      description: 描述你想要達成的開發目標
-      placeholder: "例如：實作用戶登入功能，支援 Email + 密碼登入"
+      label: Goal
+      description: Describe the development goal you want to achieve
+      placeholder: "e.g. Implement user login with email and password"
     validations:
       required: true
 
   - type: textarea
     id: acceptance
     attributes:
-      label: 驗收標準
-      description: 如何判斷任務完成？
+      label: Acceptance criteria
+      description: How do we know the task is done?
       placeholder: |
-        - [ ] 功能正常運作
-        - [ ] 有測試
+        - [ ] Feature works
+        - [ ] Tests added
     validations:
       required: false
 
   - type: dropdown
     id: priority
     attributes:
-      label: 優先級
+      label: Priority
       options:
         - normal
         - high
         - low
 EOF
 
-echo -e "${GREEN}✓ Issue Template 建立完成${NC}"
+echo -e "${GREEN}✓ Issue template created${NC}"
 
-echo -e "${BLUE}📝 初始化 Memory 系統...${NC}"
+echo -e "${BLUE}📝 Initializing memory system...${NC}"
 
 cat > .claude/memory/index.md << 'EOF'
-# 專案記憶索引
+# Project memory index
 
-> 自動維護
+> Auto-maintained
 
-## 最近學習
+## Recent learnings
 <!-- LEARNINGS_START -->
 <!-- LEARNINGS_END -->
 
-## 失敗經驗
+## Failures
 <!-- FAILURES_START -->
 <!-- FAILURES_END -->
 
-## 決策記錄
+## Decisions
 <!-- DECISIONS_START -->
 <!-- DECISIONS_END -->
 EOF
 
-# 建立 .gitkeep
+# Create .gitkeep
 touch .claude/memory/{learnings,failures,decisions,patterns,strategies}/.gitkeep
 
-echo -e "${GREEN}✓ Memory 系統初始化完成${NC}"
+echo -e "${GREEN}✓ Memory system initialized${NC}"
 
 # ============================================================================
-# 完成提示
+# Done
 # ============================================================================
 echo ""
 echo "============================================"
-echo -e "${GREEN}🎉 Auto-Dev 設定完成！${NC}"
+echo -e "${GREEN}🎉 Auto-Dev setup complete!${NC}"
 echo "============================================"
 echo ""
-echo "接下來請："
+echo "Next steps:"
 echo ""
-echo "  1. 設定 GitHub Secret："
+echo "  1. Set GitHub Secret:"
 echo "     Repository Settings → Secrets → Actions"
-echo -e "     新增 ${YELLOW}ANTHROPIC_API_KEY${NC}"
+echo -e "     Add ${YELLOW}ANTHROPIC_API_KEY${NC}"
 echo ""
-echo "  2. 提交變更："
+echo "  2. Commit changes:"
 echo "     git add .github/"
 echo "     git commit -m 'feat: Add Auto-Dev workflow'"
 echo "     git push"
 echo ""
-echo "  3. 使用方式："
-echo "     - 建立 Issue → 加上 'auto-dev' label"
-echo "     - 或在任意 Issue 留言 '/evolve [目標]'"
+echo "  3. How to use:"
+echo "     - Open an issue → add the 'auto-dev' label"
+echo "     - Or comment on any issue: '/evolve [goal]'"
 echo ""
-echo "文檔：https://github.com/miles990/claude-software-skills/blob/main/.github/AUTO-DEV.md"
+echo "Docs: https://github.com/LeoArruda/claude-software-skills/blob/main/.github/AUTO-DEV.md"
 echo ""

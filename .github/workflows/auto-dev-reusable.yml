@@ -1,9 +1,9 @@
 # ============================================================================
 # Reusable Auto-Dev Workflow
 # ============================================================================
-# 其他專案可以直接呼叫這個 workflow，不需要複製程式碼
+# Other repos can call this workflow without copying its implementation.
 #
-# 使用方式（在其他專案的 .github/workflows/auto-dev.yml）：
+# Usage (in another repo's .github/workflows/auto-dev.yml):
 #
 #   name: Auto-Dev
 #   on:
@@ -26,21 +26,21 @@ on:
   workflow_call:
     inputs:
       goal:
-        description: '開發目標'
+        description: 'Development goal'
         required: false
         type: string
       max_iterations:
-        description: '最大迭代次數'
+        description: 'Maximum iterations'
         required: false
         type: number
         default: 10
       skills_repo:
-        description: 'Skills 來源 repo（可選）'
+        description: 'Skills source repo (optional)'
         required: false
         type: string
         default: ''
       custom_instructions:
-        description: '額外指示'
+        description: 'Extra instructions'
         required: false
         type: string
         default: ''
@@ -53,13 +53,13 @@ on:
 
     outputs:
       pr_number:
-        description: '建立的 PR 號碼'
+        description: 'Created PR number'
         value: ${{ jobs.evolve.outputs.pr_number }}
       pr_url:
         description: 'PR URL'
         value: ${{ jobs.evolve.outputs.pr_url }}
       has_changes:
-        description: '是否有變更'
+        description: 'Whether there were changes'
         value: ${{ jobs.evolve.outputs.has_changes }}
 
 jobs:
@@ -169,7 +169,7 @@ jobs:
         run: |
           git clone --depth 1 https://github.com/${{ inputs.skills_repo }} /tmp/skills
 
-          # 複製 skills 到本地（如果需要）
+          # Copy skills locally if present
           if [ -d /tmp/skills/.claude/skills ]; then
             mkdir -p .claude/skills
             cp -r /tmp/skills/.claude/skills/* .claude/skills/
@@ -184,7 +184,7 @@ jobs:
           PROMPT="/evolve ${GOAL}"
 
           if [ -n "$CUSTOM" ]; then
-            PROMPT="${PROMPT}\n\n額外指示：${CUSTOM}"
+            PROMPT="${PROMPT}\n\nExtra instructions: ${CUSTOM}"
           fi
 
           claude --dangerously-skip-permissions \

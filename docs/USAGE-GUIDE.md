@@ -1,29 +1,29 @@
-# Claude Software Skills 使用指南
+# Claude Software Skills usage guide
 
-> 如何在你的專案中安裝和使用 claude-software-skills
+> How to install and use claude-software-skills in your project
 
-## 目錄
+## Contents
 
-- [前置需求](#前置需求)
-- [安裝方式](#安裝方式)
-- [使用範例](#使用範例)
-- [完整安裝流程](#完整安裝流程)
-- [常見問題](#常見問題)
+- [Prerequisites](#prerequisites)
+- [Installation](#installation)
+- [Examples](#examples)
+- [Full install walkthrough](#full-install-walkthrough)
+- [FAQ](#faq)
 
 ---
 
-## 前置需求
+## Prerequisites
 
-### 1. 安裝 skillpkg MCP Server
+### 1. Install skillpkg MCP server
 
-claude-software-skills 使用 [skillpkg](https://github.com/anthropics/skillpkg) 作為套件管理工具。
+claude-software-skills uses [skillpkg](https://github.com/anthropics/skillpkg) for packaging.
 
 ```bash
-# 透過 Claude Code 安裝 skillpkg MCP
+# Install skillpkg MCP via Claude Code
 claude mcp add skillpkg
 ```
 
-或手動加入 `~/.claude/mcp.json`:
+Or add to `~/.claude/mcp.json` manually:
 
 ```json
 {
@@ -36,13 +36,13 @@ claude mcp add skillpkg
 }
 ```
 
-### 2. 初始化專案
+### 2. Initialize the project
 
-在你的專案根目錄執行：
+From your project root:
 
 ```bash
-# Claude Code 會自動建立 skillpkg.json
-# 或手動建立
+# Claude Code can create skillpkg.json
+# Or create manually:
 echo '{
   "$schema": "https://skillpkg.dev/schemas/skillpkg.json",
   "name": "your-project",
@@ -55,34 +55,34 @@ echo '{
 
 ---
 
-## 安裝方式
+## Installation
 
-### 方式一：安裝單一 Skill
+### Option A: Install a single skill
 
 ```
 github:miles990/claude-software-skills#{skill-path}
 ```
 
-**範例：**
+**Examples:**
 
 ```python
-# 安裝 frontend skill
+# Install frontend skill
 mcp__skillpkg__install_skill(
     source="github:miles990/claude-software-skills#development-stacks/frontend",
-    scope="local"  # 或 "global"
+    scope="local"  # or "global"
 )
 
-# 安裝 python skill
+# Install python skill
 mcp__skillpkg__install_skill(
     source="github:miles990/claude-software-skills#programming-languages/python",
     scope="local"
 )
 ```
 
-### 方式二：批量安裝多個 Skills
+### Option B: Install several skills in batch
 
 ```python
-# 一次安裝多個（平行執行）
+# Parallel-friendly batch install
 skills_to_install = [
     "development-stacks/frontend",
     "development-stacks/backend",
@@ -99,15 +99,15 @@ for skill_path in skills_to_install:
     )
 ```
 
-### 方式三：使用本地路徑（開發者模式）
+### Option C: Local path (development)
 
-如果你 clone 了 repo：
+If you cloned the repo:
 
 ```bash
 git clone https://github.com/miles990/claude-software-skills.git
 ```
 
-可以使用本地路徑安裝：
+Install from disk:
 
 ```python
 mcp__skillpkg__install_skill(
@@ -118,123 +118,116 @@ mcp__skillpkg__install_skill(
 
 ---
 
-## 使用範例
+## Examples
 
-### 範例 1：Web 全端專案
-
-適用於 React + FastAPI 專案：
+### Example 1: Full-stack web (React + FastAPI)
 
 ```python
-# 前端
+# Frontend
 mcp__skillpkg__install_skill(source="github:miles990/claude-software-skills#development-stacks/frontend")
 mcp__skillpkg__install_skill(source="github:miles990/claude-software-skills#programming-languages/javascript-typescript")
 
-# 後端
+# Backend
 mcp__skillpkg__install_skill(source="github:miles990/claude-software-skills#development-stacks/backend")
 mcp__skillpkg__install_skill(source="github:miles990/claude-software-skills#programming-languages/python")
 
-# API 設計
+# API design
 mcp__skillpkg__install_skill(source="github:miles990/claude-software-skills#software-design/api-design")
 
-# 品質與測試
+# Quality and testing
 mcp__skillpkg__install_skill(source="github:miles990/claude-software-skills#software-engineering/code-quality")
 mcp__skillpkg__install_skill(source="github:miles990/claude-software-skills#software-engineering/testing-strategies")
 ```
 
-### 範例 2：AI 應用專案
-
-適用於 LLM 整合專案：
+### Example 2: AI application
 
 ```python
-# AI/ML 整合
+# AI/ML integration
 mcp__skillpkg__install_skill(source="github:miles990/claude-software-skills#development-stacks/ai-ml-integration")
 
-# 後端
+# Backend
 mcp__skillpkg__install_skill(source="github:miles990/claude-software-skills#development-stacks/backend")
 mcp__skillpkg__install_skill(source="github:miles990/claude-software-skills#programming-languages/python")
 
-# API 設計（for AI endpoints）
+# API design (for AI endpoints)
 mcp__skillpkg__install_skill(source="github:miles990/claude-software-skills#software-design/api-design")
 ```
 
-### 範例 3：即時通訊應用
-
-適用於 WebSocket/SSE 應用：
+### Example 3: Real-time app
 
 ```python
-# 即時系統
+# Real-time systems
 mcp__skillpkg__install_skill(source="github:miles990/claude-software-skills#development-stacks/realtime-systems")
 
-# 前後端
+# Frontend and backend
 mcp__skillpkg__install_skill(source="github:miles990/claude-software-skills#development-stacks/frontend")
 mcp__skillpkg__install_skill(source="github:miles990/claude-software-skills#development-stacks/backend")
 ```
 
-### 範例 4：純後端 API 服務
+### Example 4: Backend API only
 
 ```python
-# 後端開發
+# Backend
 mcp__skillpkg__install_skill(source="github:miles990/claude-software-skills#development-stacks/backend")
 mcp__skillpkg__install_skill(source="github:miles990/claude-software-skills#programming-languages/python")
-# 或 Go
+# Or Go
 mcp__skillpkg__install_skill(source="github:miles990/claude-software-skills#programming-languages/go")
 
-# API 設計
+# API design
 mcp__skillpkg__install_skill(source="github:miles990/claude-software-skills#software-design/api-design")
 
-# 資料庫
+# Database
 mcp__skillpkg__install_skill(source="github:miles990/claude-software-skills#development-stacks/database")
 
-# 可靠性
+# Reliability
 mcp__skillpkg__install_skill(source="github:miles990/claude-software-skills#software-engineering/reliability-engineering")
 ```
 
 ---
 
-## 完整安裝流程
+## Full install walkthrough
 
-以下是在 omniflow-studio 專案中安裝 claude-software-skills 的完整過程記錄：
+Recorded steps for installing claude-software-skills on the omniflow-studio project.
 
-### Step 1: 確認 skillpkg MCP 可用
+### Step 1: Confirm skillpkg MCP works
 
 ```python
-# 檢查 skill 狀態
 mcp__skillpkg__skill_status()
 ```
 
-### Step 2: 安裝開發架構 Skills
+### Step 2: Install stack skills
 
 ```python
-# 前端 (React)
+# Frontend (React)
 mcp__skillpkg__install_skill(
     source="github:miles990/claude-software-skills#development-stacks/frontend",
     scope="local"
 )
-# 輸出: ✅ Installed 1 skill(s): frontend v1.0.0
+# Output: ✅ Installed 1 skill(s): frontend v1.0.0
 
-# 後端 (FastAPI)
+# Backend (FastAPI)
 mcp__skillpkg__install_skill(
     source="github:miles990/claude-software-skills#development-stacks/backend",
     scope="local"
 )
-# 輸出: ✅ Installed 1 skill(s): backend v1.0.0
+# Output: ✅ Installed 1 skill(s): backend v1.0.0
 
-# 即時系統 (SSE/WebSocket)
+# Real-time (SSE/WebSocket)
 mcp__skillpkg__install_skill(
     source="github:miles990/claude-software-skills#development-stacks/realtime-systems",
     scope="local"
 )
-# 輸出: ✅ Installed 1 skill(s): realtime-systems v1.0.0
+# Output: ✅ Installed 1 skill(s): realtime-systems v1.0.0
 
-# AI 整合
+# AI integration
 mcp__skillpkg__install_skill(
     source="github:miles990/claude-software-skills#development-stacks/ai-ml-integration",
     scope="local"
 )
-# 輸出: ✅ Installed 1 skill(s): ai-ml-integration v1.0.0
+# Output: ✅ Installed 1 skill(s): ai-ml-integration v1.0.0
 ```
 
-### Step 3: 安裝程式語言 Skills
+### Step 3: Install language skills
 
 ```python
 # JavaScript/TypeScript
@@ -250,45 +243,44 @@ mcp__skillpkg__install_skill(
 )
 ```
 
-### Step 4: 安裝軟體工程 Skills
+### Step 4: Install software engineering skills
 
 ```python
-# 程式碼品質
+# Code quality
 mcp__skillpkg__install_skill(
     source="github:miles990/claude-software-skills#software-engineering/code-quality",
     scope="local"
 )
 
-# 測試策略
+# Testing strategies
 mcp__skillpkg__install_skill(
     source="github:miles990/claude-software-skills#software-engineering/testing-strategies",
     scope="local"
 )
 ```
 
-### Step 5: 安裝軟體設計 Skills
+### Step 5: Install software design skills
 
 ```python
-# API 設計
+# API design
 mcp__skillpkg__install_skill(
     source="github:miles990/claude-software-skills#software-design/api-design",
     scope="local"
 )
 
-# UX 原則
+# UX principles
 mcp__skillpkg__install_skill(
     source="github:miles990/claude-software-skills#software-design/ux-principles",
     scope="local"
 )
 ```
 
-### Step 6: 驗證安裝結果
+### Step 6: Verify installation
 
 ```python
-# 列出所有已安裝的 skills
 mcp__skillpkg__list_skills(scope="local")
 
-# 輸出:
+# Output:
 # Found 16 installed skill(s):
 # • ai-ml-integration v1.0.0 [local]
 # • api-design v1.0.0 [local]
@@ -303,12 +295,12 @@ mcp__skillpkg__list_skills(scope="local")
 # ...
 ```
 
-### Step 7: 查看專案狀態
+### Step 7: Project status
 
 ```python
 mcp__skillpkg__skill_status()
 
-# 輸出:
+# Output:
 # 📦 Project
 #    Name: omniflow-studio
 #    Config: skillpkg.json ✓
@@ -320,7 +312,7 @@ mcp__skillpkg__skill_status()
 #    • claude-code: ✓ synced
 ```
 
-### 安裝後的 skillpkg.json
+### Resulting skillpkg.json
 
 ```json
 {
@@ -346,111 +338,111 @@ mcp__skillpkg__skill_status()
 
 ---
 
-## 可用 Skills 一覽
+## Available skills overview
 
-### Development Stacks
+### Development stacks
 
-| Skill | 路徑 | 說明 |
-|-------|------|------|
-| frontend | `development-stacks/frontend` | React, Vue, Web 技術 |
+| Skill | Path | Description |
+|-------|------|-------------|
+| frontend | `development-stacks/frontend` | React, Vue, web stack |
 | backend | `development-stacks/backend` | Node.js, Express, NestJS |
-| database | `development-stacks/database` | SQL, NoSQL, ORM |
+| database | `development-stacks/database` | SQL, NoSQL, ORMs |
 | cloud-platforms | `development-stacks/cloud-platforms` | AWS, GCP, Azure |
 | mobile | `development-stacks/mobile` | React Native, Flutter |
 | realtime-systems | `development-stacks/realtime-systems` | WebSocket, SSE |
-| ai-ml-integration | `development-stacks/ai-ml-integration` | LLM, AI APIs |
-| edge-iot | `development-stacks/edge-iot` | IoT, 邊緣運算 |
+| ai-ml-integration | `development-stacks/ai-ml-integration` | LLMs, AI APIs |
+| edge-iot | `development-stacks/edge-iot` | IoT, edge |
 
-### Programming Languages
+### Programming languages
 
-| Skill | 路徑 | 說明 |
-|-------|------|------|
-| javascript-typescript | `programming-languages/javascript-typescript` | JS/TS 開發 |
-| python | `programming-languages/python` | Python 開發 |
-| go | `programming-languages/go` | Go 開發 |
-| rust | `programming-languages/rust` | Rust 開發 |
+| Skill | Path | Description |
+|-------|------|-------------|
+| javascript-typescript | `programming-languages/javascript-typescript` | JS/TS |
+| python | `programming-languages/python` | Python |
+| go | `programming-languages/go` | Go |
+| rust | `programming-languages/rust` | Rust |
 | java-kotlin | `programming-languages/java-kotlin` | Java/Kotlin |
 | csharp-dotnet | `programming-languages/csharp-dotnet` | C#/.NET |
-| ruby | `programming-languages/ruby` | Ruby 開發 |
-| php | `programming-languages/php` | PHP 開發 |
-| swift | `programming-languages/swift` | Swift 開發 |
-| shell-bash | `programming-languages/shell-bash` | Shell 腳本 |
-| sql | `programming-languages/sql` | SQL 查詢 |
-| cpp | `programming-languages/cpp` | C++ 開發 |
+| ruby | `programming-languages/ruby` | Ruby |
+| php | `programming-languages/php` | PHP |
+| swift | `programming-languages/swift` | Swift |
+| shell-bash | `programming-languages/shell-bash` | Shell |
+| sql | `programming-languages/sql` | SQL |
+| cpp | `programming-languages/cpp` | C++ |
 
-### Software Engineering
+### Software engineering
 
-| Skill | 路徑 | 說明 |
-|-------|------|------|
-| code-quality | `software-engineering/code-quality` | Clean Code, SOLID |
-| testing-strategies | `software-engineering/testing-strategies` | TDD, 測試 |
+| Skill | Path | Description |
+|-------|------|-------------|
+| code-quality | `software-engineering/code-quality` | Clean code, SOLID |
+| testing-strategies | `software-engineering/testing-strategies` | TDD, testing |
 | devops-cicd | `software-engineering/devops-cicd` | CI/CD, Docker |
-| security-practices | `software-engineering/security-practices` | 安全實踐 |
-| performance-optimization | `software-engineering/performance-optimization` | 效能優化 |
-| reliability-engineering | `software-engineering/reliability-engineering` | 可靠性 |
-| documentation | `software-engineering/documentation` | 文件撰寫 |
+| security-practices | `software-engineering/security-practices` | Security |
+| performance-optimization | `software-engineering/performance-optimization` | Performance |
+| reliability-engineering | `software-engineering/reliability-engineering` | Reliability |
+| documentation | `software-engineering/documentation` | Documentation |
 
-### Software Design
+### Software design
 
-| Skill | 路徑 | 說明 |
-|-------|------|------|
+| Skill | Path | Description |
+|-------|------|-------------|
 | api-design | `software-design/api-design` | REST, GraphQL |
-| architecture-patterns | `software-design/architecture-patterns` | 架構模式 |
-| design-patterns | `software-design/design-patterns` | GoF 設計模式 |
-| system-design | `software-design/system-design` | 系統設計 |
-| data-design | `software-design/data-design` | 資料建模 |
-| ux-principles | `software-design/ux-principles` | UX/無障礙設計 |
+| architecture-patterns | `software-design/architecture-patterns` | Architecture |
+| design-patterns | `software-design/design-patterns` | GoF patterns |
+| system-design | `software-design/system-design` | System design |
+| data-design | `software-design/data-design` | Data modeling |
+| ux-principles | `software-design/ux-principles` | UX/accessibility |
 
-### Domain Applications
+### Domain applications
 
-| Skill | 路徑 | 說明 |
-|-------|------|------|
-| e-commerce | `domain-applications/e-commerce` | 電商系統 |
-| saas-platforms | `domain-applications/saas-platforms` | SaaS 平台 |
+| Skill | Path | Description |
+|-------|------|-------------|
+| e-commerce | `domain-applications/e-commerce` | E-commerce |
+| saas-platforms | `domain-applications/saas-platforms` | SaaS |
 | content-platforms | `domain-applications/content-platforms` | CMS |
-| communication-systems | `domain-applications/communication-systems` | 通訊系統 |
-| developer-tools | `domain-applications/developer-tools` | 開發工具 |
-| desktop-apps | `domain-applications/desktop-apps` | 桌面應用 |
-| game-development | `domain-applications/game-development` | 遊戲開發 |
+| communication-systems | `domain-applications/communication-systems` | Messaging |
+| developer-tools | `domain-applications/developer-tools` | Dev tools |
+| desktop-apps | `domain-applications/desktop-apps` | Desktop |
+| game-development | `domain-applications/game-development` | Games |
 
-### Tools & Integrations
+### Tools & integrations
 
-| Skill | 路徑 | 說明 |
-|-------|------|------|
-| git-workflows | `tools-integrations/git-workflows` | Git 工作流 |
-| development-environment | `tools-integrations/development-environment` | 開發環境 |
-| monitoring-logging | `tools-integrations/monitoring-logging` | 監控日誌 |
-| api-tools | `tools-integrations/api-tools` | API 工具 |
-| automation-scripts | `tools-integrations/automation-scripts` | 自動化腳本 |
-| project-management | `tools-integrations/project-management` | 專案管理 |
+| Skill | Path | Description |
+|-------|------|-------------|
+| git-workflows | `tools-integrations/git-workflows` | Git workflows |
+| development-environment | `tools-integrations/development-environment` | Dev environment |
+| monitoring-logging | `tools-integrations/monitoring-logging` | Monitoring |
+| api-tools | `tools-integrations/api-tools` | API tooling |
+| automation-scripts | `tools-integrations/automation-scripts` | Automation |
+| project-management | `tools-integrations/project-management` | Project management |
 
 ---
 
-## 常見問題
+## FAQ
 
-### Q: 安裝失敗怎麼辦？
+### Q: Install failed?
 
 ```python
-# 檢查網路連線
-# 確認 GitHub repo 路徑正確
+# Check network
+# Verify the GitHub path
 
-# 嘗試使用本地路徑
+# Try a local path
 mcp__skillpkg__install_skill(
     source="/local/path/to/claude-software-skills#development-stacks/frontend"
 )
 ```
 
-### Q: 如何更新已安裝的 skill？
+### Q: How do I update an installed skill?
 
 ```python
-# 重新安裝會覆蓋舊版本
+# Reinstall overwrites the previous version
 mcp__skillpkg__install_skill(
     source="github:miles990/claude-software-skills#development-stacks/frontend",
     scope="local"
 )
 ```
 
-### Q: 如何移除 skill？
+### Q: How do I remove a skill?
 
 ```python
 mcp__skillpkg__uninstall_skill(
@@ -459,35 +451,35 @@ mcp__skillpkg__uninstall_skill(
 )
 ```
 
-### Q: local vs global 的差別？
+### Q: local vs global?
 
-| Scope | 儲存位置 | 用途 |
-|-------|----------|------|
-| `local` | `.skillpkg/` (專案目錄) | 專案專用，隨 Git 版控 |
-| `global` | `~/.skillpkg/` | 跨專案共用 |
+| Scope | Location | Use |
+|-------|----------|-----|
+| `local` | `.skillpkg/` in the project | Per-repo, versioned with Git |
+| `global` | `~/.skillpkg/` | Shared across projects |
 
-### Q: 如何載入 skill 查看內容？
+### Q: How do I load a skill to inspect it?
 
 ```python
 result = mcp__skillpkg__load_skill(id="frontend")
-print(result)  # 顯示 SKILL.md 內容
+print(result)  # SKILL.md contents
 ```
 
-### Q: 如何搜尋可用的 skills？
+### Q: How do I search skills?
 
 ```python
-# 搜尋已安裝的 skills
+# Installed skills
 mcp__skillpkg__search_skills(query="react", source="local")
 
-# 搜尋 GitHub 上的 skills
+# GitHub index
 mcp__skillpkg__search_skills(query="react", source="github")
 ```
 
 ---
 
-## 相關資源
+## Related resources
 
-- [skillpkg 官方文件](https://github.com/anthropics/skillpkg)
-- [Claude Code Skills 文件](https://docs.anthropic.com/en/docs/claude-code/skills)
-- [SKILL.md 格式規範](./SKILL-TEMPLATE.md)
-- [貢獻指南](../CONTRIBUTING.md)
+- [skillpkg docs](https://github.com/anthropics/skillpkg)
+- [Claude Code Skills](https://docs.anthropic.com/en/docs/claude-code/skills)
+- [SKILL.md format](./SKILL-TEMPLATE.md)
+- [Contributing](../CONTRIBUTING.md)

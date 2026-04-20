@@ -8,9 +8,9 @@ tags: [flame, flutter, dart, 2d-games, game-engine]
 
 # Flame Core Fundamentals
 
-Flame Engine 核心基礎，涵蓋組件系統、輸入處理、碰撞檢測、相機、動畫與場景管理。
+Core Flame topics: components, input, collision, camera, animation, and scene management.
 
-## Quick Start
+## Quick start
 
 ```bash
 flutter create my_game && cd my_game
@@ -33,47 +33,47 @@ class MyGame extends FlameGame with HasCollisionDetection {
 }
 ```
 
-## Reference Index
+## Reference index
 
 | Topic | File | Description |
 |-------|------|-------------|
-| **Components** | `references/components.md` | 組件生命週期、類型、最佳實踐 |
-| **Input** | `references/input.md` | 觸控、鍵盤、搖桿輸入處理 |
-| **Collision** | `references/collision.md` | 碰撞檢測、Hitbox 類型 |
-| **Camera** | `references/camera.md` | 相機設置、跟隨、HUD |
-| **Animation** | `references/animation.md` | 精靈動畫、Effects 系統 |
-| **Scenes** | `references/scenes.md` | RouterComponent、Overlays、UI |
-| **Audio** | `references/audio.md` | 音效、背景音樂、AudioPool |
-| **Particles** | `references/particles.md` | 粒子系統、特效、爆炸效果 |
-| **Performance** | `references/performance.md` | 效能優化、最佳實踐、常見問題 |
-| **Debug** | `references/debug.md` | 除錯模式、日誌、效能監控 |
+| **Components** | `references/components.md` | Lifecycle, types, best practices |
+| **Input** | `references/input.md` | Touch, keyboard, gamepad |
+| **Collision** | `references/collision.md` | Hitboxes and collision types |
+| **Camera** | `references/camera.md` | Follow camera, HUD, viewport |
+| **Animation** | `references/animation.md` | Sprite animation, effects |
+| **Scenes** | `references/scenes.md` | RouterComponent, overlays, UI |
+| **Audio** | `references/audio.md` | SFX, music, AudioPool |
+| **Particles** | `references/particles.md` | Particle systems and VFX |
+| **Performance** | `references/performance.md` | Optimization and pitfalls |
+| **Debug** | `references/debug.md` | Debug mode, logging, profiling |
 
-## AI Usage Guide
+## AI usage guide
 
 ```
-需要了解組件系統？ → Read references/components.md
-需要處理輸入？     → Read references/input.md
-需要碰撞檢測？     → Read references/collision.md
-需要相機設置？     → Read references/camera.md
-需要動畫效果？     → Read references/animation.md
-需要場景管理/UI？  → Read references/scenes.md
-需要音效/音樂？    → Read references/audio.md
-需要粒子特效？     → Read references/particles.md
-需要效能優化？     → Read references/performance.md
-需要除錯/日誌？    → Read references/debug.md
+Components?     → Read references/components.md
+Input?          → Read references/input.md
+Collision?      → Read references/collision.md
+Camera?         → Read references/camera.md
+Animation?      → Read references/animation.md
+Scenes / UI?    → Read references/scenes.md
+Audio?          → Read references/audio.md
+Particles?      → Read references/particles.md
+Performance?    → Read references/performance.md
+Debug / logs?   → Read references/debug.md
 ```
 
-## Component Types Quick Reference
+## Component types quick reference
 
-| Type | Use Case |
+| Type | Use case |
 |------|----------|
 | `Component` | Logic only |
 | `PositionComponent` | Has position/size |
 | `SpriteComponent` | Static image |
 | `SpriteAnimationComponent` | Animated sprite |
-| `SpriteAnimationGroupComponent` | Multiple states |
+| `SpriteAnimationGroupComponent` | Multiple animation states |
 
-## Related Skills
+## Related skills
 
-- `flame-systems` - 14 個遊戲系統（任務、對話、背包等）
-- `flame-templates` - 遊戲類型模板（RPG、平台、Roguelike）
+- `flame-systems` — 14 gameplay systems (quests, dialogue, inventory, etc.)
+- `flame-templates` — RPG, platformer, and roguelike starters

@@ -18,46 +18,46 @@ triggers:
 
 ## Overview
 
-Claude Code SDK (`claude-code-sdk`) 是 Anthropic 官方提供的 Python 套件，用於在應用程式中整合 Claude AI Agent 功能。它支援 OAuth 認證（透過 `claude login`）和 API Key 認證，讓開發者可以利用 Claude Max/Pro 訂閱或 API 計費方案。這個 SDK 是建立 AI-powered 應用程式的關鍵工具，特別適合需要程式碼生成、檔案操作、或多輪對話的場景。
+The Claude Code SDK (`claude-code-sdk`) is Anthropic’s official Python package for integrating Claude AI Agent capabilities into applications. It supports OAuth (via `claude login`) and API Key authentication so developers can use Claude Max/Pro subscriptions or API billing. This SDK is central to AI-powered apps, especially for code generation, file operations, or multi-turn dialogue.
 
 ## Key Concepts
 
-### 認證方式
+### Authentication
 
-**Description**: Claude Code SDK 支援兩種認證方式
+**Description**: The Claude Code SDK supports two authentication modes  
 **Key Features**:
-- **OAuth 認證**: 使用 `claude login` 後存儲在 `~/.claude/` 的憑證
-- **API Key 認證**: 透過 `ANTHROPIC_API_KEY` 環境變數
+- **OAuth**: Credentials stored under `~/.claude/` after `claude login`
+- **API Key**: Via the `ANTHROPIC_API_KEY` environment variable
 
 **Use Cases**:
-- OAuth：個人開發、有 Max/Pro 訂閱的用戶
-- API Key：生產環境、需要計量計費的服務
+- OAuth: Personal development, users with Max/Pro subscriptions
+- API Key: Production and metered services
 
-### SDK 核心 API
+### Core SDK API
 
-**Description**: `query()` 函數是主要的非同步介面
+**Description**: The `query()` function is the main asynchronous interface  
 **Key Features**:
-- 非同步迭代器回傳訊息
-- 支援 streaming 和完整回應
-- 可配置工具權限和執行限制
+- Async iterator for messages
+- Supports streaming and full responses
+- Configurable tool permissions and execution limits
 
-**Use Cases**: 程式碼生成、檔案操作、研究任務、唯讀分析
+**Use Cases**: Code generation, file operations, research tasks, read-only analysis
 
-### 工具類型 (ToolType)
+### Tool types (ToolType)
 
-**Description**: SDK 支援多種內建工具
+**Description**: The SDK exposes several built-in tools  
 **Key Features**:
-- `READ`, `WRITE`, `EDIT` - 檔案操作
-- `BASH` - 終端命令執行
-- `GLOB`, `GREP` - 檔案搜尋
-- `WEB_FETCH` - 網頁抓取
+- `READ`, `WRITE`, `EDIT` — file operations
+- `BASH` — terminal commands
+- `GLOB`, `GREP` — file search
+- `WEB_FETCH` — web fetching
 
 ## Best Practices
 
-1. **雙重認證檢查**
-   - 同時支援 OAuth 和 API Key
-   - 優先使用 OAuth（免費使用 Max/Pro 配額）
-   - API Key 作為後備方案
+1. **Dual authentication check**
+   - Support both OAuth and API Key
+   - Prefer OAuth when possible (uses Max/Pro quota)
+   - Use API Key as fallback
 
 ```python
 def check_auth_status() -> dict:
@@ -66,7 +66,7 @@ def check_auth_status() -> dict:
         'oauth_logged_in': False,
     }
 
-    # 檢查 OAuth 登入狀態
+    # Check OAuth login state
     claude_dir = os.path.expanduser('~/.claude')
     if os.path.exists(claude_dir):
         auth_files = ['credentials.json', 'settings.json', '.credentials.json']
@@ -75,14 +75,14 @@ def check_auth_status() -> dict:
                 status['oauth_logged_in'] = True
                 break
 
-    # 只需要其中一種認證
+    # Only one auth method is required
     status['auth_available'] = status['api_key_set'] or status['oauth_logged_in']
     return status
 ```
 
-2. **增加 Buffer Size**
-   - 預設 buffer 太小，處理大型回應會出錯
-   - 建議增加到 50MB
+2. **Increase buffer size**
+   - The default buffer is too small for large responses
+   - Increase to ~50MB
 
 ```python
 try:
@@ -92,9 +92,9 @@ except Exception as e:
     print(f"Failed to patch SDK buffer size: {e}")
 ```
 
-3. **使用 Singleton Pattern**
-   - 避免重複初始化
-   - 共享狀態和配置
+3. **Use a singleton pattern**
+   - Avoid repeated initialization
+   - Share state and configuration
 
 ```python
 _claude_service: Optional['ClaudeCodeService'] = None
@@ -106,9 +106,9 @@ def get_claude_code() -> 'ClaudeCodeService':
     return _claude_service
 ```
 
-4. **預設配置模式**
-   - 依據使用場景限制工具權限
-   - 降低風險，提升安全性
+4. **Preset configuration profiles**
+   - Restrict tools by scenario
+   - Reduce risk and improve safety
 
 ```python
 @dataclass
@@ -119,7 +119,7 @@ class AgentConfig:
 
     @classmethod
     def coding(cls) -> 'AgentConfig':
-        """開發模式：完整權限"""
+        """Development mode: full permissions"""
         return cls(
             allowed_tools=['Read', 'Write', 'Edit', 'Bash', 'Glob', 'Grep'],
             max_turns=50
@@ -127,7 +127,7 @@ class AgentConfig:
 
     @classmethod
     def research(cls) -> 'AgentConfig':
-        """研究模式：可上網"""
+        """Research mode: web access"""
         return cls(
             allowed_tools=['Read', 'Glob', 'Grep', 'WebFetch'],
             max_turns=20
@@ -135,7 +135,7 @@ class AgentConfig:
 
     @classmethod
     def readonly(cls) -> 'AgentConfig':
-        """唯讀模式：最安全"""
+        """Read-only mode: safest"""
         return cls(
             allowed_tools=['Read', 'Glob', 'Grep'],
             max_turns=10
@@ -144,17 +144,17 @@ class AgentConfig:
 
 ## Common Pitfalls
 
-### Pitfall 1: 直接在前端呼叫 SDK
+### Pitfall 1: Calling the SDK directly from the frontend
 
-- **Problem**: claude-code-sdk 是 Python 套件，無法在瀏覽器中運行
-- **Solution**: 必須建立後端 API 服務
+- **Problem**: `claude-code-sdk` is a Python package and cannot run in the browser
+- **Solution**: Expose a backend API
 - **Example**:
 
 ```python
-# ❌ 錯誤：嘗試在前端使用
-# JavaScript 無法直接使用 Python SDK
+# Wrong: trying to use from the frontend
+# JavaScript cannot use the Python SDK directly
 
-# ✅ 正確：建立 FastAPI 後端
+# Right: expose a FastAPI backend
 from fastapi import FastAPI
 from claude_code_sdk import query
 
@@ -168,42 +168,42 @@ async def generate(prompt: str):
     return {"result": result}
 ```
 
-### Pitfall 2: 忘記處理非同步
+### Pitfall 2: Forgetting async handling
 
-- **Problem**: SDK 是非同步的，忘記 await 會導致錯誤
-- **Solution**: 使用 async/await 或 asyncio
+- **Problem**: The SDK is async; omitting `await` causes errors
+- **Solution**: Use `async`/`await` or `asyncio`
 
 ```python
-# ❌ 錯誤
+# Wrong
 def run_sync():
     for msg in query(prompt="Hello"):  # TypeError
         print(msg)
 
-# ✅ 正確
+# Right
 async def run_async():
     async for msg in query(prompt="Hello"):
         print(msg)
 ```
 
-### Pitfall 3: 混淆 Claude API 和 Claude Code SDK
+### Pitfall 3: Confusing Claude API and Claude Code SDK
 
 - **Problem**:
-  - Claude API (`anthropic` 套件) - 直接 HTTP API，需要 API Key
-  - Claude Code SDK (`claude-code-sdk`) - Agent 功能，支援 OAuth
-- **Solution**: 根據需求選擇正確的套件
+  - Claude API (`anthropic` package) — direct HTTP API, API Key only
+  - Claude Code SDK (`claude-code-sdk`) — agent features, OAuth supported
+- **Solution**: Pick the right package for your needs
 
-| 特性 | Claude API | Claude Code SDK |
-|------|-----------|-----------------|
-| 認證 | API Key only | OAuth + API Key |
-| 功能 | 純對話 | Agent (檔案/終端操作) |
-| 計費 | API 用量計費 | Max/Pro 訂閱可用 |
-| 套件 | `anthropic` | `claude-code-sdk` |
+| Aspect | Claude API | Claude Code SDK |
+|--------|------------|-----------------|
+| Auth | API Key only | OAuth + API Key |
+| Capabilities | Chat only | Agent (files / terminal) |
+| Billing | API usage | Max/Pro subscription eligible |
+| Package | `anthropic` | `claude-code-sdk` |
 
 ## Patterns & Anti-Patterns
 
 ### Patterns (Do This)
 
-**完整的服務封裝**:
+**Full service wrapper**:
 
 ```python
 from dataclasses import dataclass, field
@@ -212,10 +212,10 @@ from claude_code_sdk import query, ClaudeCodeOptions, AssistantMessage, TextBloc
 
 @dataclass
 class ClaudeCodeService:
-    """Claude Code 服務封裝"""
+    """Claude Code service wrapper"""
 
     async def run(self, prompt: str, config: Optional[AgentConfig] = None) -> Dict[str, Any]:
-        """執行並收集完整結果"""
+        """Run and collect full result"""
         options = ClaudeCodeOptions(
             allowed_tools=config.allowed_tools if config else None,
             max_turns=config.max_turns if config else 30,
@@ -238,7 +238,7 @@ class ClaudeCodeService:
         }
 
     async def stream(self, prompt: str, config: Optional[AgentConfig] = None) -> AsyncIterator[dict]:
-        """串流執行，即時回傳"""
+        """Stream execution, yield chunks as they arrive"""
         options = ClaudeCodeOptions(
             allowed_tools=config.allowed_tools if config else None,
             max_turns=config.max_turns if config else 30
@@ -251,7 +251,7 @@ class ClaudeCodeService:
                         yield {'type': 'text', 'content': block.text}
 ```
 
-**FastAPI 串流端點**:
+**FastAPI streaming endpoint**:
 
 ```python
 from fastapi import FastAPI
@@ -277,21 +277,21 @@ async def agent_stream(prompt: str):
 ### Anti-Patterns (Avoid This)
 
 ```python
-# ❌ 不要在每次請求都建立新服務
+# Do not instantiate a new service on every request
 @app.post("/api/generate")
 async def bad_generate(prompt: str):
-    service = ClaudeCodeService()  # 每次都新建
+    service = ClaudeCodeService()  # new instance each time
     return await service.run(prompt)
 
-# ❌ 不要忽略錯誤處理
+# Do not ignore errors
 async def bad_run(prompt: str):
-    async for msg in query(prompt=prompt):  # 可能拋出異常
+    async for msg in query(prompt=prompt):  # may throw
         print(msg)
 
-# ❌ 不要給予過多權限
+# Do not grant excessive permissions
 config = AgentConfig(
-    allowed_tools=['Read', 'Write', 'Edit', 'Bash', 'WebFetch'],  # 全開
-    max_turns=100  # 太多
+    allowed_tools=['Read', 'Write', 'Edit', 'Bash', 'WebFetch'],  # everything on
+    max_turns=100  # too high
 )
 ```
 
@@ -299,28 +299,28 @@ config = AgentConfig(
 
 | Tool | Purpose | Link |
 |------|---------|------|
-| claude-code-sdk | 官方 Python SDK | `pip install claude-code-sdk` |
-| Claude Code CLI | 命令列工具 | `npm install -g @anthropic-ai/claude-code` |
-| FastAPI | 後端框架 | [fastapi.tiangolo.com](https://fastapi.tiangolo.com) |
+| claude-code-sdk | Official Python SDK | `pip install claude-code-sdk` |
+| Claude Code CLI | Command-line tool | `npm install -g @anthropic-ai/claude-code` |
+| FastAPI | Backend framework | [fastapi.tiangolo.com](https://fastapi.tiangolo.com) |
 
 ## Decision Guide
 
 Use Claude Code SDK when:
-- [x] 需要 Agent 功能（檔案操作、終端命令）
-- [x] 想使用 Max/Pro 訂閱而非 API 計費
-- [x] 建立需要多輪互動的 AI 應用
-- [x] 需要串流即時回應
+- [x] You need agent capabilities (files, terminal)
+- [x] You want Max/Pro subscription instead of API billing
+- [x] You are building multi-turn AI applications
+- [x] You need streaming responses
 
 Consider alternatives when:
-- [ ] 只需要簡單對話 → 使用 `anthropic` 套件
-- [ ] 純前端應用 → 使用 `anthropic` + `anthropic-dangerous-direct-browser-access`
-- [ ] 不需要 Agent 功能 → 使用標準 Claude API
+- [ ] You only need simple chat → use the `anthropic` package
+- [ ] Pure frontend app → use `anthropic` + `anthropic-dangerous-direct-browser-access`
+- [ ] You do not need agent features → use the standard Claude API
 
 ## Examples
 
-### Example 1: 完整後端服務
+### Example 1: Full backend service
 
-**Context**: 建立一個可以利用 Claude Max 訂閱的後端 API
+**Context**: Backend API that can use a Claude Max subscription
 
 **Implementation**:
 
@@ -337,7 +337,7 @@ from claude_code_sdk import query, ClaudeCodeOptions, AssistantMessage, TextBloc
 
 app = FastAPI()
 
-# CORS 設定
+# CORS
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -350,7 +350,7 @@ class GenerateRequest(BaseModel):
     max_turns: int = 30
 
 def check_auth():
-    """檢查認證狀態"""
+    """Check authentication state"""
     api_key = bool(os.environ.get('ANTHROPIC_API_KEY'))
     oauth = os.path.exists(os.path.expanduser('~/.claude/credentials.json'))
     return api_key or oauth
@@ -365,7 +365,7 @@ async def health():
 @app.post("/api/generate")
 async def generate(request: GenerateRequest):
     if not check_auth():
-        raise HTTPException(401, "請先執行 claude login 或設置 ANTHROPIC_API_KEY")
+        raise HTTPException(401, "Run claude login or set ANTHROPIC_API_KEY")
 
     options = ClaudeCodeOptions(max_turns=request.max_turns)
     results = []
@@ -381,7 +381,7 @@ async def generate(request: GenerateRequest):
 @app.post("/api/stream")
 async def stream(request: GenerateRequest):
     if not check_auth():
-        raise HTTPException(401, "未認證")
+        raise HTTPException(401, "Not authenticated")
 
     async def event_generator():
         options = ClaudeCodeOptions(max_turns=request.max_turns)
@@ -407,16 +407,16 @@ claude-code-sdk>=0.1.0
 python-dotenv>=1.0.0
 ```
 
-**Explanation**: 這個後端會自動檢測 OAuth 或 API Key 認證，支援一般請求和串流回應。
+**Explanation**: This backend detects OAuth or API Key auth and supports normal and streaming responses.
 
-### Example 2: 前端整合
+### Example 2: Frontend integration
 
-**Context**: 前端呼叫後端 API
+**Context**: Frontend calling the backend API
 
 **Implementation**:
 
 ```javascript
-// 一般請求
+// Standard request
 async function generate(prompt) {
     const response = await fetch('http://localhost:8000/api/generate', {
         method: 'POST',
@@ -427,7 +427,7 @@ async function generate(prompt) {
     return data.result;
 }
 
-// 串流請求
+// Streaming request
 async function streamGenerate(prompt, onChunk) {
     const response = await fetch('http://localhost:8000/api/stream', {
         method: 'POST',
@@ -455,9 +455,9 @@ async function streamGenerate(prompt, onChunk) {
 }
 ```
 
-### Example 3: Docker 部署
+### Example 3: Docker deployment
 
-**Context**: 容器化部署包含 Claude Code CLI
+**Context**: Containerized deployment including Claude Code CLI
 
 **Implementation**:
 
@@ -465,13 +465,13 @@ async function streamGenerate(prompt, onChunk) {
 # Dockerfile
 FROM python:3.11-slim
 
-# 安裝 Node.js (Claude Code CLI 需要)
+# Install Node.js (required for Claude Code CLI)
 RUN apt-get update && apt-get install -y curl && \
     curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
     apt-get install -y nodejs && \
     rm -rf /var/lib/apt/lists/*
 
-# 安裝 Claude Code CLI
+# Install Claude Code CLI
 RUN npm install -g @anthropic-ai/claude-code
 
 WORKDIR /app
@@ -495,15 +495,15 @@ services:
     environment:
       - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
     volumes:
-      - ~/.claude:/root/.claude:ro  # 掛載 OAuth 憑證
+      - ~/.claude:/root/.claude:ro  # Mount OAuth credentials
 ```
 
 ## Related Skills
 
-- [[api-design]] - 設計 REST API 端點
-- [[backend]] - Python/FastAPI 後端開發
-- [[devops-cicd]] - Docker 部署和 CI/CD
-- [[security-practices]] - API 認證和安全
+- [[api-design]] — Designing REST API endpoints
+- [[backend]] — Python/FastAPI backend development
+- [[devops-cicd]] — Docker deployment and CI/CD
+- [[security-practices]] — API authentication and security
 
 ## References
 

@@ -583,105 +583,105 @@ module.exports = {
 
 ---
 
-## Sharp Edges（常見陷阱）
+## Sharp edges (common pitfalls)
 
-> 這些是測試中最常見且代價最高的錯誤
+> These are among the most common and costly mistakes in testing.
 
-### SE-1: 測試實作而非行為
-- **嚴重度**: high
-- **情境**: 測試過度耦合內部實作，重構時測試全部壞掉
-- **原因**: 測試私有方法、mock 太細、驗證內部狀態
-- **症狀**:
-  - 改了一行程式碼，10 個測試失敗
-  - 測試檔案比程式碼還長
-  - 重構時花更多時間修測試
-- **檢測**: `expect.*\.toHaveBeenCalledTimes\(\d{2,}\)|mock.*private|spy.*internal`
-- **解法**: 測試公開 API/行為、使用 black-box testing、減少 mock 數量
+### SE-1: Testing implementation instead of behavior
+- **Severity**: high
+- **Situation**: Tests are tightly coupled to internals and all break on refactor
+- **Causes**: Testing private methods, over-mocking, asserting internal state
+- **Symptoms**:
+  - One line of production code breaks many tests
+  - Test files longer than the code under test
+  - More time fixing tests than refactoring features
+- **Detection**: `expect.*\.toHaveBeenCalledTimes\(\d{2,}\)|mock.*private|spy.*internal`
+- **Mitigation**: Test public APIs and behavior; favor black-box testing; reduce mock surface
 
-### SE-2: 假陽性測試 (False Positive)
-- **嚴重度**: critical
-- **情境**: 測試永遠通過，但實際上沒有驗證任何東西
-- **原因**: 忘記 await、expect 沒有執行、條件判斷錯誤
-- **症狀**:
-  - 測試通過但 bug 仍然存在
-  - 刪掉測試中的關鍵 assertion 測試還是通過
-  - Coverage 高但信心低
-- **檢測**: `it\(.*\{\s*\}\)|expect\(.*\)(?!\.)|\.resolves(?!\.)|\.rejects(?!\.)`
-- **解法**: TDD（先寫失敗的測試）、review 測試程式碼、使用 ESLint no-floating-promises
+### SE-2: False-positive tests
+- **Severity**: critical
+- **Situation**: Tests always pass but verify nothing meaningful
+- **Causes**: Missing `await`, assertions never run, incorrect control flow
+- **Symptoms**:
+  - Tests green while bugs remain
+  - Removing key assertions still leaves tests passing
+  - High coverage but low confidence
+- **Detection**: `it\(.*\{\s*\}\)|expect\(.*\)(?!\.)|\.resolves(?!\.)|\.rejects(?!\.)`
+- **Mitigation**: TDD (write a failing test first), review test code, ESLint `no-floating-promises`
 
-### SE-3: Flaky Tests（不穩定測試）
-- **嚴重度**: high
-- **情境**: 測試有時通過有時失敗，沒有程式碼變更
-- **原因**: 依賴時間、依賴外部服務、競態條件、共享狀態
-- **症狀**:
-  - CI 需要 retry 才能通過
-  - 本地通過但 CI 失敗
-  - 團隊開始忽略失敗的測試
-- **檢測**: `new Date\(\)|Date\.now\(\)|setTimeout.*\d{4,}|sleep\(\d+\)`
-- **解法**: 使用 fake timers、隔離測試狀態、避免 hard-coded delays、mock 外部依賴
+### SE-3: Flaky tests
+- **Severity**: high
+- **Situation**: Pass/fail varies with no code changes
+- **Causes**: Time dependence, external services, races, shared mutable state
+- **Symptoms**:
+  - CI only passes with retries
+  - Passes locally, fails in CI
+  - Team ignores red builds
+- **Detection**: `new Date\(\)|Date\.now\(\)|setTimeout.*\d{4,}|sleep\(\d+\)`
+- **Mitigation**: Fake timers, isolate test state, avoid fixed delays, mock externals
 
-### SE-4: 測試金字塔倒置
-- **嚴重度**: medium
-- **情境**: E2E 測試太多，單元測試太少，CI 超慢
-- **原因**: 「E2E 測試更接近真實」的誤解、不想寫單元測試
-- **症狀**:
-  - CI 跑 30+ 分鐘
-  - 測試失敗難以定位問題
-  - E2E 測試經常 flaky
-- **檢測**: `describe.*E2E|playwright.*test|cypress.*it` (數量遠超 unit test)
-- **解法**: 遵循 70% unit / 20% integration / 10% E2E 比例、E2E 只測關鍵路徑
+### SE-4: Inverted test pyramid
+- **Severity**: medium
+- **Situation**: Too many E2E tests, too few unit tests, slow CI
+- **Causes**: Belief that “E2E is more realistic,” reluctance to write unit tests
+- **Symptoms**:
+  - CI runs 30+ minutes
+  - Failures are hard to localize
+  - E2E suites are often flaky
+- **Detection**: `describe.*E2E|playwright.*test|cypress.*it` (count far exceeds unit tests)
+- **Mitigation**: Aim for ~70% unit / 20% integration / 10% E2E; E2E only for critical paths
 
-### SE-5: 過度 Mocking
-- **嚴重度**: medium
-- **情境**: Mock 太多導致測試失去意義，只是在測試 mock
-- **原因**: 為了隔離而 mock 所有依賴、測試執行時間焦慮
-- **症狀**:
-  - 測試通過但整合時失敗
-  - Mock 的行為與真實行為不符
-  - 更新依賴後 mock 過時
-- **檢測**: `jest\.mock.*jest\.mock.*jest\.mock|mock\(.*\).*mock\(.*\).*mock\(`
-- **解法**: 只 mock 外部依賴（網路、檔案系統）、使用真實的 in-memory 實作、寫更多整合測試
+### SE-5: Over-mocking
+- **Severity**: medium
+- **Situation**: So many mocks that tests only verify the mocks
+- **Causes**: Mocking everything for isolation, optimizing for test runtime over signal
+- **Symptoms**:
+  - Tests pass but integration fails
+  - Mocks diverge from real behavior
+  - Mocks rot when dependencies change
+- **Detection**: `jest\.mock.*jest\.mock.*jest\.mock|mock\(.*\).*mock\(.*\).*mock\(`
+- **Mitigation**: Mock only true externals (network, filesystem); use real in-memory implementations; add integration tests
 
 ---
 
 ## Validations
 
-### V-1: 禁止空的測試
-- **類型**: regex
-- **嚴重度**: critical
-- **模式**: `(it|test)\s*\([^)]+,\s*(async\s*)?\(\)\s*=>\s*\{\s*\}\s*\)`
-- **訊息**: Empty test detected - test has no assertions
-- **修復建議**: Add meaningful assertions with expect()
-- **適用**: `*.test.ts`, `*.test.js`, `*.spec.ts`, `*.spec.js`
+### V-1: Disallow empty tests
+- **Type**: regex
+- **Severity**: critical
+- **Pattern**: `(it|test)\s*\([^)]+,\s*(async\s*)?\(\)\s*=>\s*\{\s*\}\s*\)`
+- **Message**: Empty test detected - test has no assertions
+- **Fix**: Add meaningful assertions with expect()
+- **Applies to**: `*.test.ts`, `*.test.js`, `*.spec.ts`, `*.spec.js`
 
-### V-2: 測試缺少 assertion
-- **類型**: regex
-- **嚴重度**: high
-- **模式**: `(it|test)\s*\([^)]+,\s*(async\s*)?\(\)\s*=>\s*\{[^}]*\}(?![^}]*expect)`
-- **訊息**: Test without expect() assertion may be a false positive
-- **修復建議**: Add at least one expect() assertion
-- **適用**: `*.test.ts`, `*.test.js`, `*.spec.ts`, `*.spec.js`
+### V-2: Test missing assertion
+- **Type**: regex
+- **Severity**: high
+- **Pattern**: `(it|test)\s*\([^)]+,\s*(async\s*)?\(\)\s*=>\s*\{[^}]*\}(?![^}]*expect)`
+- **Message**: Test without expect() assertion may be a false positive
+- **Fix**: Add at least one expect() assertion
+- **Applies to**: `*.test.ts`, `*.test.js`, `*.spec.ts`, `*.spec.js`
 
-### V-3: 禁止 fit/fdescribe (focused tests)
-- **類型**: regex
-- **嚴重度**: critical
-- **模式**: `\b(fit|fdescribe|it\.only|describe\.only|test\.only)\s*\(`
-- **訊息**: Focused test will skip other tests in CI
-- **修復建議**: Remove `f` prefix or `.only` before committing
-- **適用**: `*.test.ts`, `*.test.js`, `*.spec.ts`, `*.spec.js`
+### V-3: Disallow fit/fdescribe (focused tests)
+- **Type**: regex
+- **Severity**: critical
+- **Pattern**: `\b(fit|fdescribe|it\.only|describe\.only|test\.only)\s*\(`
+- **Message**: Focused test will skip other tests in CI
+- **Fix**: Remove `f` prefix or `.only` before committing
+- **Applies to**: `*.test.ts`, `*.test.js`, `*.spec.ts`, `*.spec.js`
 
-### V-4: 禁止 skip tests 無說明
-- **類型**: regex
-- **嚴重度**: medium
-- **模式**: `(xit|xdescribe|it\.skip|describe\.skip|test\.skip)\s*\([^)]+\)`
-- **訊息**: Skipped test without documented reason
-- **修復建議**: Add comment explaining why test is skipped and tracking issue
-- **適用**: `*.test.ts`, `*.test.js`, `*.spec.ts`, `*.spec.js`
+### V-4: Disallow skipped tests without explanation
+- **Type**: regex
+- **Severity**: medium
+- **Pattern**: `(xit|xdescribe|it\.skip|describe\.skip|test\.skip)\s*\([^)]+\)`
+- **Message**: Skipped test without documented reason
+- **Fix**: Add a comment explaining why the test is skipped and a tracking issue
+- **Applies to**: `*.test.ts`, `*.test.js`, `*.spec.ts`, `*.spec.js`
 
-### V-5: 測試中使用 setTimeout
-- **類型**: regex
-- **嚴重度**: high
-- **模式**: `setTimeout\s*\(\s*[^,]+,\s*\d{3,}\s*\)`
-- **訊息**: Hard-coded delays in tests cause flakiness and slow tests
-- **修復建議**: Use `jest.useFakeTimers()` or `waitFor()` from testing-library
-- **適用**: `*.test.ts`, `*.test.js`, `*.spec.ts`, `*.spec.js`
+### V-5: setTimeout in tests
+- **Type**: regex
+- **Severity**: high
+- **Pattern**: `setTimeout\s*\(\s*[^,]+,\s*\d{3,}\s*\)`
+- **Message**: Hard-coded delays in tests cause flakiness and slow tests
+- **Fix**: Use `jest.useFakeTimers()` or `waitFor()` from Testing Library
+- **Applies to**: `*.test.ts`, `*.test.js`, `*.spec.ts`, `*.spec.js`

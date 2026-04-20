@@ -1,23 +1,23 @@
-# 專案記憶索引
+# Project memory index
 
-> 自動維護，請勿手動編輯主要區塊
+> Auto-maintained; avoid editing the main marker blocks by hand
 
-## 最近學習
+## Recent learnings
 <!-- LEARNINGS_START -->
 <!-- LEARNINGS_END -->
 
-## 重要決策
+## Important decisions
 <!-- DECISIONS_START -->
 <!-- DECISIONS_END -->
 
-## 失敗經驗
+## Failures
 <!-- FAILURES_START -->
 <!-- FAILURES_END -->
 
-## 推理模式
+## Patterns
 <!-- PATTERNS_START -->
 <!-- PATTERNS_END -->
 
-## 標籤索引
+## Tag index
 <!-- TAGS_START -->
 <!-- TAGS_END -->

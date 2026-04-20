@@ -1,24 +1,24 @@
 # V1 Roadmap: Skills Enhancement Plan
 
-> 從 MVP 到 V1 的完整升級計劃
+> Plan to evolve from MVP to V1
 
-## 目標
+## Goals
 
-將 48 個 skills 從「純知識型」升級為「混合型」，加入實用的 templates/、scripts/、reference.md。
+Upgrade 48 skills from “knowledge-only” to “hybrid” by adding practical `templates/`, `scripts/`, and `reference.md`.
 
-## 現況分析
+## Current state
 
-### 統計
+### Stats
 
-| 指標 | 數量 |
-|------|------|
-| 總 skills | 48 |
-| > 500 行 (官方建議上限) | 27 |
-| 已有 templates/ (MVP) | 4 |
-| 需要額外資源 | ~35 |
-| 純知識型（不需要） | ~8 |
+| Metric | Count |
+|--------|-------|
+| Total skills | 48 |
+| Over 500 lines (recommended cap) | 27 |
+| Already had `templates/` (MVP) | 4 |
+| Needed extra assets | ~35 |
+| Knowledge-only (no extras) | ~8 |
 
-### MVP 已完成
+### MVP already done
 
 - ✅ `software-engineering/devops-cicd/templates/`
 - ✅ `tools-integrations/git-workflows/scripts/` + `templates/`
@@ -27,35 +27,35 @@
 
 ---
 
-## 官方結構建議
+## Recommended layout (official)
 
-根據 [Claude Code Skills 官方文檔](https://docs.anthropic.com/en/docs/claude-code/skills)：
+Per [Claude Code Skills docs](https://docs.anthropic.com/en/docs/claude-code/skills):
 
 ```
 my-skill/
-├── SKILL.md              # 必須，< 500 行
-├── reference.md          # 可選，詳細 API/參數說明
-├── examples.md           # 可選，使用範例
-├── scripts/              # 可選，工具腳本
+├── SKILL.md              # Required, under 500 lines
+├── reference.md          # Optional deep API/parameter notes
+├── examples.md           # Optional examples
+├── scripts/              # Optional tooling
 │   └── helper.py
-└── templates/            # 可選，可直接使用的範本
+└── templates/            # Optional copy-paste configs
     └── config.example
 ```
 
-**原則：**
-- SKILL.md 保持 < 500 行
-- 長內容拆分到 reference.md
-- 可執行範例放 scripts/
-- 可複製設定放 templates/
+**Principles:**
+- Keep SKILL.md under 500 lines
+- Move long content to reference.md
+- Put runnable examples in scripts/
+- Put copy-paste configs in templates/
 
 ---
 
-## V1 詳細計劃
+## V1 plan detail
 
-### P0: MVP 已完成 ✅
+### P0: MVP complete ✅
 
-| Skill | 新增資源 | 狀態 |
-|-------|----------|------|
+| Skill | New assets | Status |
+|-------|------------|--------|
 | devops-cicd | templates/github-actions/, templates/docker/ | ✅ |
 | git-workflows | scripts/pre-commit, commit-msg + templates/gitignore-* | ✅ |
 | frontend | templates/react/, templates/vite/ | ✅ |
@@ -63,29 +63,29 @@ my-skill/
 
 ---
 
-### P1: 高價值 (12 skills) ✅
+### P1: High value (12 skills) ✅
 
-**狀態：已完成** (45 檔案, 4169 行)
+**Status: done** (45 files, 4169 lines)
 
 #### software-engineering/
 
-| Skill | 行數 | 新增 | 內容 | 狀態 |
-|-------|------|------|------|------|
+| Skill | Lines | Added | Contents | Status |
+|-------|-------|-------|----------|--------|
 | testing-strategies | 532 | `templates/` | jest.config.ts, vitest.config.ts, pytest.ini | ✅ |
 | code-quality | 501 | `templates/` | eslint.config.js, .prettierrc, .editorconfig | ✅ |
 | security-practices | 486 | `templates/` | helmet-config.js, csp-policy.json, .env.example | ✅ |
 
 #### development-stacks/
 
-| Skill | 行數 | 新增 | 內容 | 狀態 |
-|-------|------|------|------|------|
+| Skill | Lines | Added | Contents | Status |
+|-------|-------|-------|----------|--------|
 | database | 644 | `templates/` | schema.prisma, migration.sql, docker-compose.db.yml | ✅ |
 | cloud-platforms | 540 | `templates/` | main.tf, cdk-stack.ts, serverless.yml | ✅ |
 
 #### tools-integrations/
 
-| Skill | 行數 | 新增 | 內容 | 狀態 |
-|-------|------|------|------|------|
+| Skill | Lines | Added | Contents | Status |
+|-------|-------|-------|----------|--------|
 | automation-scripts | 570 | `templates/` | Makefile.example, turbo.json | ✅ |
 | development-environment | 610 | `templates/` | .vscode/settings.json, extensions.json, devcontainer.json | ✅ |
 | monitoring-logging | 500 | `templates/` | prometheus.yml, grafana-dashboard.json, docker-compose.monitoring.yml | ✅ |
@@ -93,48 +93,48 @@ my-skill/
 
 #### software-design/
 
-| Skill | 行數 | 新增 | 內容 | 狀態 |
-|-------|------|------|------|------|
+| Skill | Lines | Added | Contents | Status |
+|-------|-------|-------|----------|--------|
 | api-design | 463 | `templates/` | openapi.yaml, schema.graphql | ✅ |
 
 #### programming-languages/
 
-| Skill | 行數 | 新增 | 內容 | 狀態 |
-|-------|------|------|------|------|
+| Skill | Lines | Added | Contents | Status |
+|-------|-------|-------|----------|--------|
 | javascript-typescript | 536 | `templates/` | tsconfig.json, tsconfig.react.json, package.json | ✅ |
 | python | 467 | `templates/` | pyproject.toml, requirements.txt, requirements-dev.txt | ✅ |
 
 ---
 
-### P2: 中價值 (13 skills) ✅
+### P2: Medium value (13 skills) ✅
 
-**狀態：已完成**
+**Status: done**
 
 #### development-stacks/
 
-| Skill | 行數 | 新增 | 內容 | 狀態 |
-|-------|------|------|------|------|
+| Skill | Lines | Added | Contents | Status |
+|-------|-------|-------|----------|--------|
 | mobile | 662 | `templates/` | react-native.config.js, pubspec.yaml | ✅ |
 | realtime-systems | 689 | `templates/` | websocket-server.ts, sse-handler.ts | ✅ |
 | ai-ml-integration | 564 | `templates/` | llm-config.ts, embedding-utils.py | ✅ |
 
 #### tools-integrations/
 
-| Skill | 行數 | 新增 | 內容 | 狀態 |
-|-------|------|------|------|------|
+| Skill | Lines | Added | Contents | Status |
+|-------|-------|-------|----------|--------|
 | api-tools | 590 | `scripts/` + `templates/` | curl-examples.sh, postman-collection.json | ✅ |
 
 #### domain-applications/
 
-| Skill | 行數 | 新增 | 內容 | 狀態 |
-|-------|------|------|------|------|
+| Skill | Lines | Added | Contents | Status |
+|-------|-------|-------|----------|--------|
 | e-commerce | 539 | `templates/` | cart-schema.ts, checkout-flow.ts | ✅ |
 | saas-platforms | 464 | `templates/` | tenant-schema.prisma, billing-config.ts | ✅ |
 
 #### programming-languages/
 
-| Skill | 行數 | 新增 | 內容 | 狀態 |
-|-------|------|------|------|------|
+| Skill | Lines | Added | Contents | Status |
+|-------|-------|-------|----------|--------|
 | go | 623 | `templates/` | go.mod, Makefile | ✅ |
 | rust | 540 | `templates/` | Cargo.toml | ✅ |
 | shell-bash | 528 | `scripts/` | common-utils.sh | ✅ |
@@ -142,27 +142,27 @@ my-skill/
 
 #### software-design/
 
-| Skill | 行數 | 新增 | 內容 | 狀態 |
-|-------|------|------|------|------|
+| Skill | Lines | Added | Contents | Status |
+|-------|-------|-------|----------|--------|
 | data-design | 464 | `templates/` | schema-patterns.sql | ✅ |
 
 #### software-engineering/
 
-| Skill | 行數 | 新增 | 內容 | 狀態 |
-|-------|------|------|------|------|
+| Skill | Lines | Added | Contents | Status |
+|-------|-------|-------|----------|--------|
 | reliability-engineering | 470 | `templates/` | health-check.ts, circuit-breaker.ts | ✅ |
 | documentation | 493 | `templates/` | README-template.md, CHANGELOG-template.md | ✅ |
 
 ---
 
-### P3: 低價值 (11 skills) ✅
+### P3: Lower value (11 skills) ✅
 
-**狀態：已完成**
+**Status: done**
 
 #### programming-languages/
 
-| Skill | 行數 | 新增 | 內容 | 狀態 |
-|-------|------|------|------|------|
+| Skill | Lines | Added | Contents | Status |
+|-------|-------|-------|----------|--------|
 | java-kotlin | 499 | `templates/` | build.gradle.kts, pom.xml | ✅ |
 | csharp-dotnet | 588 | `templates/` | WebApi.csproj, appsettings.json | ✅ |
 | cpp | 607 | `templates/` | CMakeLists.txt | ✅ |
@@ -172,56 +172,56 @@ my-skill/
 
 #### domain-applications/
 
-| Skill | 行數 | 新增 | 內容 | 狀態 |
-|-------|------|------|------|------|
+| Skill | Lines | Added | Contents | Status |
+|-------|-------|-------|----------|--------|
 | content-platforms | 502 | `templates/` | cms-schema.ts | ✅ |
 | communication-systems | 530 | `templates/` | email-template.html, notification-types.ts | ✅ |
 | developer-tools | 485 | `templates/` | cli-boilerplate.ts | ✅ |
 | desktop-apps | 515 | `templates/` | electron-main.ts, tauri.conf.json | ✅ |
 
-#### 拆分完成 (reference.md)
+#### Split to reference.md
 
-| Skill | 行數 | 新增 | 狀態 |
-|-------|------|------|------|
+| Skill | Lines | Added | Status |
+|-------|-------|-------|--------|
 | edge-iot | 659 | `reference.md` | ✅ |
 | ux-principles | 554 | `reference.md` | ✅ |
 | performance-optimization | 515 | `reference.md` | ✅ |
 
 ---
 
-### 不需要額外資源 (8 skills)
+### No extra assets needed (8 skills)
 
-純知識型，SKILL.md 已足夠：
+Knowledge-only; SKILL.md is enough:
 
-| Skill | 行數 | 原因 |
-|-------|------|------|
-| architecture-patterns | 214 | 純架構概念 |
-| design-patterns | 490 | GoF 模式說明 |
-| system-design | 468 | 分散式系統概念 |
-| application-patterns | 378 | MVC/CQRS 概念 |
-| game-development | 408 | 遊戲開發概念 |
-| auto-dev-setup | 151 | 已完整（有獨立 scripts/） |
+| Skill | Lines | Reason |
+|-------|-------|--------|
+| architecture-patterns | 214 | Architecture concepts only |
+| design-patterns | 490 | GoF patterns |
+| system-design | 468 | Distributed systems concepts |
+| application-patterns | 378 | MVC/CQRS concepts |
+| game-development | 408 | Game dev concepts |
+| auto-dev-setup | 151 | Already complete (standalone scripts/) |
 
 ---
 
-## 實作指南
+## Implementation guide
 
-### 目錄結構範例
+### Example directory layout
 
 ```
 my-skill/
-├── SKILL.md                    # 主文件 (< 500 行)
-├── reference.md                # 詳細參考 (可選)
+├── SKILL.md                    # Main doc (under 500 lines)
+├── reference.md                # Deep reference (optional)
 ├── templates/
-│   ├── README.md               # 範本使用說明
-│   ├── config-a.example        # 設定範本 A
-│   └── config-b.example        # 設定範本 B
+│   ├── README.md               # How to use templates
+│   ├── config-a.example        # Template A
+│   └── config-b.example        # Template B
 └── scripts/
-    ├── setup.sh                # 設定腳本
-    └── helper.py               # 工具腳本
+    ├── setup.sh                # Setup script
+    └── helper.py               # Helper script
 ```
 
-### templates/README.md 範本
+### templates/README.md template
 
 ```markdown
 # [Skill Name] Templates
@@ -242,53 +242,53 @@ cp templates/file-a.example ./file-a
 \`\`\`
 ```
 
-### 命名規範
+### Naming
 
-| 類型 | 命名規則 | 範例 |
-|------|----------|------|
-| 設定檔 | 原檔名 | `tsconfig.json`, `eslint.config.js` |
-| 需修改的範本 | `.example` 後綴 | `config.example.yaml` |
-| 腳本 | 功能描述 | `setup-hooks.sh`, `validate.py` |
-
----
-
-## 時程建議
-
-| 階段 | 內容 | 預估時間 |
+| Type | Rule | Examples |
 |------|------|----------|
-| V1.0 | P1 完成 (12 skills) | 3-4 小時 |
-| V1.1 | P2 完成 (13 skills) | 3-4 小時 |
-| V1.2 | P3 完成 (11 skills) | 2-3 小時 |
-| V1.3 | reference.md 拆分 | 1-2 小時 |
-
-**總計：約 10-13 小時**
+| Config files | Original filename | `tsconfig.json`, `eslint.config.js` |
+| Templates to customize | `.example` suffix | `config.example.yaml` |
+| Scripts | Descriptive name | `setup-hooks.sh`, `validate.py` |
 
 ---
 
-## 驗收標準
+## Suggested timeline
 
-### 每個 templates/ 必須包含
+| Phase | Scope | Estimate |
+|-------|-------|----------|
+| V1.0 | P1 (12 skills) | 3–4 hours |
+| V1.1 | P2 (13 skills) | 3–4 hours |
+| V1.2 | P3 (11 skills) | 2–3 hours |
+| V1.3 | reference.md splits | 1–2 hours |
 
-- [ ] README.md 說明使用方式
-- [ ] 至少 2-3 個實用範本
-- [ ] 範本可直接複製使用
-
-### 每個 scripts/ 必須包含
-
-- [ ] 腳本有執行權限 (`chmod +x`)
-- [ ] 腳本頂部有用途說明
-- [ ] 腳本可獨立執行
-
-### CI 驗證
-
-- [ ] 所有 SKILL.md frontmatter 有效
-- [ ] 無重複 skill name
-- [ ] templates/ 下有 README.md
+**Total: roughly 10–13 hours**
 
 ---
 
-## 相關文件
+## Acceptance criteria
 
-- [SKILL-TEMPLATE.md](./SKILL-TEMPLATE.md) - Skill 撰寫範本
-- [CONTRIBUTING.md](../CONTRIBUTING.md) - 貢獻指南
-- [Claude Code Skills 官方文檔](https://docs.anthropic.com/en/docs/claude-code/skills)
+### Each templates/ must have
+
+- [ ] README.md explaining usage
+- [ ] At least 2–3 practical templates
+- [ ] Templates copy-paste ready
+
+### Each scripts/ must have
+
+- [ ] Executable bit (`chmod +x`)
+- [ ] Header comment describing purpose
+- [ ] Runnable standalone
+
+### CI checks
+
+- [ ] All SKILL.md frontmatter valid
+- [ ] No duplicate skill names
+- [ ] README.md under each templates/
+
+---
+
+## Related docs
+
+- [SKILL-TEMPLATE.md](./SKILL-TEMPLATE.md) — Skill authoring template
+- [CONTRIBUTING.md](../CONTRIBUTING.md) — Contribution guide
+- [Claude Code Skills (official)](https://docs.anthropic.com/en/docs/claude-code/skills)
