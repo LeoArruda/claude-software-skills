@@ -3,7 +3,7 @@
 # Auto-Dev setup script (API key)
 # ============================================================================
 # Usage:
-#   curl -fsSL https://raw.githubusercontent.com/miles990/claude-software-skills/main/scripts/setup-auto-dev-apikey.sh | bash
+#   curl -fsSL https://raw.githubusercontent.com/leoarruda/claude-software-skills/main/scripts/setup-auto-dev-apikey.sh | bash
 # ============================================================================
 
 set -e

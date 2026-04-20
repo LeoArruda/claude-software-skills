@@ -43,7 +43,7 @@
 
 ```bash
 # 1. Add marketplace (GitHub format: owner/repo)
-/plugin marketplace add miles990/claude-software-skills
+/plugin marketplace add leoarruda/claude-software-skills
 
 # 2. Open plugin management interface, view available plugins in Discover tab
 /plugin
@@ -59,13 +59,13 @@
 **Supported GitHub formats:**
 ```bash
 # Short format (recommended)
-/plugin marketplace add miles990/claude-software-skills
+/plugin marketplace add leoarruda/claude-software-skills
 
 # HTTPS URL
-/plugin marketplace add https://github.com/miles990/claude-software-skills.git
+/plugin marketplace add https://github.com/leoarruda/claude-software-skills.git
 
 # Specify branch or tag
-/plugin marketplace add miles990/claude-software-skills#main
+/plugin marketplace add leoarruda/claude-software-skills#main
 ```
 
 **Plugin commands:**
@@ -169,7 +169,7 @@
 
 ```bash
 # Clone to your skills directory
-git clone https://github.com/miles990/claude-software-skills.git ~/.claude/skills/software-skills
+git clone https://github.com/leoarruda/claude-software-skills.git ~/.claude/skills/software-skills
 ```
 
 Claude will automatically discover and use the skills when relevant to your tasks.
@@ -207,7 +207,7 @@ Add to your Cursor MCP settings:
 
 Simply clone and reference the SKILL.md files in your prompts:
 ```bash
-git clone https://github.com/miles990/claude-software-skills.git
+git clone https://github.com/leoarruda/claude-software-skills.git
 ```
 
 ## Auto-Dev: Automated Development Workflow
@@ -218,12 +218,12 @@ One-click setup for GitHub Actions automated development workflow, let Claude he
 
 **Using API Key:**
 ```bash
-curl -fsSL https://raw.githubusercontent.com/miles990/claude-software-skills/main/scripts/setup-auto-dev-apikey.sh | bash
+curl -fsSL https://raw.githubusercontent.com/leoarruda/claude-software-skills/main/scripts/setup-auto-dev-apikey.sh | bash
 ```
 
 **Using Claude Max (OAuth):**
 ```bash
-curl -fsSL https://raw.githubusercontent.com/miles990/claude-software-skills/main/scripts/setup-auto-dev-max.sh | bash
+curl -fsSL https://raw.githubusercontent.com/leoarruda/claude-software-skills/main/scripts/setup-auto-dev-max.sh | bash
 ```
 
 ### Post-Installation Setup
@@ -317,7 +317,7 @@ MIT License - See [LICENSE](LICENSE) for details.
 
 ## Related Projects
 
-- [claude-domain-skills](https://github.com/miles990/claude-domain-skills) - Non-technical domain skills
+- [claude-domain-skills](https://github.com/leoarruda/claude-domain-skills) - Non-technical domain skills
 - [claude-skills-mcp](https://github.com/K-Dense-AI/claude-skills-mcp) - MCP server for skill discovery
 
 ---

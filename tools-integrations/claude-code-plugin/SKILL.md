@@ -176,7 +176,7 @@ npm install -g claude-plugin-my-plugin
 /plugin install github:owner/repo#path/to/plugin
 
 # Example
-/plugin install github:miles990/evolve-plugin
+/plugin install github:leoarruda/evolve-plugin
 ```
 
 ### Local install

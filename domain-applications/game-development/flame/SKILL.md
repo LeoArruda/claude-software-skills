@@ -14,7 +14,7 @@ triggers:
 dependencies:
   prerequisites: [flutter, dart]
   related: [game-design, mobile]
-author: miles990
+author: leoarruda
 ---
 
 # Flame Engine 2D Game Development

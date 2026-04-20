@@ -3,7 +3,7 @@
 # Auto-Dev setup script (Claude Max)
 # ============================================================================
 # Usage:
-#   curl -fsSL https://raw.githubusercontent.com/miles990/claude-software-skills/main/scripts/setup-auto-dev-max.sh | bash
+#   curl -fsSL https://raw.githubusercontent.com/leoarruda/claude-software-skills/main/scripts/setup-auto-dev-max.sh | bash
 # ============================================================================
 
 set -e

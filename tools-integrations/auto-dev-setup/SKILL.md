@@ -151,5 +151,5 @@ After setup:
 
 ## Related docs
 
-- [AUTO-DEV.md](https://github.com/miles990/claude-software-skills/blob/main/.github/AUTO-DEV.md)
+- [AUTO-DEV.md](https://github.com/leoarruda/claude-software-skills/blob/main/.github/AUTO-DEV.md)
 - [Evolve Skill](../../skills/evolve/SKILL.md)

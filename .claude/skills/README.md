@@ -20,19 +20,19 @@ claude-software-skills/
 
 ### evolve (v3.3.0)
 
-Self-Evolving Agent - 自主學習並迭代改進直到達成目標。
+Self-Evolving Agent - Learns autonomously and iteratively improves until the goal is achieved.
 
 **Source:** https://github.com/miles990/self-evolving-agent
 
 **Usage:**
 ```
-/evolve [目標描述]
+/evolve [goal description]
 ```
 
 **Features:**
-- 強制檢查點（任務前查 Memory、變更後編譯測試、Milestone 後目標確認）
-- Memory 生命週期管理（去蕪存菁）
-- Git-based Memory（版本控制、可追溯、可回滾）
+- Mandatory checkpoints (check Memory before tasks, compile/test after changes, confirm goals after milestones)
+- Memory lifecycle management (keep what matters, remove noise)
+- Git-based Memory (version-controlled, traceable, reversible)
 
 ## Managing Skills
 

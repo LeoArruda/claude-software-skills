@@ -60,7 +60,7 @@ echo '{
 ### Option A: Install a single skill
 
 ```
-github:miles990/claude-software-skills#{skill-path}
+github:leoarruda/claude-software-skills#{skill-path}
 ```
 
 **Examples:**
@@ -68,13 +68,13 @@ github:miles990/claude-software-skills#{skill-path}
 ```python
 # Install frontend skill
 mcp__skillpkg__install_skill(
-    source="github:miles990/claude-software-skills#development-stacks/frontend",
+    source="github:leoarruda/claude-software-skills#development-stacks/frontend",
     scope="local"  # or "global"
 )
 
 # Install python skill
 mcp__skillpkg__install_skill(
-    source="github:miles990/claude-software-skills#programming-languages/python",
+    source="github:leoarruda/claude-software-skills#programming-languages/python",
     scope="local"
 )
 ```
@@ -94,7 +94,7 @@ skills_to_install = [
 
 for skill_path in skills_to_install:
     mcp__skillpkg__install_skill(
-        source=f"github:miles990/claude-software-skills#{skill_path}",
+        source=f"github:leoarruda/claude-software-skills#{skill_path}",
         scope="local"
     )
 ```
@@ -104,7 +104,7 @@ for skill_path in skills_to_install:
 If you cloned the repo:
 
 ```bash
-git clone https://github.com/miles990/claude-software-skills.git
+git clone https://github.com/leoarruda/claude-software-skills.git
 ```
 
 Install from disk:
@@ -124,63 +124,63 @@ mcp__skillpkg__install_skill(
 
 ```python
 # Frontend
-mcp__skillpkg__install_skill(source="github:miles990/claude-software-skills#development-stacks/frontend")
-mcp__skillpkg__install_skill(source="github:miles990/claude-software-skills#programming-languages/javascript-typescript")
+mcp__skillpkg__install_skill(source="github:leoarruda/claude-software-skills#development-stacks/frontend")
+mcp__skillpkg__install_skill(source="github:leoarruda/claude-software-skills#programming-languages/javascript-typescript")
 
 # Backend
-mcp__skillpkg__install_skill(source="github:miles990/claude-software-skills#development-stacks/backend")
-mcp__skillpkg__install_skill(source="github:miles990/claude-software-skills#programming-languages/python")
+mcp__skillpkg__install_skill(source="github:leoarruda/claude-software-skills#development-stacks/backend")
+mcp__skillpkg__install_skill(source="github:leoarruda/claude-software-skills#programming-languages/python")
 
 # API design
-mcp__skillpkg__install_skill(source="github:miles990/claude-software-skills#software-design/api-design")
+mcp__skillpkg__install_skill(source="github:leoarruda/claude-software-skills#software-design/api-design")
 
 # Quality and testing
-mcp__skillpkg__install_skill(source="github:miles990/claude-software-skills#software-engineering/code-quality")
-mcp__skillpkg__install_skill(source="github:miles990/claude-software-skills#software-engineering/testing-strategies")
+mcp__skillpkg__install_skill(source="github:leoarruda/claude-software-skills#software-engineering/code-quality")
+mcp__skillpkg__install_skill(source="github:leoarruda/claude-software-skills#software-engineering/testing-strategies")
 ```
 
 ### Example 2: AI application
 
 ```python
 # AI/ML integration
-mcp__skillpkg__install_skill(source="github:miles990/claude-software-skills#development-stacks/ai-ml-integration")
+mcp__skillpkg__install_skill(source="github:leoarruda/claude-software-skills#development-stacks/ai-ml-integration")
 
 # Backend
-mcp__skillpkg__install_skill(source="github:miles990/claude-software-skills#development-stacks/backend")
-mcp__skillpkg__install_skill(source="github:miles990/claude-software-skills#programming-languages/python")
+mcp__skillpkg__install_skill(source="github:leoarruda/claude-software-skills#development-stacks/backend")
+mcp__skillpkg__install_skill(source="github:leoarruda/claude-software-skills#programming-languages/python")
 
 # API design (for AI endpoints)
-mcp__skillpkg__install_skill(source="github:miles990/claude-software-skills#software-design/api-design")
+mcp__skillpkg__install_skill(source="github:leoarruda/claude-software-skills#software-design/api-design")
 ```
 
 ### Example 3: Real-time app
 
 ```python
 # Real-time systems
-mcp__skillpkg__install_skill(source="github:miles990/claude-software-skills#development-stacks/realtime-systems")
+mcp__skillpkg__install_skill(source="github:leoarruda/claude-software-skills#development-stacks/realtime-systems")
 
 # Frontend and backend
-mcp__skillpkg__install_skill(source="github:miles990/claude-software-skills#development-stacks/frontend")
-mcp__skillpkg__install_skill(source="github:miles990/claude-software-skills#development-stacks/backend")
+mcp__skillpkg__install_skill(source="github:leoarruda/claude-software-skills#development-stacks/frontend")
+mcp__skillpkg__install_skill(source="github:leoarruda/claude-software-skills#development-stacks/backend")
 ```
 
 ### Example 4: Backend API only
 
 ```python
 # Backend
-mcp__skillpkg__install_skill(source="github:miles990/claude-software-skills#development-stacks/backend")
-mcp__skillpkg__install_skill(source="github:miles990/claude-software-skills#programming-languages/python")
+mcp__skillpkg__install_skill(source="github:leoarruda/claude-software-skills#development-stacks/backend")
+mcp__skillpkg__install_skill(source="github:leoarruda/claude-software-skills#programming-languages/python")
 # Or Go
-mcp__skillpkg__install_skill(source="github:miles990/claude-software-skills#programming-languages/go")
+mcp__skillpkg__install_skill(source="github:leoarruda/claude-software-skills#programming-languages/go")
 
 # API design
-mcp__skillpkg__install_skill(source="github:miles990/claude-software-skills#software-design/api-design")
+mcp__skillpkg__install_skill(source="github:leoarruda/claude-software-skills#software-design/api-design")
 
 # Database
-mcp__skillpkg__install_skill(source="github:miles990/claude-software-skills#development-stacks/database")
+mcp__skillpkg__install_skill(source="github:leoarruda/claude-software-skills#development-stacks/database")
 
 # Reliability
-mcp__skillpkg__install_skill(source="github:miles990/claude-software-skills#software-engineering/reliability-engineering")
+mcp__skillpkg__install_skill(source="github:leoarruda/claude-software-skills#software-engineering/reliability-engineering")
 ```
 
 ---
@@ -200,28 +200,28 @@ mcp__skillpkg__skill_status()
 ```python
 # Frontend (React)
 mcp__skillpkg__install_skill(
-    source="github:miles990/claude-software-skills#development-stacks/frontend",
+    source="github:leoarruda/claude-software-skills#development-stacks/frontend",
     scope="local"
 )
 # Output: ✅ Installed 1 skill(s): frontend v1.0.0
 
 # Backend (FastAPI)
 mcp__skillpkg__install_skill(
-    source="github:miles990/claude-software-skills#development-stacks/backend",
+    source="github:leoarruda/claude-software-skills#development-stacks/backend",
     scope="local"
 )
 # Output: ✅ Installed 1 skill(s): backend v1.0.0
 
 # Real-time (SSE/WebSocket)
 mcp__skillpkg__install_skill(
-    source="github:miles990/claude-software-skills#development-stacks/realtime-systems",
+    source="github:leoarruda/claude-software-skills#development-stacks/realtime-systems",
     scope="local"
 )
 # Output: ✅ Installed 1 skill(s): realtime-systems v1.0.0
 
 # AI integration
 mcp__skillpkg__install_skill(
-    source="github:miles990/claude-software-skills#development-stacks/ai-ml-integration",
+    source="github:leoarruda/claude-software-skills#development-stacks/ai-ml-integration",
     scope="local"
 )
 # Output: ✅ Installed 1 skill(s): ai-ml-integration v1.0.0
@@ -232,13 +232,13 @@ mcp__skillpkg__install_skill(
 ```python
 # JavaScript/TypeScript
 mcp__skillpkg__install_skill(
-    source="github:miles990/claude-software-skills#programming-languages/javascript-typescript",
+    source="github:leoarruda/claude-software-skills#programming-languages/javascript-typescript",
     scope="local"
 )
 
 # Python
 mcp__skillpkg__install_skill(
-    source="github:miles990/claude-software-skills#programming-languages/python",
+    source="github:leoarruda/claude-software-skills#programming-languages/python",
     scope="local"
 )
 ```
@@ -248,13 +248,13 @@ mcp__skillpkg__install_skill(
 ```python
 # Code quality
 mcp__skillpkg__install_skill(
-    source="github:miles990/claude-software-skills#software-engineering/code-quality",
+    source="github:leoarruda/claude-software-skills#software-engineering/code-quality",
     scope="local"
 )
 
 # Testing strategies
 mcp__skillpkg__install_skill(
-    source="github:miles990/claude-software-skills#software-engineering/testing-strategies",
+    source="github:leoarruda/claude-software-skills#software-engineering/testing-strategies",
     scope="local"
 )
 ```
@@ -264,13 +264,13 @@ mcp__skillpkg__install_skill(
 ```python
 # API design
 mcp__skillpkg__install_skill(
-    source="github:miles990/claude-software-skills#software-design/api-design",
+    source="github:leoarruda/claude-software-skills#software-design/api-design",
     scope="local"
 )
 
 # UX principles
 mcp__skillpkg__install_skill(
-    source="github:miles990/claude-software-skills#software-design/ux-principles",
+    source="github:leoarruda/claude-software-skills#software-design/ux-principles",
     scope="local"
 )
 ```
@@ -319,16 +319,16 @@ mcp__skillpkg__skill_status()
   "$schema": "https://skillpkg.dev/schemas/skillpkg.json",
   "name": "omniflow-studio",
   "skills": {
-    "frontend": "github:miles990/claude-software-skills#development-stacks/frontend",
-    "backend": "github:miles990/claude-software-skills#development-stacks/backend",
-    "realtime-systems": "github:miles990/claude-software-skills#development-stacks/realtime-systems",
-    "ai-ml-integration": "github:miles990/claude-software-skills#development-stacks/ai-ml-integration",
-    "javascript-typescript": "github:miles990/claude-software-skills#programming-languages/javascript-typescript",
-    "python": "github:miles990/claude-software-skills#programming-languages/python",
-    "code-quality": "github:miles990/claude-software-skills#software-engineering/code-quality",
-    "testing-strategies": "github:miles990/claude-software-skills#software-engineering/testing-strategies",
-    "api-design": "github:miles990/claude-software-skills#software-design/api-design",
-    "ux-principles": "github:miles990/claude-software-skills#software-design/ux-principles"
+    "frontend": "github:leoarruda/claude-software-skills#development-stacks/frontend",
+    "backend": "github:leoarruda/claude-software-skills#development-stacks/backend",
+    "realtime-systems": "github:leoarruda/claude-software-skills#development-stacks/realtime-systems",
+    "ai-ml-integration": "github:leoarruda/claude-software-skills#development-stacks/ai-ml-integration",
+    "javascript-typescript": "github:leoarruda/claude-software-skills#programming-languages/javascript-typescript",
+    "python": "github:leoarruda/claude-software-skills#programming-languages/python",
+    "code-quality": "github:leoarruda/claude-software-skills#software-engineering/code-quality",
+    "testing-strategies": "github:leoarruda/claude-software-skills#software-engineering/testing-strategies",
+    "api-design": "github:leoarruda/claude-software-skills#software-design/api-design",
+    "ux-principles": "github:leoarruda/claude-software-skills#software-design/ux-principles"
   },
   "sync_targets": {
     "claude-code": true
@@ -437,7 +437,7 @@ mcp__skillpkg__install_skill(
 ```python
 # Reinstall overwrites the previous version
 mcp__skillpkg__install_skill(
-    source="github:miles990/claude-software-skills#development-stacks/frontend",
+    source="github:leoarruda/claude-software-skills#development-stacks/frontend",
     scope="local"
 )
 ```
